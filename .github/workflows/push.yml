@@ -1,6 +1,13 @@
-on: push
-name: build
+name: Prueba
+on:
+	push:
+		branches:
+			- master
+
 jobs:
-	build:
-	name: building the app
-	runs-on: ubuntu-latest
+	build-and-deploy:
+		runs-on: ubuntu-latest
+		steps:
+			-name: prueba hello world
+			 run: |
+			 	echo "hello world"
