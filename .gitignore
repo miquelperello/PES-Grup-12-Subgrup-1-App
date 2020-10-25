@@ -17,3 +17,4 @@
 
 # Gradle
 /.gradle
+local.properties
