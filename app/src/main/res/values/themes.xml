@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="MyApplication" parent="Theme.AppCompat.Light.NoActionBar">>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/blue_app</item>
+        <item name="colorPrimaryVariant">@color/orange_app</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
 

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
         setSupportActionBar(toolbar)
-        toolbar?.setTitle("Toolbar")
+        toolbar?.setTitle("Events")
 
         val url = "https://securevent.herokuapp.com/events"
         val queue = Volley.newRequestQueue(this)
