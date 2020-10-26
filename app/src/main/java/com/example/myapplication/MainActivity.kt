@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.os.Build
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONException
@@ -31,27 +30,39 @@ class MainActivity : AppCompatActivity() {
         toolbar?.setTitle("Events")
 
         /*textViewEventName = findViewById(R.id.titleTv)
-        textViewEventDesc = findViewById(R.id.descriptionTv)
+        textViewEventDesc = findViewById(R.id.descriptionTv)*/
 
         val url = "https://securevent.herokuapp.com/events"
         requestQueue = Volley.newRequestQueue(this)
         println("hola")
-        val request = JsonObjectRequest(Request.Method.GET, url, null, {
-                response ->try {
-            val jsonArray = response.getJSONArray("events")
-            for (i in 0 until jsonArray.length()) {
-                val event = jsonArray.getJSONObject(i)
-                val eventname = event.getString("name")
-                val desc = event.getString("street")
-                textViewEventName.append("$eventname\n\n")
-                textViewEventDesc.append("$desc\n\n")
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        }, { error -> error.printStackTrace() })
-        requestQueue?.add(request)*/
+        val arrayList = ArrayList<Model>()
 
+        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+            try {
+                for (i in 0 until response.length()) {
+                    val event = response.getJSONObject(i)
+                    arrayList.add(
+                        Model(
+                            event.getString("name"),
+                            event.getString("street"),
+                            R.mipmap.ic_launcher
+                        )
+                    )
+                }
+
+                val myAdapter = (MyAdapter(arrayList, this))
+
+                recyclerView.layoutManager = LinearLayoutManager(this)
+                recyclerView.adapter = myAdapter
+
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, { error -> error.printStackTrace() })
+        requestQueue?.add(request)
+
+/*
         val arrayList = ArrayList<Model>()
         arrayList.add(Model("Event1", "Tipus1", R.mipmap.ic_launcher))
         arrayList.add(Model("Event2", "Tipus2", R.mipmap.ic_launcher))
@@ -62,11 +73,7 @@ class MainActivity : AppCompatActivity() {
         arrayList.add(Model("Event7", "Tipus7", R.mipmap.ic_launcher))
         arrayList.add(Model("Event8", "Tipus8", R.mipmap.ic_launcher))
         arrayList.add(Model("Event9", "Tipus9", R.mipmap.ic_launcher))
-
-        val myAdapter = (MyAdapter(arrayList,this))
-
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = myAdapter
+        */
 
 
         /*val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
