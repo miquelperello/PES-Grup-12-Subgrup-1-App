@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.os.Build
 import android.os.Bundle
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,8 +15,6 @@ import org.json.JSONException
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var textViewEventName: TextView
-    private lateinit var textViewEventDesc: TextView
     private var requestQueue: RequestQueue? = null
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -28,9 +25,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
         setSupportActionBar(toolbar)
         toolbar?.setTitle("Events")
-
-        /*textViewEventName = findViewById(R.id.titleTv)
-        textViewEventDesc = findViewById(R.id.descriptionTv)*/
 
         val url = "https://securevent.herokuapp.com/events"
         requestQueue = Volley.newRequestQueue(this)
@@ -74,11 +68,6 @@ class MainActivity : AppCompatActivity() {
         arrayList.add(Model("Event8", "Tipus8", R.mipmap.ic_launcher))
         arrayList.add(Model("Event9", "Tipus9", R.mipmap.ic_launcher))
         */
-
-
-        /*val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
-        setSupportActionBar(toolbar)
-        toolbar?.setTitle("Events")*/
 
 
 
