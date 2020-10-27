@@ -19,10 +19,18 @@ class Esdeveniment : AppCompatActivity() {
         val ETitle = intent.getStringExtra("ETitle")
         val EDesc = intent.getStringExtra("EDesc")
         val EImageView = intent.getIntExtra("EImage", 0)
+        val ELocalitzacio = intent.getStringExtra("ELocalitzacio")
+        val EData = intent.getStringExtra("EData")
+        val EHora = intent.getStringExtra("EHora")
+        val EPreu = intent.getStringExtra("EPreu")
 
         actionBar.setTitle(ETitle)
         titleTv.text = ETitle
         descriptionTv.text = EDesc
         imageIv.setImageResource(EImageView)
+        LocalitzacioDescripcio.text= ELocalitzacio
+        DataDescripcio.text = EData
+        HoraDescripcio.text = EHora
+        PreuDescripcio.text = EPreu
     }
 }

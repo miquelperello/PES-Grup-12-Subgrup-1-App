@@ -38,11 +38,23 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
             var EImage : Int = model.image
 
+            var ELocalitzacio : String = model.localitzacio
+
+            var EData : String = model.data
+
+            var EHora: String = model.hora
+            var EPreu : String = model.preu
+
+
             val intent = Intent(context, Esdeveniment::class.java)
 
             intent.putExtra("ETitle", ETitle)
             intent.putExtra("EDesc", EDesc)
             intent.putExtra("EImage", EImage)
+            intent.putExtra("ELocalitzacio", ELocalitzacio)
+            intent.putExtra("EData", EData)
+            intent.putExtra("EHora", EHora)
+            intent.putExtra("EPreu", EPreu)
 
             context.startActivity(intent)
         }
