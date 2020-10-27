@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,14 +31,20 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
         holder.bindItems(arrayList[position])
 
         holder.itemView.setOnClickListener{
+            val model = arrayList.get(position)
 
-            if(position==0) {
-                Toast.makeText(
-                        context,
-                        "You clicked over Newsfeed",
-                        Toast.LENGTH_LONG
-                ).show()
-            }
+            var ETitle : String = model.title
+            var EDesc : String = model.des
+
+            var EImage : Int = model.image
+
+            val intent = Intent(context, Esdeveniment::class.java)
+
+            intent.putExtra("ETitle", ETitle)
+            intent.putExtra("EDesc", EDesc)
+            intent.putExtra("EImage", EImage)
+
+            context.startActivity(intent)
         }
     }
 
