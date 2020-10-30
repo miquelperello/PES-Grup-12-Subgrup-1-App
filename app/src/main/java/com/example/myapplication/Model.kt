@@ -1,4 +1,6 @@
 package com.example.myapplication
 
-class Model ( val title:String, val des:String, val image:Int, val localitzacio:String, val data:String, val hora:String, val preu:String){
+class Model ( val title:String, val des:String, val image:Int,
+              val loc:String, val date:String, val hour:String,
+              val minPrice:String, val maxPrice: String){
 }

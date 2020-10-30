@@ -39,11 +39,12 @@ class MainActivity : AppCompatActivity() {
                         Model(
                             event.getString("name"),
                             event.getString("street"),
-                            R.mipmap.ic_launcher,
+                            R.drawable.icon,
                             event.getString("street"),
                             event.getString("date"),
                             event.getString("hourIni"),
-                            event.getString("price_range")
+                            event.getString("minPrice"),
+                            event.getString("maxPrice")
                         )
                     )
                 }

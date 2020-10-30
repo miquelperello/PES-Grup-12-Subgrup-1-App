@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row.view.*
 
@@ -15,9 +14,9 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
         fun bindItems(model:Model){
 
-            itemView.titleTv.text = model.title
-            itemView.descriptionTv.text = model.des
-            itemView.imageIv.setImageResource(model.image)
+            itemView.titleE.text = model.title
+            itemView.descE.text = model.des
+            itemView.imageE.setImageResource(model.image)
         }
     }
 
@@ -38,25 +37,27 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
             var EImage : Int = model.image
 
-            var ELocalitzacio : String = model.localitzacio
+            var ELoc : String = model.loc
 
-            var EData : String = model.data
+            var EDate : String = model.date
 
-            var EHora: String = model.hora
-            var EPreu : String = model.preu
+            var EHour: String = model.hour
+            var EPriceMin : String = model.minPrice
+            var EPriceMax : String = model.maxPrice
 
 
-            val intent = Intent(context, Esdeveniment::class.java)
+            val esdeveniment = Intent(context, Esdeveniment::class.java)
 
-            intent.putExtra("ETitle", ETitle)
-            intent.putExtra("EDesc", EDesc)
-            intent.putExtra("EImage", EImage)
-            intent.putExtra("ELocalitzacio", ELocalitzacio)
-            intent.putExtra("EData", EData)
-            intent.putExtra("EHora", EHora)
-            intent.putExtra("EPreu", EPreu)
+            esdeveniment.putExtra("ETitle", ETitle)
+            esdeveniment.putExtra("EDesc", EDesc)
+            esdeveniment.putExtra("EImage", EImage)
+            esdeveniment.putExtra("ELoc", ELoc)
+            esdeveniment.putExtra("EDate", EDate)
+            esdeveniment.putExtra("EHour", EHour)
+            esdeveniment.putExtra("EPriceMin", EPriceMin)
+            esdeveniment.putExtra("EPriceMax", EPriceMax)
 
-            context.startActivity(intent)
+            context.startActivity(esdeveniment)
         }
     }
 

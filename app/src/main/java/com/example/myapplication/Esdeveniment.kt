@@ -13,24 +13,26 @@ class Esdeveniment : AppCompatActivity() {
 
         val actionBar : ActionBar? = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar!!.setDisplayShowHomeEnabled(true)
+        actionBar.setDisplayShowHomeEnabled(true)
 
-        var intent = intent
+        val intent = intent
         val ETitle = intent.getStringExtra("ETitle")
         val EDesc = intent.getStringExtra("EDesc")
         val EImageView = intent.getIntExtra("EImage", 0)
-        val ELocalitzacio = intent.getStringExtra("ELocalitzacio")
-        val EData = intent.getStringExtra("EData")
-        val EHora = intent.getStringExtra("EHora")
-        val EPreu = intent.getStringExtra("EPreu")
+        val ELoc = intent.getStringExtra("ELoc")
+        val EDate = intent.getStringExtra("EDate")
+        val EHour = intent.getStringExtra("EHour")
+        val EPriceMin = intent.getStringExtra("EPriceMin")
+        val EPriceMax = intent.getStringExtra("EPriceMax")
 
         actionBar.setTitle(ETitle)
-        titleTv.text = ETitle
-        descriptionTv.text = EDesc
-        imageIv.setImageResource(EImageView)
-        LocalitzacioDescripcio.text= ELocalitzacio
-        DataDescripcio.text = EData
-        HoraDescripcio.text = EHora
-        PreuDescripcio.text = EPreu
+        titleE.text = ETitle
+        descE.text = EDesc
+        imageE.setImageResource(EImageView)
+        LocE.text= ELoc
+        DateE.text = EDate
+        HourE.text = EHour
+        MinPriceE.text = EPriceMin
+        MaxPriceE.text = EPriceMax
     }
 }

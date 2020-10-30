@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,22 +10,23 @@
     tools:context=".Esdeveniment">
 
     <ImageView
-        android:id="@+id/imageIv"
+        android:id="@+id/imageE"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_centerHorizontal="true"/>
+        android:src="@drawable/icon"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/titleTv"
-        android:text="Title"
-        android:textSize="22dp"
+        android:id="@+id/titleE"
+        android:text="@string/title"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:gravity="center"
-        android:layout_below="@id/imageIv"
+        android:layout_below="@id/imageE"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         />
@@ -34,12 +34,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/descriptionTv"
-        android:text="Description"
-        android:textSize="18dp"
+        android:id="@+id/descE"
+        android:text="@string/description"
+        android:textSize="18sp"
         android:textColor="@color/teal_200"
         android:gravity="center"
-        android:layout_below="@id/titleTv"
+        android:layout_below="@id/titleE"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
        />
@@ -48,11 +48,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/LabelInfo"
-        android:text="INFO"
-        android:textSize="20dp"
+        android:text="@string/info"
+        android:textSize="20sp"
         android:textColor="@color/teal_200"
         android:gravity="center"
-        android:layout_below="@id/descriptionTv"
+        android:layout_below="@id/descE"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         />
@@ -66,29 +66,25 @@
         android:layout_below="@id/LabelInfo">
 
         <TextView
-            android:id="@+id/LocalitzacioTitol"
+            android:id="@+id/LocTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_marginRight="20dp"
-            android:text="Localització"
+            android:text="@string/location"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
 
         <TextView
-            android:id="@+id/LocalitzacioDescripcio"
+            android:id="@+id/LocE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="right"
-            android:text="LocalitzacióEvent"
+            android:gravity="start"
             android:textColor="@color/grey"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -100,29 +96,25 @@
         android:layout_below="@id/LinearLayoutLocalitzacio">
 
         <TextView
-            android:id="@+id/DataTitol"
+            android:id="@+id/DateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_marginRight="20dp"
-            android:text="Data"
+            android:text="@string/date"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
 
         <TextView
-            android:id="@+id/DataDescripcio"
+            android:id="@+id/DateE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="right"
-            android:text="Data"
+            android:gravity="start"
             android:textColor="@color/grey"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -134,64 +126,85 @@
         android:layout_below="@id/LinearLayoutData">
 
         <TextView
-            android:id="@+id/Horatitol"
+            android:id="@+id/HourTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_marginRight="20dp"
-            android:text="Hora"
+            android:text="@string/hour"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
 
         <TextView
-            android:id="@+id/HoraDescripcio"
+            android:id="@+id/HourE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="right"
-            android:text="Hora"
+            android:gravity="start"
             android:textColor="@color/grey"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="15dp"
-        android:id="@+id/LinearLayoutPreu"
+        android:id="@+id/LinearLayoutPriceMin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/LinearLayoutHora">
 
         <TextView
-            android:id="@+id/Preutitol"
+            android:id="@+id/PriceMinTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_marginRight="20dp"
-            android:text="Preu"
+            android:text="@string/mininum_price"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
 
         <TextView
-            android:id="@+id/PreuDescripcio"
+            android:id="@+id/MinPriceE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/LabelInfo"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:gravity="right"
-            android:text="Preu"
+            android:gravity="start"
             android:textColor="@color/grey"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinearLayoutPriceMax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutPriceMin"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/PriceMaxTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:gravity="start"
+            android:text="@string/MaxPrice"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/MaxPriceE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </RelativeLayout>
