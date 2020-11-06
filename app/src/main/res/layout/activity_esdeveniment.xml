@@ -42,7 +42,7 @@
         android:layout_below="@id/titleE"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-       />
+        />
 
     <TextView
         android:layout_width="match_parent"
