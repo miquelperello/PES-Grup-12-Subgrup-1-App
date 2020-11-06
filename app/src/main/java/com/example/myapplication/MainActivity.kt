@@ -2,33 +2,76 @@ package com.example.myapplication
 
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
+import android.view.MenuItem
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import org.json.JSONException
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var requestQueue: RequestQueue? = null
+
+    lateinit var Meus: MeusEsdeveniments
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+        setSupportActionBar(toolBar)
+        val actionBar = supportActionBar
+        actionBar?.title = "Navigation Drawer"
+
+        val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolBar,
+                (R.string.open),
+                (R.string.close)
+        ){
+
+        }
+
+        drawerToggle.isDrawerIndicatorEnabled = true
+        drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
+        nav_view.setNavigationItemSelectedListener (this)
+
+        Meus = MeusEsdeveniments()
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frame_layout, Meus)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
+
+/*
         val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
         setSupportActionBar(toolbar)
-        toolbar?.setTitle("Events")
+        toolbar?.setTitle("Events")*/
 
         val url = "https://securevent.herokuapp.com/events"
         requestQueue = Volley.newRequestQueue(this)
-        println("hola")
+
         val arrayList = ArrayList<Model>()
 
         val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
@@ -60,6 +103,32 @@ class MainActivity : AppCompatActivity() {
             }
         }, { error -> error.printStackTrace() })
         requestQueue?.add(request)
+    }
+
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+
+        when (menuItem.itemId) {
+            R.id.home->{
+                Meus = MeusEsdeveniments()
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_layout, Meus)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true;
+
+    }
+
+    override fun onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+        else {
+            super.onBackPressed()
+        }
     }
 }
 
