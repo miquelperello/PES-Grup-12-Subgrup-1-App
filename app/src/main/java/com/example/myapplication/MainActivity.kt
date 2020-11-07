@@ -35,11 +35,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         setSupportActionBar(toolBar)
-        val actionBar = supportActionBar
-        actionBar?.title = "Navigation Drawer"
+        //val actionBar = this.supportActionBar
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
                 this,

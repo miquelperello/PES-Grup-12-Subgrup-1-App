@@ -17,6 +17,7 @@
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolBar"
         android:background="?attr/colorPrimary"
+        android:title="@string/Events"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
     </androidx.appcompat.widget.Toolbar>

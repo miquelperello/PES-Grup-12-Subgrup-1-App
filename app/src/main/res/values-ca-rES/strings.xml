@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SecurEvent</string>
+    <string name="MainPage">Esdeveniments</string>
+    <string name="action_settings">Configuració</string>
+    <string name="next">Següent</string>
+    <string name="previous">Anterior</string>
+    <string name="todo">TODO</string>
+    <string name="title">Títol</string>
+    <string name="Events">Esdeveniments</string>
+    <string name="description">Descripció</string>
+    <string name="info">INFORMACIÓ</string>
+    <string name="location">Localització</string>
+    <string name="MaxPrice">Preu Màxim</string>
+    <string name="mininum_price">Preu Mínim</string>
+    <string name="hour">Hora</string>
+    <string name="date">Data</string>
+    <string name="open">obre</string>
+    <string name="close">tanca</string>
+    <string name="Home">Esdeveniments</string>
+    <string name="Language">Idioma</string>
+    <string name="first_fragment_label">Primer Fragment</string>
+    <string name="second_fragment_label">Segon Fragment</string>
+</resources>
