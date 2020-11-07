@@ -1,15 +1,13 @@
 package com.example.myapplication
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +25,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var requestQueue: RequestQueue? = null
 
     lateinit var Meus: MeusEsdeveniments
+    lateinit var Conf: Configuration
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -35,8 +34,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         setSupportActionBar(toolBar)
-        //val actionBar = this.supportActionBar
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
                 this,
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener (this)
+        nav_view.setNavigationItemSelectedListener(this)
 
         Meus = MeusEsdeveniments()
         supportFragmentManager
@@ -76,16 +75,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)
                     arrayList.add(
-                        Model(
-                            event.getString("name"),
-                            event.getString("street"),
-                            R.drawable.icon,
-                            event.getString("street"),
-                            event.getString("date"),
-                            event.getString("hourIni"),
-                            event.getString("minPrice"),
-                            event.getString("maxPrice")
-                        )
+                            Model(
+                                    event.getString("name"),
+                                    event.getString("street"),
+                                    R.drawable.icon,
+                                    event.getString("street"),
+                                    event.getString("date"),
+                                    event.getString("hourIni"),
+                                    event.getString("minPrice"),
+                                    event.getString("maxPrice")
+                            )
                     )
                 }
 
@@ -105,13 +104,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
 
         when (menuItem.itemId) {
-            R.id.home->{
+            R.id.home -> {
                 Meus = MeusEsdeveniments()
                 supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.frame_layout, Meus)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout, Meus)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+            }
+            R.id.settings -> {
+                Conf = Configuration()
+                supportFragmentManager
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

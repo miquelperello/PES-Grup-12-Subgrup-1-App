@@ -18,6 +18,7 @@
     <string name="open">abre</string>
     <string name="close">cierra</string>
     <string name="Home">Eventos</string>
+    <string name="Settings">Configuración</string>
     <string name="Language">Idioma</string>
     <string name="first_fragment_label">Primer Fragmento</string>
     <string name="second_fragment_label">Segundo Fragmento</string>

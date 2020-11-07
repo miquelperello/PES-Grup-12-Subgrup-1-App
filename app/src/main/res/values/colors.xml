@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue_app">#97D8FF</color>
+    <color name="blue2">#70C3FF</color>
     <color name="orange_app">#ff9a76</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
