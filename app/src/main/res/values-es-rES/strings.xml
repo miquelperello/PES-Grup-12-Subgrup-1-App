@@ -17,7 +17,7 @@
     <string name="date">Fecha</string>
     <string name="open">abre</string>
     <string name="close">cierra</string>
-    <string name="Home">Eventos</string>
+    <string name="MyEvents">Mis eventos</string>
     <string name="Settings">Configuración</string>
     <string name="Language">Idioma</string>
     <string name="first_fragment_label">Primer Fragmento</string>

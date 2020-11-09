@@ -7,13 +7,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
+            android:id="@+id/events"
             android:title="@string/Events"
             android:icon="@drawable/ic_events" />
         <item
-            android:id="@+id/settings"
-            android:title="@string/Settings"
-            android:icon="@drawable/ic_settings" />
+            android:id="@+id/myevents"
+            android:title="@string/MyEvents"
+            android:icon="@drawable/ic_myevents" />
     </group>
 
 </menu>

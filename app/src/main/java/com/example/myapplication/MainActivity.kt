@@ -29,8 +29,8 @@ import org.json.JSONException
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var requestQueue: RequestQueue? = null
 
-    lateinit var Meus: Events
-    lateinit var Features: Features
+    lateinit var Events: Events
+    lateinit var MyEvents: MyEvents
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -58,10 +58,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        Meus = Events()
+        Events = Events()
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_layout, Meus)
+            .replace(R.id.frame_layout, Events)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
@@ -109,19 +109,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
 
         when (menuItem.itemId) {
-            R.id.home -> {
-                Meus = Events()
+            R.id.events -> {
+                Events = Events()
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.frame_layout, Meus)
+                    .replace(R.id.frame_layout, Events)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
-            R.id.settings -> {
-                Features = Features()
+            R.id.myevents -> {
+                MyEvents = MyEvents()
                 supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.frame_layout, Features)
+                    .replace(R.id.frame_layout, MyEvents)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
