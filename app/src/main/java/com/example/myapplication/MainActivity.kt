@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
         toolbar?.setTitle("Events")*/
 
-        val url = "https://securevent.herokuapp.com/events"
+        /*val url = "https://securevent.herokuapp.com/events"
         requestQueue = Volley.newRequestQueue(this)
 
         val arrayList = ArrayList<Model>()
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 e.printStackTrace()
             }
         }, { error -> error.printStackTrace() })
-        requestQueue?.add(request)
+        requestQueue?.add(request)*/
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
