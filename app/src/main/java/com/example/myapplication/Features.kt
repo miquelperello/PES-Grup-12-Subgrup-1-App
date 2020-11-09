@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Configuration.newInstance] factory method to
+ * Use the [Features.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Configuration : Fragment() {
+class Features : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +34,7 @@ class Configuration : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_configuration, container, false)
+        return inflater.inflate(R.layout.fragment_features, container, false)
     }
 
     companion object {
@@ -44,12 +44,12 @@ class Configuration : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Configuration.
+         * @return A new instance of fragment Features.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Configuration().apply {
+            Features().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

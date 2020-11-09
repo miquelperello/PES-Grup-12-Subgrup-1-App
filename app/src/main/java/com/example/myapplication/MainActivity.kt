@@ -10,6 +10,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.replace
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -24,8 +29,8 @@ import org.json.JSONException
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var requestQueue: RequestQueue? = null
 
-    lateinit var Meus: MeusEsdeveniments
-    lateinit var Conf: Configuration
+    lateinit var Meus: Events
+    lateinit var Features: Features
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -38,11 +43,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolBar)
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolBar,
-                (R.string.open),
-                (R.string.close)
+            this,
+            drawerLayout,
+            toolBar,
+            (R.string.open),
+            (R.string.close)
         ){
 
         }
@@ -53,12 +58,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        Meus = MeusEsdeveniments()
+        Meus = Events()
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame_layout, Meus)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.frame_layout, Meus)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
 
 /*
         val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
@@ -75,16 +80,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)
                     arrayList.add(
-                            Model(
-                                    event.getString("name"),
-                                    event.getString("street"),
-                                    R.drawable.icon,
-                                    event.getString("street"),
-                                    event.getString("date"),
-                                    event.getString("hourIni"),
-                                    event.getString("minPrice"),
-                                    event.getString("maxPrice")
-                            )
+                        Model(
+                            event.getString("name"),
+                            event.getString("street"),
+                            R.drawable.icon,
+                            event.getString("street"),
+                            event.getString("date"),
+                            event.getString("hourIni"),
+                            event.getString("minPrice"),
+                            event.getString("maxPrice")
+                        )
                     )
                 }
 
@@ -105,7 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         when (menuItem.itemId) {
             R.id.home -> {
-                Meus = MeusEsdeveniments()
+                Meus = Events()
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.frame_layout, Meus)
@@ -113,9 +118,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
             R.id.settings -> {
-                Conf = Configuration()
+                Features = Features()
                 supportFragmentManager
                     .beginTransaction()
+                    .replace(R.id.frame_layout, Features)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
@@ -134,4 +140,3 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 }
-
