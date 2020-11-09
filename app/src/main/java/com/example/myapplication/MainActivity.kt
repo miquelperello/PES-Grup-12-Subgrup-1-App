@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         setSupportActionBar(toolBar)
 
         val drawerToggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
@@ -111,6 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (menuItem.itemId) {
             R.id.events -> {
                 Events = Events()
+                toolBar.title = getResources().getString(R.string.Events);
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.frame_layout, Events)
@@ -119,6 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.myevents -> {
                 MyEvents = MyEvents()
+                toolBar.title = getResources().getString(R.string.MyEvents);
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.frame_layout, MyEvents)
