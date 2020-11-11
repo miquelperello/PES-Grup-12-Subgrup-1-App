@@ -1,29 +1,17 @@
-package com.example.myapplication
+package com.pes.securevent
 
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.replace
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import org.json.JSONException
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +19,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var Events: Events
     lateinit var MyEvents: MyEvents
+    lateinit var SignIn: SignIn
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -123,6 +112,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.frame_layout, MyEvents)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+            }
+            R.id.signin -> {
+                SignIn = SignIn()
+                toolBar.title = getResources().getString(R.string.SignIn);
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frame_layout, SignIn)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }

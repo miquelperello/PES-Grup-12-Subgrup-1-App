@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/events"
-        android:name="com.example.myapplication.Events"
+        android:name="com.pes.securevent.Events"
         android:label="@string/Events"
         tools:layout="@layout/fragment_events" />
     <fragment
         android:id="@+id/configuration"
-        android:name="com.example.myapplication.Configuration"
+        android:name="com.pes.securevent.Configuration"
         android:label="@string/Settings"
         tools:layout="@layout/fragment_configuration" />
 </navigation>

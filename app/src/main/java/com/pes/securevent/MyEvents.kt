@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.pes.securevent
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

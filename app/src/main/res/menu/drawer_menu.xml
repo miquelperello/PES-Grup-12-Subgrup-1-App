@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/events"
@@ -14,6 +15,10 @@
             android:id="@+id/myevents"
             android:title="@string/MyEvents"
             android:icon="@drawable/ic_myevents" />
+        <item
+            android:id="@+id/signin"
+            android:icon="@drawable/ic_login"
+            android:title="@string/SignIn"
+            />
     </group>
-
 </menu>

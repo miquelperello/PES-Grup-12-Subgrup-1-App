@@ -22,4 +22,6 @@
     <string name="Language">Idioma</string>
     <string name="first_fragment_label">Primer Fragmento</string>
     <string name="second_fragment_label">Segundo Fragmento</string>
+    <string name="SignIn">Iniciar sesión</string>
+    <string name="SignInWithGoogle">Inicia sesión con google</string>
 </resources>

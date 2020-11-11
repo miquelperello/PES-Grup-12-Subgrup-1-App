@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.pes.securevent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.pes.securevent
 
 import android.content.Context
 import android.content.Intent

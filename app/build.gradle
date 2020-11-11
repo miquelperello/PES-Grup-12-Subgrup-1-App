@@ -2,14 +2,14 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
-
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.pes.securevent"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -54,4 +54,5 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:version'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 }
