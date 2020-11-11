@@ -1,16 +1,24 @@
 package com.pes.securevent
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.pes.securevent.UserG
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_sign_in.*
+import kotlinx.android.synthetic.main.header.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,7 +47,7 @@ class SignIn : Fragment() {
 
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("188171199785-n6id5q7sgv1kfeas04u3nqpdulufpvsj.apps.googleusercontent.com")
+            .requestIdToken("188171199785-ffb2q48q1kjvvgf6lekq226028diam9a.apps.googleusercontent.com")
             .requestEmail()
                 .build()
 
@@ -67,6 +75,65 @@ class SignIn : Fragment() {
             signIn()
         }
         return view;
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task =
+                    GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(
+                    ApiException::class.java
+            )
+            // Signed in successfully
+            val googleId = account?.id ?: ""
+            //println("Google ID" + googleId)
+
+            val googleFirstName = account?.givenName ?: ""
+            //println("Google First Name" + googleFirstName)
+
+            val googleLastName = account?.familyName ?: ""
+            //println("Google Last Name" + googleLastName)
+
+            val googleEmail = account?.email ?: ""
+            //println("Google Email" + googleEmail)
+
+            val googleProfilePicURL = account?.photoUrl.toString()
+            //println("Google Profile Pic URL" + googleProfilePicURL)
+
+            val googleIdToken = account?.idToken ?: ""
+            //println("Google ID Token" + googleIdToken)
+
+             var userGoogle = UserG( googleFirstName, googleLastName, googleEmail, googleIdToken, googleProfilePicURL )
+
+            loadUserInfo(userGoogle)
+
+        } catch (e: ApiException) {
+            // Sign in was unsuccessful
+            Log.e(
+                    "failed code=", e.statusCode.toString()
+            )
+        }
+    }
+
+    private fun loadUserInfo(userGoogle: UserG) {
+        //Fragment Sign In
+        google_login_btn.setVisibility(View.GONE); //amaguem el botó
+        titleE.text = userGoogle.firstName
+        descE.text = userGoogle.email
+        Picasso.get().load(userGoogle.image).into(imageE);
+
+        //Header
+
+        //Picasso.get().load(userGoogle.image).into(findViewById);
+        //imageUserName.text = userGoogle.firstName
+
     }
 
     companion object {
