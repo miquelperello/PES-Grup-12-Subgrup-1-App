@@ -24,4 +24,7 @@
     <string name="second_fragment_label">Segundo Fragmento</string>
     <string name="SignIn">Iniciar sesión</string>
     <string name="SignInWithGoogle">Inicia sesión con google</string>
+    <string name="BotoEvent">Inscribirse</string>
+    <string name="MessageSignIn">¡Inicia sesión para reservar un evento!</string>
+    <string name="MessageInscripcioEvent">¡Te has unido al evento correctamente!</string>
 </resources>

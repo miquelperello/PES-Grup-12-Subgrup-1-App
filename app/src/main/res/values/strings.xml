@@ -27,5 +27,9 @@
     <string name="Language">Change Language</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="BotoEvent">Join Event</string>
+    <string name="MessageSignIn">SignIn in order to join Events!</string>
+    <string name="MessageInscripcioEvent">Event Joined!</string>
+
 
 </resources>

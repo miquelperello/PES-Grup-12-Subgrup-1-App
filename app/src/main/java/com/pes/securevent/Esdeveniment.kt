@@ -2,7 +2,13 @@ package com.pes.securevent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import com.google.android.material.internal.ContextUtils.getActivity
+import com.google.android.material.snackbar.Snackbar
+import com.pes.securevent.MainActivity.Companion.UsuariActiu
+import com.pes.securevent.MainActivity.Companion.usuari
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
 
 class Esdeveniment : AppCompatActivity() {
@@ -34,5 +40,29 @@ class Esdeveniment : AppCompatActivity() {
         HourE.text = EHour
         MinPriceE.text = EPriceMin
         MaxPriceE.text = EPriceMax
+
+        val btn_click_me = findViewById(R.id.buttonEvent) as Button
+        btn_click_me.setOnClickListener {view->
+            println (UsuariActiu)
+
+            if (UsuariActiu) {
+                Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+
+            }
+            else {
+
+                Snackbar.make(view, getResources().getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+
+            }
+        }
     }
+
+
+
+    // get reference to button
+
+// set on-click listener
+
 }

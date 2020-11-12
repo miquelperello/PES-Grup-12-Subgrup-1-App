@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -15,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.pes.securevent.MainActivity.Companion.usuari
 import com.pes.securevent.UserG
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_sign_in.*
@@ -110,9 +112,9 @@ class SignIn : Fragment() {
             val googleIdToken = account?.idToken ?: ""
             //println("Google ID Token" + googleIdToken)
 
-             var userGoogle = UserG( googleFirstName, googleLastName, googleEmail, googleIdToken, googleProfilePicURL )
+             usuari = UserG( googleFirstName, googleLastName, googleEmail, googleIdToken, googleProfilePicURL )
 
-            loadUserInfo(userGoogle)
+            loadUserInfo()
 
         } catch (e: ApiException) {
             // Sign in was unsuccessful
@@ -122,15 +124,17 @@ class SignIn : Fragment() {
         }
     }
 
-    private fun loadUserInfo(userGoogle: UserG) {
+    private fun loadUserInfo() {
         //Fragment Sign In
         google_login_btn.setVisibility(View.GONE); //amaguem el botó
-        titleE.text = userGoogle.firstName
-        descE.text = userGoogle.email
-        Picasso.get().load(userGoogle.image).into(imageE);
-
+        titleE.text = usuari.firstName
+        descE.text = usuari.email
+        Picasso.get().load(usuari.image).into(imageE);
+        MainActivity.UsuariActiu = true
+        println (MainActivity.UsuariActiu)
         //Header
 
+       // (activity as AppCompatActivity).header?.title = "Example 1"
         //Picasso.get().load(userGoogle.image).into(findViewById);
         //imageUserName.text = userGoogle.firstName
 
