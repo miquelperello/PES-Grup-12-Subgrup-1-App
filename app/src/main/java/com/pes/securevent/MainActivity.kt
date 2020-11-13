@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //Gestió Users
 
-    var UsuariActiu=false as  Boolean
+    //var UsuariActiu=false as  Boolean
 
     companion object {
         lateinit var usuari: UserG
@@ -66,45 +66,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
-/*
-        val toolbar = findViewById(R.id.my_toolbar) as Toolbar?
-        setSupportActionBar(toolbar)
-        toolbar?.setTitle("Events")*/
+        //nav_view.getMenu().clear(); //clear old inflated items.
+        //nav_view.inflateMenu(R.layout.header_log); //inflate new items
 
-        /*val url = "https://securevent.herokuapp.com/events"
-        requestQueue = Volley.newRequestQueue(this)
-
-        val arrayList = ArrayList<Model>()
-
-        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
-            try {
-                for (i in 0 until response.length()) {
-                    val event = response.getJSONObject(i)
-                    arrayList.add(
-                        Model(
-                            event.getString("name"),
-                            event.getString("street"),
-                            R.drawable.icon,
-                            event.getString("street"),
-                            event.getString("date"),
-                            event.getString("hourIni"),
-                            event.getString("minPrice"),
-                            event.getString("maxPrice")
-                        )
-                    )
-                }
-
-                val myAdapter = (MyAdapter(arrayList, this))
-
-                recyclerView.layoutManager = LinearLayoutManager(this)
-                recyclerView.adapter = myAdapter
-
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        }, { error -> error.printStackTrace() })
-        requestQueue?.add(request)*/
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
@@ -151,4 +115,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
+
 }

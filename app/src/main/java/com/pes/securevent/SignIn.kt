@@ -1,6 +1,6 @@
 package com.pes.securevent
 
-import android.app.Activity
+import android.R.attr.name
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,19 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.android.material.navigation.NavigationView
+import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import com.pes.securevent.MainActivity.Companion.usuari
-import com.pes.securevent.UserG
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import kotlinx.android.synthetic.main.header.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,6 +52,7 @@ class SignIn : Fragment() {
         }
 
 
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("188171199785-ffb2q48q1kjvvgf6lekq226028diam9a.apps.googleusercontent.com")
             .requestEmail()
@@ -61,13 +66,13 @@ class SignIn : Fragment() {
     private fun signIn() {
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(
-            signInIntent, RC_SIGN_IN
+                signInIntent, RC_SIGN_IN
         )
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
@@ -76,6 +81,21 @@ class SignIn : Fragment() {
         button.setOnClickListener{
             signIn()
         }
+        //handle login - hay que hacerlo así, ya que al fragment no le gustan las referencias xd.
+        val google_login_btn : Button = view.findViewById<Button>(R.id.google_login_btn)
+        val NomUser : TextView = view.findViewById<TextView>(R.id.NomUser)
+        val MailUser : TextView = view.findViewById<TextView>(R.id.MailUser)
+        val imageE: ImageView = view.findViewById<ImageView>(R.id.imageE)
+        if (UsuariActiu) {
+            google_login_btn.setVisibility(View.GONE); //amaguem el botó
+            imageE.setVisibility(View.VISIBLE)
+            NomUser.setVisibility(View.VISIBLE)
+            MailUser.setVisibility(View.VISIBLE)
+            NomUser.text = usuari.firstName
+            MailUser.text = usuari.email
+            Picasso.get().load(usuari.image).into(imageE);
+        }
+
         return view;
     }
 
@@ -112,7 +132,7 @@ class SignIn : Fragment() {
             val googleIdToken = account?.idToken ?: ""
             //println("Google ID Token" + googleIdToken)
 
-             usuari = UserG( googleFirstName, googleLastName, googleEmail, googleIdToken, googleProfilePicURL )
+             usuari = UserG(googleFirstName, googleLastName, googleEmail, googleIdToken, googleProfilePicURL)
 
             loadUserInfo()
 
@@ -127,18 +147,31 @@ class SignIn : Fragment() {
     private fun loadUserInfo() {
         //Fragment Sign In
         google_login_btn.setVisibility(View.GONE); //amaguem el botó
-        titleE.text = usuari.firstName
-        descE.text = usuari.email
+        imageE.setVisibility(View.VISIBLE)
+        NomUser.setVisibility(View.VISIBLE)
+        MailUser.setVisibility(View.VISIBLE)
+        NomUser.text = usuari.firstName
+        MailUser.text = usuari.email
         Picasso.get().load(usuari.image).into(imageE);
         MainActivity.UsuariActiu = true
-        println (MainActivity.UsuariActiu)
+        println(MainActivity.UsuariActiu)
         //Header
 
+
+        //var navigationView: NavigationView
+
+        //navigationView = (NavigationView()) findViewById(R.id.nav_view);
+        //nav_view.getMenu().clear(); //clear old inflated items.
+        //nav_view.inflateMenu(R.layout.header_log); //inflate new items
        // (activity as AppCompatActivity).header?.title = "Example 1"
         //Picasso.get().load(userGoogle.image).into(findViewById);
         //imageUserName.text = userGoogle.firstName
 
+
+
     }
+
+
 
     companion object {
         /**
