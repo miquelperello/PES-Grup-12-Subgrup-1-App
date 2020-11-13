@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.internal.ContextUtils.getActivity
 import com.google.android.material.snackbar.Snackbar
+import com.pes.securevent.MainActivity.Companion.LlistaEvents
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import com.pes.securevent.MainActivity.Companion.usuari
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
@@ -48,6 +49,8 @@ class Esdeveniment : AppCompatActivity() {
             if (UsuariActiu) {
                 Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
+
+                LlistaEvents.add(titleE.toString())
 
             }
             else {

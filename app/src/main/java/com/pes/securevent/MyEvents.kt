@@ -5,7 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.pes.securevent.MainActivity.Companion.LlistaEvents
+import com.pes.securevent.MainActivity.Companion.UsuariActiu
+import kotlinx.android.synthetic.main.fragment_events.*
+import kotlinx.android.synthetic.main.fragment_my_events.*
+import kotlinx.android.synthetic.main.fragment_my_events.recyclerViewE
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -27,14 +34,25 @@ class MyEvents : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        if (UsuariActiu){
+            val arrayList = ArrayList<Model>()
+            for (i in LlistaEvents){
+            arrayList.add(Model(i, "", 0, "", "", "", "", "" ))
+            }
+            val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapter(arrayList, it) })
+            //var recyclerViewE = view?.findViewById(R.id.recyclerViewE) as RecyclerView
+            val recyclerViewE : RecyclerView = requireView().findViewById<RecyclerView>(R.id.recyclerViewE)
+
+            recyclerViewE.layoutManager = LinearLayoutManager(activity)
+            recyclerViewE.adapter = myAdapter
+        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_events, container, false)
+        return inflater.inflate(R.layout.fragment_events, container, false)
     }
 
     companion object {

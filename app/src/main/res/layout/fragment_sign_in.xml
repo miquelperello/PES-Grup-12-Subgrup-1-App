@@ -75,8 +75,19 @@
             android:drawablePadding="15dp"
             android:text="@string/SignInWithGoogle"
             android:textSize="15sp" />
+
+
         </LinearLayout>
 
+        <Button
+            android:id="@+id/google_logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/LinearLayoutLocalitzacio"
+            android:layout_gravity="center"
+            android:text="@string/SignOutWithGoogle"
+            android:textSize="15sp"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

@@ -77,15 +77,20 @@ class SignIn : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
         super.onViewCreated(view, savedInstanceState)
-        val button : Button = view.findViewById<Button>(R.id.google_login_btn)
-        button.setOnClickListener{
+        val google_login_btn : Button = view.findViewById<Button>(R.id.google_login_btn)
+        val google_logout_btn : Button = view.findViewById<Button>(R.id.google_logout_btn)
+        google_login_btn.setOnClickListener{
             signIn()
         }
+        google_logout_btn.setOnClickListener{
+            signOut()
+        }
         //handle login - hay que hacerlo así, ya que al fragment no le gustan las referencias xd.
-        val google_login_btn : Button = view.findViewById<Button>(R.id.google_login_btn)
+
         val NomUser : TextView = view.findViewById<TextView>(R.id.NomUser)
         val MailUser : TextView = view.findViewById<TextView>(R.id.MailUser)
         val imageE: ImageView = view.findViewById<ImageView>(R.id.imageE)
+
         if (UsuariActiu) {
             google_login_btn.setVisibility(View.GONE); //amaguem el botó
             imageE.setVisibility(View.VISIBLE)
@@ -94,9 +99,25 @@ class SignIn : Fragment() {
             NomUser.text = usuari.firstName
             MailUser.text = usuari.email
             Picasso.get().load(usuari.image).into(imageE);
+            google_logout_btn.setVisibility(View.VISIBLE)
         }
 
         return view;
+    }
+
+    private fun signOut() {
+
+        getActivity()?.let {
+            mGoogleSignInClient.signOut()
+                .addOnCompleteListener(it) {
+                   UsuariActiu = false
+                    google_login_btn.setVisibility(View.VISIBLE);
+                    google_logout_btn.setVisibility(View.GONE);
+                    imageE.setVisibility(View.GONE)
+                    NomUser.setVisibility(View.GONE)
+                    MailUser.setVisibility(View.GONE)
+                }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,6 +174,7 @@ class SignIn : Fragment() {
         NomUser.text = usuari.firstName
         MailUser.text = usuari.email
         Picasso.get().load(usuari.image).into(imageE);
+        google_logout_btn.setVisibility(View.VISIBLE)
         MainActivity.UsuariActiu = true
         println(MainActivity.UsuariActiu)
         //Header

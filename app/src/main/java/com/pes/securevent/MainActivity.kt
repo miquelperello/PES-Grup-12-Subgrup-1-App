@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lateinit var usuari: UserG
 
          var UsuariActiu :Boolean = false
+
+         val LlistaEvents: MutableList<String> = ArrayList()
     }
 
 

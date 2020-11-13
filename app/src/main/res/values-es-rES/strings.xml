@@ -27,4 +27,5 @@
     <string name="BotoEvent">Inscribirse</string>
     <string name="MessageSignIn">¡Inicia sesión para reservar un evento!</string>
     <string name="MessageInscripcioEvent">¡Te has unido al evento correctamente!</string>
+    <string name="SignOutWithGoogle">Cerrar sesión</string>
 </resources>
