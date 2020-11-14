@@ -1,6 +1,5 @@
 package com.pes.securevent
 
-import android.R.attr.name
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,12 +17,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.navigation.NavigationView
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import com.pes.securevent.MainActivity.Companion.usuari
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_sign_in.*
+import kotlinx.android.synthetic.main.fragment_account.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +33,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [SignIn.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SignIn : Fragment() {
+class Acc : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -75,7 +71,7 @@ class SignIn : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
+        val view = inflater.inflate(R.layout.fragment_account, container, false)
         super.onViewCreated(view, savedInstanceState)
         val google_login_btn : Button = view.findViewById<Button>(R.id.google_login_btn)
         val google_logout_btn : Button = view.findViewById<Button>(R.id.google_logout_btn)
@@ -188,12 +184,7 @@ class SignIn : Fragment() {
        // (activity as AppCompatActivity).header?.title = "Example 1"
         //Picasso.get().load(userGoogle.image).into(findViewById);
         //imageUserName.text = userGoogle.firstName
-
-
-
     }
-
-
 
     companion object {
         /**
@@ -207,7 +198,7 @@ class SignIn : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SignIn().apply {
+            Acc().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

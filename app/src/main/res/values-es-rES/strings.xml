@@ -28,4 +28,6 @@
     <string name="MessageSignIn">¡Inicia sesión para reservar un evento!</string>
     <string name="MessageInscripcioEvent">¡Te has unido al evento correctamente!</string>
     <string name="SignOutWithGoogle">Cerrar sesión</string>
+    <string name="SignOut">Cierra sesión</string>
+    <string name="Account">Cuenta</string>
 </resources>

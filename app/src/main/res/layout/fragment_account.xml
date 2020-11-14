@@ -12,14 +12,14 @@
         android:id="@+id/linearL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#293859"
-        android:orientation="horizontal"></LinearLayout>
+        android:background="@color/white"
+        android:orientation="horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:background="#293859"
+        android:background="@color/white"
         android:padding="16dp">
 
         <ImageView
