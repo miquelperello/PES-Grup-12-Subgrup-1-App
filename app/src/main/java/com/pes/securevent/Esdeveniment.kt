@@ -49,7 +49,7 @@ class Esdeveniment : AppCompatActivity() {
             if (UsuariActiu) {
                 Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
-
+                //Crida POST {idUser: idEvent}
                 LlistaEvents.add(titleE.toString())
 
             }

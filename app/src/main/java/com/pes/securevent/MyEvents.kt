@@ -42,17 +42,19 @@ class MyEvents : Fragment() {
             }
             val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapter(arrayList, it) })
             //var recyclerViewE = view?.findViewById(R.id.recyclerViewE) as RecyclerView
-            val recyclerViewE : RecyclerView = requireView().findViewById<RecyclerView>(R.id.recyclerViewE)
+            //val recyclerViewE : RecyclerView = requireView().findViewById<RecyclerView>(R.id.recyclerViewE)
 
             recyclerViewE.layoutManager = LinearLayoutManager(activity)
             recyclerViewE.adapter = myAdapter
         }
+        else{}
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_events, container, false)
+        return inflater.inflate(R.layout.fragment_my_events, container, false)
     }
 
     companion object {

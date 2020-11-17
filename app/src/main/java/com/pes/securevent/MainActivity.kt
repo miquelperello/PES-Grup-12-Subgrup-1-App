@@ -147,6 +147,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            if(UsuariActiu) println("User actiu.")
+            else println("User not actiu")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
         else {
