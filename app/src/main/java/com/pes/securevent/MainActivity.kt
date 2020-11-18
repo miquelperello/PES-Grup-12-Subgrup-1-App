@@ -94,8 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
-        //nav_view.getMenu().clear(); //clear old inflated items.
-        //nav_view.inflateMenu(R.layout.header_log); //inflate new items
+
 
     }
 
@@ -130,15 +129,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit()
             }
-            R.id.signout -> {
-                Acc = Acc()
-                toolBar.title = getResources().getString(R.string.SignIn);
-                supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.frame_layout, Acc)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
-            }
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true;

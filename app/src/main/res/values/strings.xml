@@ -33,5 +33,6 @@
     <string name="MessageSignIn">SignIn in order to join Events!</string>
     <string name="MessageInscripcioEvent">Event Joined!</string>
     <string name="SignOutWithGoogle">Sign out!</string>
+    <string name="username" translatable="false">username</string>
 
 </resources>
