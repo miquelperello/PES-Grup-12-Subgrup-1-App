@@ -49,13 +49,14 @@ class MyEvents : Fragment() {
         if (UsuariActiu){
             val arrayList = ArrayList<Model>()
             for (i in LlistaEvents){
-                arrayList.add(Model(i, "", 0, "", "", "", "", ""))
+                arrayList.add(Model("holaa", "aasasas", 0, "asas", "1212", "12", "11", "11"))
             }
             var recyclerViewEE : RecyclerView = view.findViewById(com.pes.securevent.R.id.recyclerViewE)
-            var myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapter(arrayList, it) })
+
 
             recyclerViewEE.layoutManager = LinearLayoutManager(activity)
-            recyclerViewEE.adapter = myAdapter
+            var myAdapter_ =  MyAdapter(arrayList, requireContext())
+            recyclerViewEE.adapter = myAdapter_
                     
 
 
