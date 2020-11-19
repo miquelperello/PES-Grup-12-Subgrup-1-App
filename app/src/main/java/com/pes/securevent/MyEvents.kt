@@ -3,7 +3,9 @@ package com.pes.securevent
 import android.R
 import android.content.Context
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pes.securevent.MainActivity.Companion.LlistaEvents
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
+import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import kotlinx.android.synthetic.main.fragment_events.*
 import kotlinx.android.synthetic.main.fragment_my_events.*
 import org.json.JSONException
@@ -37,7 +41,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MyEvents : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var requestQueue: RequestQueue? = null
@@ -49,17 +52,18 @@ class MyEvents : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+        val pref = PreferenceManager.getDefaultSharedPreferences(getActivity()?.getApplicationContext())
+        var tokenMongoPost :String
+        pref.apply{
+            tokenMongoPost = (getString("TOKEN", "").toString())
 
+        }
 
-
-
-
-
-        val url = "https://securevent.herokuapp.com/events"
+        val url = "https://securevent.herokuapp.com/clients/agenda"
         requestQueue = Volley.newRequestQueue(getActivity()?.getApplicationContext())
         val arrayList = ArrayList<Model>()
 
-        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+        val request = object: JsonArrayRequest(Request.Method.GET, url, null, { response ->
             try {
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)
@@ -87,11 +91,24 @@ class MyEvents : Fragment() {
                 e.printStackTrace()
             }
         }, { error -> error.printStackTrace() })
+        {
+            override fun getHeaders(): Map<String, String> {
+                // Create HashMap of your Headers as the example provided below
+
+                val headers = HashMap<String, String>()
+                headers.put("Authorization", "Token $tokenMongoPost")
+
+                return headers
+            }
+        }
+
         requestQueue?.add(request)
 
 
 
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -135,4 +152,5 @@ class MyEvents : Fragment() {
                     }
                 }
     }
+
 }

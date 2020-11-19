@@ -72,6 +72,9 @@ class Events : Fragment() {
                e.printStackTrace()
            }
        }, { error -> error.printStackTrace() })
+
+
+
         requestQueue?.add(request)
 
 

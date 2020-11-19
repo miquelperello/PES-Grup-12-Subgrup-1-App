@@ -327,7 +327,7 @@ class Acc : Fragment() {
             println(getString("TOKEN", ""))
         }
 
-        println("PRUEBASSS")
+
 
     }
 
