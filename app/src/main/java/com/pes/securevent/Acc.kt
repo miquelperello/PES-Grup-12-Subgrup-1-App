@@ -238,10 +238,8 @@ class Acc : Fragment() {
                     // Process the json
                     try {
 
-                        val event = response.getString("token")
-                        println(event)
+                        token_mongo = response.getString("token")
                         println( "Response $response")
-                        token_mongo = event
                         println(token_mongo)
 
                     } catch (e: Exception) {
@@ -296,13 +294,7 @@ class Acc : Fragment() {
 //Un cop fetes les crides i amb la informació, guardem al local storage l'user
 
         val pref = PreferenceManager.getDefaultSharedPreferences(getActivity()?.getApplicationContext())
-        pref.apply{
-            println(getString("NAME", ""))
-            println(getString("EMAIL", ""))
-            println(getString("IMAGE", ""))
-        }
         val editor = pref.edit()
-
         editor
                 .putString("NAME", usuari.firstName)
                 .putString("SURNAME", usuari.lastName)
@@ -310,6 +302,13 @@ class Acc : Fragment() {
                 .putString("IMAGE", usuari.image)
                 .putString("TOKEN", token_mongo)
                 .apply()
+
+        pref.apply{
+            println(getString("NAME", ""))
+            println(getString("EMAIL", ""))
+            println(getString("IMAGE", ""))
+            println(getString("TOKEN", ""))
+        }
 
 
         //Fragment Sign In

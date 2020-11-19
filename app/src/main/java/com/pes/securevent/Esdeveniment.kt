@@ -83,8 +83,8 @@ class Esdeveniment : AppCompatActivity() {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         var tokenMongoPost :String
         pref.apply{
-
             tokenMongoPost = (getString("TOKEN", "").toString())
+            println(tokenMongoPost)
         }
 
         // Volley post request with parameters
@@ -106,7 +106,8 @@ class Esdeveniment : AppCompatActivity() {
             override fun getHeaders(): Map<String, String> {
                 println(tokenMongoPost)
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token " + tokenMongoPost)
+                headers.put("Authorization", "Token $tokenMongoPost")
+                println(headers)
                 return headers
             }
 /*
