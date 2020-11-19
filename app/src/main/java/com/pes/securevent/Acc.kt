@@ -94,7 +94,7 @@ class Acc : Fragment() {
 
 
 
-
+//TODO Mirar-ho, if usuariActiu
         val NomUser : TextView = view.findViewById<TextView>(R.id.NomUser)
         val MailUser : TextView = view.findViewById<TextView>(R.id.MailUser)
         val imageE: ImageView = view.findViewById<ImageView>(R.id.imageE)
@@ -105,7 +105,7 @@ class Acc : Fragment() {
             if (getString("EMAIL", "") != "") check = true
             else check = false
         }
-
+//TODO  if usuariActiu
         if (check) {
             UsuariActiu = true
             pref.apply {

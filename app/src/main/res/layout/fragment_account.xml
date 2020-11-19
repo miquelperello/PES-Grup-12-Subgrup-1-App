@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="57dp"
-    tools:context=".SignIn">
+    tools:context=".Acc">
 
 
     <LinearLayout
