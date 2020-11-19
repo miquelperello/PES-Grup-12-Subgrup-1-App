@@ -49,7 +49,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
             val esdeveniment = Intent(context, Esdeveniment::class.java)
 
             esdeveniment.putExtra("ETitle", ETitle)
-            esdeveniment.putExtra("EDesc", EId)
+            esdeveniment.putExtra("EId", EId)
             esdeveniment.putExtra("EImage", EImage)
             esdeveniment.putExtra("ELoc", ELoc)
             esdeveniment.putExtra("EDate", EDate)

@@ -47,9 +47,9 @@ class Esdeveniment : AppCompatActivity() {
         MinPriceE.text = EPriceMin
         MaxPriceE.text = EPriceMax
 
+
         val btn_click_me = findViewById(R.id.buttonEvent) as Button
         btn_click_me.setOnClickListener { view->
-            println(UsuariActiu)
 
             if (UsuariActiu) {
                 Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
@@ -80,11 +80,12 @@ class Esdeveniment : AppCompatActivity() {
         params.put("id_event", IDE.text);
 
 
+
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         var tokenMongoPost :String
         pref.apply{
             tokenMongoPost = (getString("TOKEN", "").toString())
-            println(tokenMongoPost)
+
         }
 
         // Volley post request with parameters
@@ -104,21 +105,13 @@ class Esdeveniment : AppCompatActivity() {
 
         }) {
             override fun getHeaders(): Map<String, String> {
-                println(tokenMongoPost)
+
                 val headers = HashMap<String, String>()
                 headers.put("Authorization", "Token $tokenMongoPost")
-                println(headers)
+
                 return headers
             }
-/*
-            override fun getHeaders(): Map<String, String> {
-                var params: MutableMap<String, String>? = super.getHeaders()
-                if (params == null) params = HashMap()
-                params["Authorization"] = "Token " + tokenMongoPost
-                return params
-            }
 
-            */
         }
 
 
@@ -136,10 +129,5 @@ class Esdeveniment : AppCompatActivity() {
     }
 
 
-
-
-    // get reference to button
-
-// set on-click listener
 
 }
