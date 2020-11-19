@@ -221,35 +221,11 @@ class Acc : Fragment() {
 
 
 
-        // Volley post request with parameters
-        val request = JsonObjectRequest(com.android.volley.Request.Method.POST,url,params,
-                { response ->
-                    // Process the json
-                    try {
-                        Log.i("Registration", "Response $response")
-                    }catch (e:Exception){
-                        Log.e("Registration", "Response $e")
 
-                    }
-
-                }, {
-            // Error in request -- ja estem registrats
-            println( "Volley error: $it")
-
-        })
-
-
-        // Volley request policy, only one time request to avoid duplicate transaction
-        request.retryPolicy = DefaultRetryPolicy(
-                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                0,
-                1f
-        )
-
-        getActivity()?.getApplicationContext()?.let { VolleySingleton.getInstance(it).addToRequestQueue(request)}
 //un cop ja hem fet el registre, sol.licitem el token
 
 //getToken
+
         var token_mongo = ""
         val urltoken = "https://securevent.herokuapp.com/auth/login"
         val paramsToken = JSONObject()
@@ -261,17 +237,47 @@ class Acc : Fragment() {
                 { response ->
                     // Process the json
                     try {
-                        Log.i("Registration", "Response $response")
-                        token_mongo = response.getString("token")
+
+                        val event = response.getString("token")
+                        println(event)
+                        println( "Response $response")
+                        token_mongo = event
+                        println(token_mongo)
 
                     } catch (e: Exception) {
-                        Log.e("Registration", "Response $e")
+                       println( "Response $e")
 
                     }
 
                 }, {
             // Error in request
-            println("Volley error: $it")
+            //POST a /clients
+            // Volley post request with parameters
+            val request = JsonObjectRequest(com.android.volley.Request.Method.POST,url,params,
+                    { response ->
+                        // Process the json
+                        try {
+                            println( "Response $response")
+                        }catch (e:Exception){
+                            println("Response $e")
+
+                        }
+
+                    }, {
+                // Error in request -- ja estem registrats
+                println( "Volley error: $it")
+
+            })
+
+
+            // Volley request policy, only one time request to avoid duplicate transaction
+            request.retryPolicy = DefaultRetryPolicy(
+                    DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                    0,
+                    1f
+            )
+
+            getActivity()?.getApplicationContext()?.let { VolleySingleton.getInstance(it).addToRequestQueue(request)}
 
         })
 

@@ -15,7 +15,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
         fun bindItems(model:Model){
 
             itemView.titleE.text = model.title
-            itemView.descE.text = model.des
+            itemView.descE.text = model._id
             itemView.imageE.setImageResource(model.image)
         }
     }
@@ -33,7 +33,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
             val model = arrayList.get(position)
 
             var ETitle : String = model.title
-            var EDesc : String = model.des
+            var EId : String = model._id
 
             var EImage : Int = model.image
 
@@ -49,7 +49,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
             val esdeveniment = Intent(context, Esdeveniment::class.java)
 
             esdeveniment.putExtra("ETitle", ETitle)
-            esdeveniment.putExtra("EDesc", EDesc)
+            esdeveniment.putExtra("EDesc", EId)
             esdeveniment.putExtra("EImage", EImage)
             esdeveniment.putExtra("ELoc", ELoc)
             esdeveniment.putExtra("EDate", EDate)

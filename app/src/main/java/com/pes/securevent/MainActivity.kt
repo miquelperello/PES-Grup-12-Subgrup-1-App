@@ -20,11 +20,11 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private var requestQueue: RequestQueue? = null
+
 
     //Gestió Users
 
-    //var UsuariActiu=false as  Boolean
+
 
     companion object {
         lateinit var usuari: UserG

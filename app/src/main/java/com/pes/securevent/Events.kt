@@ -51,7 +51,7 @@ class Events : Fragment() {
                    arrayList.add(
                            Model(
                                    event.getString("name"),
-                                   event.getString("ratings"),
+                                   event.getString("_id"),
                                    R.drawable.icon,
                                    event.getString("id_room"),
                                    event.getString("date"),

@@ -1,18 +1,29 @@
 package com.pes.securevent
 
 import android.R
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pes.securevent.MainActivity.Companion.LlistaEvents
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import kotlinx.android.synthetic.main.fragment_events.*
 import kotlinx.android.synthetic.main.fragment_my_events.*
+import org.json.JSONException
+import org.json.JSONObject
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +40,7 @@ class MyEvents : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var requestQueue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,32 +51,71 @@ class MyEvents : Fragment() {
 
 
 
+
+
+
+
+        val url = "https://securevent.herokuapp.com/events"
+        requestQueue = Volley.newRequestQueue(getActivity()?.getApplicationContext())
+        val arrayList = ArrayList<Model>()
+
+        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+            try {
+                for (i in 0 until response.length()) {
+                    val event = response.getJSONObject(i)
+                    arrayList.add(
+                            Model(
+                                    event.getString("name"),
+                                    event.getString("_id"),
+                                    com.pes.securevent.R.drawable.icon,
+                                    event.getString("id_room"),
+                                    event.getString("date"),
+                                    event.getString("hourIni"),
+                                    event.getString("minPrice"),
+                                    event.getString("maxPrice")
+                            )
+                    )
+                }
+
+                val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapter(arrayList, it) })
+
+                recyclerViewE.layoutManager = LinearLayoutManager(activity)
+                recyclerViewE.adapter = myAdapter
+
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, { error -> error.printStackTrace() })
+        requestQueue?.add(request)
+
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        val view = inflater.inflate(com.pes.securevent.R.layout.fragment_my_events, container, false)
         // Inflate the layout for this fragment
-        if (UsuariActiu){
-            val arrayList = ArrayList<Model>()
-            for (i in LlistaEvents){
-                arrayList.add(Model("holaa", "aasasas", 0, "asas", "1212", "12", "11", "11"))
-            }
-            var recyclerViewEE : RecyclerView = view.findViewById(com.pes.securevent.R.id.recyclerViewE)
-
-
-            recyclerViewEE.layoutManager = LinearLayoutManager(activity)
-            var myAdapter_ =  MyAdapter(arrayList, requireContext())
-            recyclerViewEE.adapter = myAdapter_
-                    
-
-
-        }
-        else{}
-
         return inflater.inflate(com.pes.securevent.R.layout.fragment_my_events, container, false)
     }
+
+    class MyDrawerLayout : DrawerLayout {
+        constructor(context: Context?) : super(context!!) {}
+        constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
+        constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
+
+        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+            var widthMeasureSpec = widthMeasureSpec
+            var heightMeasureSpec = heightMeasureSpec
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(
+                    MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY)
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(
+                    MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.EXACTLY)
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        }
+    }
+
+
 
     companion object {
         /**
@@ -73,12 +124,11 @@ class MyEvents : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MyEvents.
+         * @return A new instance of fragment Events.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                MyEvents().apply {
+        @JvmStatic fun newInstance(param1: String, param2: String) =
+                Events().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
