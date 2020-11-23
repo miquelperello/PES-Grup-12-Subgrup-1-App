@@ -58,23 +58,37 @@
             android:textSize="18sp"
             android:visibility="invisible" />
 
-        <LinearLayout
-            android:layout_marginTop="200dp"
-            android:id="@+id/LinearLayoutLocalitzacio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+    </RelativeLayout>
 
-            >
-        <Button
-            android:id="@+id/google_login_btn"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/LinearLayoutLocalitzacio"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/google_logo"
-            android:drawablePadding="15dp"
-            android:text="@string/SignInWithGoogle"
-            android:textSize="15sp" />
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="200dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#800000"
+            >
+
+            <ImageView
+                android:id="@+id/imageViewGoogle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/google_logo" />
+
+
+            <Button
+                android:id="@+id/google_login_btn"
+                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:textColor="@color/white"
+                android:text="@string/SignInWithGoogle"
+                android:textSize="15sp" />
 
 
         </LinearLayout>
@@ -89,7 +103,11 @@
             android:textSize="15sp"
             android:visibility="invisible" />
 
-    </RelativeLayout>
+
+
+
+
+
 
 
 </RelativeLayout>

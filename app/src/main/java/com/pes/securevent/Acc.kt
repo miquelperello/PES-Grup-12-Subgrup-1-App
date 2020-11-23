@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.media.Image
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.preference.PreferenceManager.*
@@ -98,6 +99,7 @@ class Acc : Fragment() {
         val NomUser : TextView = view.findViewById<TextView>(R.id.NomUser)
         val MailUser : TextView = view.findViewById<TextView>(R.id.MailUser)
         val imageE: ImageView = view.findViewById<ImageView>(R.id.imageE)
+        val imageViewGoogle : ImageView = view.findViewById<ImageView>(R.id.imageViewGoogle)
 
         val pref = PreferenceManager.getDefaultSharedPreferences(getActivity()?.getApplicationContext())
         var check: Boolean
@@ -122,6 +124,7 @@ class Acc : Fragment() {
 
         if (UsuariActiu) {
             google_login_btn.setVisibility(View.GONE); //amaguem el botó
+            imageViewGoogle.setVisibility(View.GONE);
             imageE.setVisibility(View.VISIBLE)
             NomUser.setVisibility(View.VISIBLE)
             MailUser.setVisibility(View.VISIBLE)
@@ -143,12 +146,24 @@ class Acc : Fragment() {
                     .addOnCompleteListener(it) {
                         UsuariActiu = false
                         google_login_btn.setVisibility(View.VISIBLE);
+                        imageViewGoogle.setVisibility(View.VISIBLE);
                         google_logout_btn.setVisibility(View.GONE);
                         imageE.setVisibility(View.GONE)
                         NomUser.setVisibility(View.GONE)
                         MailUser.setVisibility(View.GONE)
                     }
         }
+        val pref = getDefaultSharedPreferences(getActivity()?.getApplicationContext())
+        val editor = pref.edit()
+        editor
+                .putString("NAME", "")
+                .putString("SURNAME", "")
+                .putString("EMAIL", "")
+                .putString("IMAGE", "")
+                .putString("TOKEN", "")
+                .apply()
+
+        UsuariActiu = false;
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -299,6 +314,7 @@ class Acc : Fragment() {
 
         //Fragment Sign In
         google_login_btn.setVisibility(View.GONE); //amaguem el botó
+        imageViewGoogle.setVisibility(View.GONE);
         imageE.setVisibility(View.VISIBLE)
         NomUser.setVisibility(View.VISIBLE)
         MailUser.setVisibility(View.VISIBLE)
