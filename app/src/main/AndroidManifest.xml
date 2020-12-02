@@ -29,6 +29,12 @@
             android:parentActivityName="com.pes.securevent.MainActivity"
             android:theme="@style/MyEvent">
         </activity>
+
+        <activity android:name="com.pes.securevent.MyEsdeveniment"
+            android:parentActivityName="com.pes.securevent.MainActivity"
+            android:theme="@style/MyEvent">
+        </activity>
+
     </application>
 
 </manifest>

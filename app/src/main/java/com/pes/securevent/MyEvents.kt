@@ -81,7 +81,7 @@ class MyEvents : Fragment() {
                     )
                 }
 
-                val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapter(arrayList, it) })
+                val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapterMyEvents(arrayList, it) })
 
                 recyclerViewE.layoutManager = LinearLayoutManager(activity)
                 recyclerViewE.adapter = myAdapter
