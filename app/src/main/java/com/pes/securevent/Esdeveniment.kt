@@ -1,8 +1,10 @@
 package com.pes.securevent
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +54,8 @@ class Esdeveniment : AppCompatActivity() {
         btn_click_me.setOnClickListener { view->
 
             if (UsuariActiu) {
+                //new activity!
+
                 Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
                 //Crida POST {tokenUser: idEvent}
@@ -61,7 +65,6 @@ class Esdeveniment : AppCompatActivity() {
 
             }
             else {
-
                 Snackbar.make(view, getResources().getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
 
@@ -129,5 +132,9 @@ class Esdeveniment : AppCompatActivity() {
     }
 
 
-
+    fun goToPaypal(view: View) {
+        val intent = Intent(this, BuyPaypal::class.java)
+        intent.putExtra("eventID", IDE.text)
+        startActivity(intent)
+    }
 }

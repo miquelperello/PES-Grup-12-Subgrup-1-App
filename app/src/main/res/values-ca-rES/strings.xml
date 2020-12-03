@@ -30,4 +30,6 @@
     <string name="SignOutWithGoogle">Tancar sessió</string>
     <string name="SignOut">Tanca sessió</string>
     <string name="Account">Compte</string>
+    <string name="ButtonGoToPaypal">Comprar</string>
+    <string name="PayPal">PayPal</string>
 </resources>

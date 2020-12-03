@@ -6,7 +6,6 @@
     android:padding="16dp"
     android:layout_marginTop="20dp"
     android:background="@color/white"
-
     tools:context=".Esdeveniment">
 
     <ImageView
@@ -223,6 +222,25 @@
             android:layout_gravity="start"
             android:text="@string/BotoEvent"
             android:background="#2222" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutGoToPaypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutButton"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/buttonGoToPaypal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#2222"
+            android:onClick="goToPaypal"
+            android:text="@string/ButtonGoToPaypal" />
     </LinearLayout>
 
 

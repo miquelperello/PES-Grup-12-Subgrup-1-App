@@ -30,9 +30,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="BotoEvent">Join Event</string>
+    <string name="ButtonGoToPaypal">Buy</string>
     <string name="MessageSignIn">SignIn in order to join Events!</string>
     <string name="MessageInscripcioEvent">Event Joined!</string>
     <string name="SignOutWithGoogle">Sign out!</string>
     <string name="username" translatable="false">username</string>
+    <string name="PayPal">PayPal</string>
 
 </resources>
