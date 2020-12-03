@@ -8,4 +8,19 @@
     android:background="@color/white"
     tools:context=".BuyPaypal">
 
+    <LinearLayout
+        android:id="@+id/LinearLayoutLocalitzacio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/buy"
+            android:onClick="buy"/>
+    </LinearLayout>
 </RelativeLayout>

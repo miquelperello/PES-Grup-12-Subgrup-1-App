@@ -36,5 +36,6 @@
     <string name="SignOutWithGoogle">Sign out!</string>
     <string name="username" translatable="false">username</string>
     <string name="PayPal">PayPal</string>
+    <string name="buy">Buy</string>
 
 </resources>

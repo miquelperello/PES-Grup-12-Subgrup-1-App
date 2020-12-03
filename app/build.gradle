@@ -4,6 +4,12 @@ plugins {
 }
 apply plugin: 'com.android.application'
 
+
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').canRead()) {
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -14,8 +20,9 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'keyGCM', properties.getProperty('keyGCM', '"xxx"')
+        buildConfigField 'String', 'keyPayPal', properties.getProperty('keyPayPal', '"xxx"')
     }
 
     buildTypes {
@@ -57,4 +64,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support:design:30.0.0'
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.14.2'
 }
