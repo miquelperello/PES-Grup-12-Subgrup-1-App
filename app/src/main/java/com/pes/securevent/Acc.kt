@@ -58,11 +58,11 @@ class Acc : Fragment() {
 
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("188171199785-ffb2q48q1kjvvgf6lekq226028diam9a.apps.googleusercontent.com")
+                .requestIdToken(BuildConfig.keyGCM)
                 .requestEmail()
                 .build()
 
-        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity().getApplicationContext(), gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity().applicationContext, gso);
 
 
     }
