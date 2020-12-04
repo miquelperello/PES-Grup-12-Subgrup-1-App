@@ -49,92 +49,29 @@ class Esdeveniment : AppCompatActivity() {
         MinPriceE.text = EPriceMin
         MaxPriceE.text = EPriceMax
 
-
-        val btn_click_me = findViewById(R.id.buttonEvent) as Button
+        val btn_click_me = findViewById(R.id.buttonGoToPaypal) as Button
         btn_click_me.setOnClickListener { view->
-
             if (UsuariActiu) {
-                //new activity!
 
+                //new activity!
                 Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
-                //Crida POST {tokenUser: idEvent}
+                goToPaypal(view)
 
-                PostEvent()
                 LlistaEvents.add(titleE.toString())
-
             }
             else {
                 Snackbar.make(view, getResources().getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
-
             }
         }
-    }
-
-    fun PostEvent() {
-
-
-        val url = "https://securevent.herokuapp.com/reservations"
-
-
-        //creem objecte JSON per fer la crida POST
-        val params = JSONObject()
-        params.put("id_event", IDE.text);
-
-
-
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        var tokenMongoPost :String
-        pref.apply{
-            tokenMongoPost = (getString("TOKEN", "").toString())
-
-        }
-
-        // Volley post request with parameters
-        val request = object : JsonObjectRequest(Request.Method.POST, url, params,
-                { response ->
-                    // Process the json
-                    try {
-                        Log.i("Registration", "Response $response")
-                    } catch (e: Exception) {
-                        Log.e("Registration", "Response $e")
-
-                    }
-
-                }, {
-            // Error in request -- ja estem registrats
-            println("Volley error: $it")
-
-        }) {
-            override fun getHeaders(): Map<String, String> {
-
-                val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token $tokenMongoPost")
-
-                return headers
-            }
-
-        }
-
-
-        // Volley request policy, only one time request to avoid duplicate transaction
-        request.retryPolicy = DefaultRetryPolicy(
-                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                0,
-                1f
-        )
-        val queue = Volley.newRequestQueue(this)
-        queue.add(request)
-
-
-
     }
 
 
     fun goToPaypal(view: View) {
         val intent = Intent(this, BuyPaypal::class.java)
         intent.putExtra("eventID", IDE.text)
+        intent.putExtra("qtt", MinPriceE.text)
         startActivity(intent)
     }
 }

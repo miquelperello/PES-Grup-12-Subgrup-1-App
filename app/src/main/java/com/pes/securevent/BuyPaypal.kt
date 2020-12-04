@@ -2,13 +2,20 @@ package com.pes.securevent
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.paypal.android.sdk.payments.*
+import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import org.json.JSONException
+import org.json.JSONObject
 import java.math.BigDecimal
 
 
@@ -74,9 +81,13 @@ class BuyPaypal : AppCompatActivity() {
     }
 
     fun buy(view: View) {
+
+        // Get extras in the Esdeveniment.kt
+        val extras = getIntent().getExtras()
+
         //Creating a paypalpayment
         val payment = PayPalPayment(
-            BigDecimal(50), "USD", "Simplified Coding Fee",
+            BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal(), "USD", "Simplified Coding Fee",
             PayPalPayment.PAYMENT_INTENT_SALE
         )
 
@@ -92,6 +103,50 @@ class BuyPaypal : AppCompatActivity() {
         //Starting the intent activity for result
         //the request code will be used on the method onActivityResult
         startActivityForResult(intent, PAYPAL_REQUEST_CODE)
-        println("poh aqui tamoh")
+
+        postEvent(extras?.getString("eventID"))
+    }
+
+    fun postEvent(eventID: String?) {
+
+        val url = "https://securevent.herokuapp.com/reservations"
+
+        //creem objecte JSON per fer la crida POST
+        val params = JSONObject()
+        params.put("id_event", eventID)
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        var tokenMongoPost :String
+        pref.apply{
+            tokenMongoPost = (getString("TOKEN", "").toString())
+        }
+        // Volley post request with parameters
+        val request = object : JsonObjectRequest(Request.Method.POST, url, params,
+                { response ->
+                    // Process the json
+                    try {
+                        Log.i("Registration", "Response $response")
+                    } catch (e: Exception) {
+                        Log.e("Registration", "Response $e")
+                    }
+                }, {
+            // Error in request -- ja estem registrats
+            println("Volley error: $it")
+
+        }) {
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers.put("Authorization", "Token $tokenMongoPost")
+                return headers
+            }
+        }
+        // Volley request policy, only one time request to avoid duplicate transaction
+        request.retryPolicy = DefaultRetryPolicy(
+                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                0,
+                1f
+        )
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
     }
 }

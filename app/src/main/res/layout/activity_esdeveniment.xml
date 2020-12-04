@@ -41,6 +41,7 @@
         android:layout_below="@id/titleE"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
+        android:visibility="invisible"
         />
 
     <TextView
@@ -212,17 +213,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/LinearLayoutPriceMax"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonEvent"
-            android:layout_gravity="start"
-            android:text="@string/BotoEvent"
-            android:background="#2222" />
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
     <LinearLayout
         android:id="@+id/LinearLayoutGoToPaypal"
@@ -239,9 +230,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#2222"
-            android:onClick="goToPaypal"
             android:text="@string/ButtonGoToPaypal" />
     </LinearLayout>
-
 
 </RelativeLayout>
