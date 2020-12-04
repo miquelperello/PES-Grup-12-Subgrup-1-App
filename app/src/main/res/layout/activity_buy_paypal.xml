@@ -12,15 +12,23 @@
         android:id="@+id/LinearLayoutLocalitzacio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:gravity="center"
-        >
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/grid"
+            android:layout_width="match_parent"
+            android:layout_height="478dp"
+            android:layout_gravity="center" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/buy"
-            android:onClick="buy"/>
+            android:onClick="buy"
+            android:text="@string/buy" />
+
     </LinearLayout>
+
 </RelativeLayout>

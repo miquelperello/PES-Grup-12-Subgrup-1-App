@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
+import android.widget.GridView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.DefaultRetryPolicy
@@ -36,6 +37,36 @@ class BuyPaypal : AppCompatActivity() {
 
         actionBar.title = resources.getString(R.string.PayPal)
 
+        // GET THE MATRIX DIMENSIONS
+        val rows = 10 // Utilizar el put.extra para conseguir filas y columnas de la room
+        val columns = 8
+
+        /*
+        val extras = getIntent().getExtras()
+        val rows = extras?.getString("nrows").toInt()
+        val columns = extras?.getString("ncols").toInt()
+         */
+
+        // INITIALISE YOUR GRID
+        val grid = findViewById<View>(R.id.grid) as GridView
+        grid.numColumns = columns
+
+        // CREATE A LIST OF MATRIX OBJECT
+        val salaList: MutableList<Sala> = ArrayList()
+
+        // ADD SOME CONTENTS TO EACH ITEM
+        for (i in 0 until rows) {
+            for (j in 0 until columns) {
+                salaList.add(Sala(i, j))
+            }
+        }
+
+        // CREATE AN ADAPTER  (MATRIX ADAPTER)
+        val adapter = SalaAdapter(applicationContext, salaList)
+
+        // ATTACH THE ADAPTER TO GRID
+        grid.adapter = adapter
+
         val intent = Intent(this, PayPalService::class.java)
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         startService(intent);
@@ -63,7 +94,11 @@ class BuyPaypal : AppCompatActivity() {
                         //Getting the payment details
                         val paymentDetails = confirm.toJSONObject().toString(4)
                         Log.i("paymentExample", paymentDetails)
-                        Snackbar.make(findViewById(android.R.id.content), getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            getResources().getString(R.string.MessageInscripcioEvent),
+                            Snackbar.LENGTH_LONG
+                        )
                             .setAction("Action", null).show()
                     } catch (e: JSONException) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e)
@@ -87,7 +122,9 @@ class BuyPaypal : AppCompatActivity() {
 
         //Creating a paypalpayment
         val payment = PayPalPayment(
-            BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal(), "USD", "Simplified Coding Fee",
+            BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal(),
+            "USD",
+            "Simplified Coding Fee",
             PayPalPayment.PAYMENT_INTENT_SALE
         )
 
@@ -122,18 +159,18 @@ class BuyPaypal : AppCompatActivity() {
         }
         // Volley post request with parameters
         val request = object : JsonObjectRequest(Request.Method.POST, url, params,
-                { response ->
-                    // Process the json
-                    try {
-                        Log.i("Registration", "Response $response")
-                    } catch (e: Exception) {
-                        Log.e("Registration", "Response $e")
-                    }
-                }, {
-            // Error in request -- ja estem registrats
-            println("Volley error: $it")
+            { response ->
+                // Process the json
+                try {
+                    Log.i("Registration", "Response $response")
+                } catch (e: Exception) {
+                    Log.e("Registration", "Response $e")
+                }
+            }, {
+                // Error in request -- ja estem registrats
+                println("Volley error: $it")
 
-        }) {
+            }) {
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
                 headers.put("Authorization", "Token $tokenMongoPost")
@@ -142,9 +179,9 @@ class BuyPaypal : AppCompatActivity() {
         }
         // Volley request policy, only one time request to avoid duplicate transaction
         request.retryPolicy = DefaultRetryPolicy(
-                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-                0,
-                1f
+            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+            0,
+            1f
         )
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
