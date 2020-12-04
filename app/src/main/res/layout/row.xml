@@ -7,14 +7,18 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardElevation="5dp"
     app:cardUseCompatPadding="true"
-    >
+    android:background="@drawable/myrect"
 
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:background="@drawable/layout_bg"
+
+
         >
         <ImageView
             android:layout_width="75dp"
@@ -42,7 +46,7 @@
             android:id="@+id/descE"
             android:text="@string/description"
             android:textSize="18sp"
-            android:textColor="@color/grey"
+            android:textColor="@color/white"
             android:layout_toRightOf="@id/imageE"
             android:layout_toEndOf="@+id/imageE"
             android:layout_marginLeft="10dp"
