@@ -14,7 +14,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.paypal.android.sdk.payments.*
-import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.BigDecimal
@@ -52,17 +51,20 @@ class BuyPaypal : AppCompatActivity() {
         grid.numColumns = columns
 
         // CREATE A LIST OF MATRIX OBJECT
-        val salaList: MutableList<Sala> = ArrayList()
+        val salaList: MutableList<Seat> = ArrayList()
 
         // ADD SOME CONTENTS TO EACH ITEM
         for (i in 0 until rows) {
             for (j in 0 until columns) {
-                salaList.add(Sala(i, j))
+                /*
+                DE MOMENTO ALEATORIO HASTA QUE EL BACK NOS PASE ESTA INFO
+                 */
+                salaList.add(Seat(i, j, (0..1).random()))
             }
         }
 
         // CREATE AN ADAPTER  (MATRIX ADAPTER)
-        val adapter = SalaAdapter(applicationContext, salaList)
+        val adapter = SeatAdapter(applicationContext, salaList)
 
         // ATTACH THE ADAPTER TO GRID
         grid.adapter = adapter
