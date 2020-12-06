@@ -16,35 +16,17 @@ import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_events.recyclerView
 import org.json.JSONException
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Events.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Events : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var requestQueue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
 
-       val url = "https://securevent.herokuapp.com/events"
-       requestQueue = Volley.newRequestQueue(getActivity()?.getApplicationContext())
-       val arrayList = ArrayList<Model>()
+        val url = "https://securevent.herokuapp.com/events"
+        requestQueue = Volley.newRequestQueue(activity?.applicationContext)
+        val arrayList = ArrayList<Model>()
 
-       val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
            try {
                for (i in 0 until response.length()) {
                    val event = response.getJSONObject(i)
@@ -62,7 +44,7 @@ class Events : Fragment() {
                    )
                }
 
-               val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapter(arrayList, it) })
+               val myAdapter = (activity?.applicationContext?.let { MyAdapter(arrayList, it) })
 
                recyclerView.layoutManager = LinearLayoutManager(activity)
                recyclerView.adapter = myAdapter
@@ -71,13 +53,9 @@ class Events : Fragment() {
            } catch (e: JSONException) {
                e.printStackTrace()
            }
-       }, { error -> error.printStackTrace() })
-
-
+        }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
-
-
 
     }
 
@@ -102,28 +80,4 @@ class Events : Fragment() {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }
     }
-
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Events.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                Events().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
-
-
-
 }

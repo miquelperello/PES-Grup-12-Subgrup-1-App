@@ -34,10 +34,12 @@ class BuyPaypal : AppCompatActivity() {
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
 
-        actionBar.title = resources.getString(R.string.PayPal)
+        val extras = intent.extras
+        val roomName = extras?.getString("roomName")
+        actionBar.title = roomName
 
         // GET THE MATRIX DIMENSIONS
-        val rows = 10 // Utilizar el put.extra para conseguir filas y columnas de la room
+        val rows = 4 // Utilizar el put.extra para conseguir filas y columnas de la room
         val columns = 8
 
         /*
@@ -120,7 +122,7 @@ class BuyPaypal : AppCompatActivity() {
     fun buy(view: View) {
 
         // Get extras in the Esdeveniment.kt
-        val extras = getIntent().getExtras()
+        val extras = intent.extras
 
         //Creating a paypalpayment
         val payment = PayPalPayment(
@@ -160,7 +162,7 @@ class BuyPaypal : AppCompatActivity() {
             tokenMongoPost = (getString("TOKEN", "").toString())
         }
         // Volley post request with parameters
-        val request = object : JsonObjectRequest(Request.Method.POST, url, params,
+        val request = object : JsonObjectRequest(Method.POST, url, params,
             { response ->
                 // Process the json
                 try {

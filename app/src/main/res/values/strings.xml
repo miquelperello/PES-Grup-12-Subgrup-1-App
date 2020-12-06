@@ -37,5 +37,6 @@
     <string name="username" translatable="false">username</string>
     <string name="PayPal">PayPal</string>
     <string name="buy">Buy</string>
+    <string name="RoomVisualization">Room visualization</string>
 
 </resources>
