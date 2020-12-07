@@ -132,40 +132,44 @@ class BuyPaypal : AppCompatActivity() {
         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
         val numTickets = edit_text_tickets.text.toString().toInt()
 
-        edit_text_tickets.setText((numTickets - 1).toString())
+        if (numTickets > 0)
+            edit_text_tickets.setText((numTickets - 1).toString())
 
     }
 
     fun buy(view: View) {
 
         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
-        val numTickets = edit_text_tickets.text.toString().toInt().toBigDecimal()
+        val numTickets = edit_text_tickets.text.toString().toInt()
 
-        // Get extras in the Esdeveniment.kt
-        val extras = intent.extras
+        if (numTickets > 0) {
 
-        //Creating a paypalpayment
-        val payment = PayPalPayment(
-            BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal() * numTickets,
-            "USD",
-            "Simplified Coding Fee",
-            PayPalPayment.PAYMENT_INTENT_SALE
-        )
+            // Get extras in the Esdeveniment.kt
+            val extras = intent.extras
 
-        //Creating Paypal Payment activity intent
-        val intent = Intent(this, PaymentActivity::class.java)
+            //Creating a paypalpayment
+            val payment = PayPalPayment(
+                    BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal() * numTickets.toBigDecimal(),
+                    "USD",
+                    "Simplified Coding Fee",
+                    PayPalPayment.PAYMENT_INTENT_SALE
+            )
 
-        //putting the paypal configuration to the intent
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
+            //Creating Paypal Payment activity intent
+            val intent = Intent(this, PaymentActivity::class.java)
 
-        //Puting paypal payment to the intent
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment)
+            //putting the paypal configuration to the intent
+            intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config)
 
-        //Starting the intent activity for result
-        //the request code will be used on the method onActivityResult
-        startActivityForResult(intent, PAYPAL_REQUEST_CODE)
+            //Puting paypal payment to the intent
+            intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment)
 
-        postEvent(extras?.getString("eventID"))
+            //Starting the intent activity for result
+            //the request code will be used on the method onActivityResult
+            startActivityForResult(intent, PAYPAL_REQUEST_CODE)
+
+            postEvent(extras?.getString("eventID"))
+        }
     }
 
     fun postEvent(eventID: String?) {
