@@ -6,10 +6,17 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.pes.securevent.MainActivity.Companion.LlistaEvents
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
+import org.json.JSONArray
+import org.json.JSONException
 
 class Esdeveniment : AppCompatActivity() {
 
@@ -62,30 +69,35 @@ class Esdeveniment : AppCompatActivity() {
 
     fun goToPaypal(view: View) {
 
-        /*
-        Get de la room para devolver cols y rows
+        var requestQueue: RequestQueue? = null
+        var event : String? = null
+        //Get de la room para devolver cols y rows
 
-        val url = "https://securevent.herokuapp.com/rooms/probando_20"
-        var room = JSONObject()
+        val url = "https://securevent.herokuapp.com/events/" + IDE.text //<- events
+     
+        requestQueue = Volley.newRequestQueue(this)
+
+
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
-            try {
-                room = response
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
+           try {
+                   event  = response.getString("seats")
+                   val intent = Intent(this, BuyPaypal::class.java)
+                   intent.putExtra("eventID", IDE.text)
+                   intent.putExtra("qtt", MinPriceE.text)
+                   intent.putExtra("roomName", LocE.text)
+                   intent.putExtra("matrix", event)
+                   startActivity(intent)
+
+           } catch (e: JSONException) {
+               e.printStackTrace()
+           }
         }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
 
-        println(room)
 
-         */
 
-        val intent = Intent(this, BuyPaypal::class.java)
-        intent.putExtra("eventID", IDE.text)
-        intent.putExtra("qtt", MinPriceE.text)
-        intent.putExtra("roomName", LocE.text)
-        startActivity(intent)
+
     }
 }
 

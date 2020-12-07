@@ -10,11 +10,11 @@ import android.widget.GridView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.DefaultRetryPolicy
-import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.paypal.android.sdk.payments.*
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.BigDecimal
@@ -39,15 +39,25 @@ class BuyPaypal : AppCompatActivity() {
         val roomName = extras?.getString("roomName")
         actionBar.title = roomName
 
-        // GET THE MATRIX DIMENSIONS
-        val rows = 4 // Utilizar el put.extra para conseguir filas y columnas de la room
-        val columns = 8
+        val cadires = extras?.getString("matrix")
 
-        /*
-        val extras = getIntent().getExtras()
-        val rows = extras?.getString("nrows").toInt()
-        val columns = extras?.getString("ncols").toInt()
-        */
+        var prematrix : List<String>?=null
+
+        if (cadires != null) {
+            prematrix = cadires.split('\n')
+        }
+
+        // GET THE MATRIX DIMENSIONS
+        val rows = prematrix!!.size // Utilizar el put.extra para conseguir filas y columnas de la room
+        var columns = prematrix.get(0).filter{it!= '\t'}.count()
+
+
+        var sala = ArrayList<String>()
+
+        for (i in 0 until columns){
+            sala.add(prematrix.get(i).filter{it!= '\t'})
+        }
+
 
         // INITIALISE YOUR GRID
         val grid = findViewById<View>(R.id.grid) as GridView
@@ -59,10 +69,11 @@ class BuyPaypal : AppCompatActivity() {
         // ADD SOME CONTENTS TO EACH ITEM
         for (i in 0 until rows) {
             for (j in 0 until columns) {
-                /*
-                DE MOMENTO ALEATORIO HASTA QUE EL BACK NOS PASE ESTA INFO
-                 */
-                salaList.add(Seat(i, j, (0..1).random()))
+
+                if (sala.get(i).get(j) == 'T') salaList.add(Seat(i, j, 0))
+                else salaList.add(Seat(i, j, 1))
+
+
             }
         }
 
@@ -100,9 +111,9 @@ class BuyPaypal : AppCompatActivity() {
                         val paymentDetails = confirm.toJSONObject().toString(4)
                         Log.i("paymentExample", paymentDetails)
                         Snackbar.make(
-                            findViewById(android.R.id.content),
-                            getResources().getString(R.string.MessageInscripcioEvent),
-                            Snackbar.LENGTH_LONG
+                                findViewById(android.R.id.content),
+                                getResources().getString(R.string.MessageInscripcioEvent),
+                                Snackbar.LENGTH_LONG
                         )
                             .setAction("Action", null).show()
                     } catch (e: JSONException) {
@@ -113,8 +124,8 @@ class BuyPaypal : AppCompatActivity() {
                 Log.i("paymentExample", "The user canceled.")
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Log.i(
-                    "paymentExample",
-                    "An invalid Payment or PayPalConfiguration was submitted. Please see the docs."
+                        "paymentExample",
+                        "An invalid Payment or PayPalConfiguration was submitted. Please see the docs."
                 )
             }
         }
@@ -187,18 +198,18 @@ class BuyPaypal : AppCompatActivity() {
         }
         // Volley post request with parameters
         val request = object : JsonObjectRequest(Method.POST, url, params,
-            { response ->
-                // Process the json
-                try {
-                    Log.i("Registration", "Response $response")
-                } catch (e: Exception) {
-                    Log.e("Registration", "Response $e")
-                }
-            }, {
-                // Error in request -- ja estem registrats
-                println("Volley error: $it")
+                { response ->
+                    // Process the json
+                    try {
+                        Log.i("Registration", "Response $response")
+                    } catch (e: Exception) {
+                        Log.e("Registration", "Response $e")
+                    }
+                }, {
+            // Error in request -- ja estem registrats
+            println("Volley error: $it")
 
-            }) {
+        }) {
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
                 headers.put("Authorization", "Token $tokenMongoPost")
@@ -207,9 +218,9 @@ class BuyPaypal : AppCompatActivity() {
         }
         // Volley request policy, only one time request to avoid duplicate transaction
         request.retryPolicy = DefaultRetryPolicy(
-            DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-            0,
-            1f
+                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                0,
+                1f
         )
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
