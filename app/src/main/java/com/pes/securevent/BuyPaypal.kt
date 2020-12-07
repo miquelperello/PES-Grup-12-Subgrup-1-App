@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.GridView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +47,7 @@ class BuyPaypal : AppCompatActivity() {
         val extras = getIntent().getExtras()
         val rows = extras?.getString("nrows").toInt()
         val columns = extras?.getString("ncols").toInt()
-         */
+        */
 
         // INITIALISE YOUR GRID
         val grid = findViewById<View>(R.id.grid) as GridView
@@ -119,14 +120,33 @@ class BuyPaypal : AppCompatActivity() {
         }
     }
 
+    fun increment(view: View) {
+        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
+        val numTickets = edit_text_tickets.text.toString().toInt()
+
+        edit_text_tickets.setText((numTickets + 1).toString())
+
+    }
+
+    fun decrement(view: View) {
+        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
+        val numTickets = edit_text_tickets.text.toString().toInt()
+
+        edit_text_tickets.setText((numTickets - 1).toString())
+
+    }
+
     fun buy(view: View) {
+
+        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
+        val numTickets = edit_text_tickets.text.toString().toInt().toBigDecimal()
 
         // Get extras in the Esdeveniment.kt
         val extras = intent.extras
 
         //Creating a paypalpayment
         val payment = PayPalPayment(
-            BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal(),
+            BigDecimal(extras?.getString("qtt")).toInt().toBigDecimal() * numTickets,
             "USD",
             "Simplified Coding Fee",
             PayPalPayment.PAYMENT_INTENT_SALE

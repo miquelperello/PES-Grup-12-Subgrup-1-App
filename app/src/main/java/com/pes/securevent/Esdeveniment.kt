@@ -2,31 +2,16 @@ package com.pes.securevent
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.DefaultRetryPolicy
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.pes.securevent.MainActivity.Companion.LlistaEvents
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
-import com.pes.securevent.MainActivity.Companion.usuari
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
-import kotlinx.android.synthetic.main.fragment_events.*
-import org.json.JSONException
-import org.json.JSONObject
 
 class Esdeveniment : AppCompatActivity() {
-
-    private var requestQueue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
