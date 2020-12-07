@@ -1,6 +1,6 @@
 package com.pes.securevent
 
-class Seat(i: Int, j: Int, occ: Int) {
+class Seat(i: Int, j: Int, occ: Char) {
 
     var row = i
     var column = j

@@ -70,8 +70,12 @@ class BuyPaypal : AppCompatActivity() {
         for (i in 0 until rows) {
             for (j in 0 until columns) {
 
-                if (sala.get(i).get(j) == 'T') salaList.add(Seat(i, j, 0))
-                else salaList.add(Seat(i, j, 1))
+                if (sala.get(i).get(j) == 'T')
+                    salaList.add(Seat(i, j, 'T'))
+                else if (sala.get(i).get(j) == 'F')
+                    salaList.add(Seat(i, j, 'F'))
+                else
+                    salaList.add(Seat(i, j, 'C'))
 
 
             }
@@ -145,7 +149,6 @@ class BuyPaypal : AppCompatActivity() {
 
         if (numTickets > 0)
             edit_text_tickets.setText((numTickets - 1).toString())
-
     }
 
     fun buy(view: View) {
@@ -177,6 +180,7 @@ class BuyPaypal : AppCompatActivity() {
 
             //Starting the intent activity for result
             //the request code will be used on the method onActivityResult
+
             startActivityForResult(intent, PAYPAL_REQUEST_CODE)
 
             postEvent(extras?.getString("eventID"))

@@ -1,56 +1,28 @@
 package com.pes.securevent
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.pes.securevent.MainActivity.Companion.LlistaEvents
-import com.pes.securevent.MainActivity.Companion.UsuariActiu
-import kotlinx.android.synthetic.main.activity_esdeveniment.*
-import kotlinx.android.synthetic.main.fragment_events.*
 import kotlinx.android.synthetic.main.fragment_my_events.*
 import org.json.JSONException
-import org.json.JSONObject
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MyEvents.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyEvents : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+
     private var requestQueue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
 
         val pref = PreferenceManager.getDefaultSharedPreferences(getActivity()?.getApplicationContext())
         var tokenMongoPost :String
@@ -69,15 +41,15 @@ class MyEvents : Fragment() {
                     val event = response.getJSONObject(i)
                     arrayList.add(
                             Model(
-                                    event.getString("name"),
-                                    event.getString("_id"),
-                                    com.pes.securevent.R.drawable.icon,
-                                    event.getString("id_room"),
-                                    event.getString("date"),
-                                    event.getString("hourIni"),
-                                    event.getString("minPrice"),
-                                    event.getString("maxPrice")
-                            )
+                                event.getString("name"),
+                                event.getString("_id"),
+                                R.drawable.icon,
+                                event.getString("id_room"),
+                                event.getString("date"),
+                                event.getString("hourIni"),
+                                event.getString("minPrice"),
+                                event.getString("maxPrice")
+                        )
                     )
                 }
 
@@ -104,10 +76,7 @@ class MyEvents : Fragment() {
 
         requestQueue?.add(request)
 
-
-
     }
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -130,27 +99,6 @@ class MyEvents : Fragment() {
                     MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.EXACTLY)
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }
-    }
-
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Events.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                Events().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 
 }

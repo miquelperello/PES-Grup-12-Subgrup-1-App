@@ -1,21 +1,9 @@
 package com.pes.securevent
 
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.DefaultRetryPolicy
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.google.android.material.snackbar.Snackbar
-import com.pes.securevent.MainActivity.Companion.LlistaEvents
-import com.pes.securevent.MainActivity.Companion.UsuariActiu
-import com.pes.securevent.MainActivity.Companion.usuari
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
-import org.json.JSONObject
 
 class MyEsdeveniment : AppCompatActivity() {
 

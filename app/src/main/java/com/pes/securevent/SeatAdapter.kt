@@ -28,9 +28,11 @@ class SeatAdapter(context: Context, seatList: List<Seat>) :
 
         @SuppressLint("ViewHolder")
         override fun getView(i: Int, view: View?, viewGroup: ViewGroup?): View {
-            if (seatList[i].occupied == 1)
+            if (seatList[i].occupied == 'F')
                 return View.inflate(context, R.layout.seat_item_occ, null)
-            return View.inflate(context, R.layout.seat_item, null)
+            else if (seatList[i].occupied == 'T')
+                return View.inflate(context, R.layout.seat_item_free, null)
+            return View.inflate(context, R.layout.seat_item_covid, null)
         }
 
         init {

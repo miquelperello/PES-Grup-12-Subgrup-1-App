@@ -51,13 +51,7 @@ class Esdeveniment : AppCompatActivity() {
         val btn_click_me = findViewById<Button>(R.id.buttonGoToPaypal)
         btn_click_me.setOnClickListener { view->
             if (UsuariActiu) {
-
-                //new activity!
-                Snackbar.make(view, getResources().getString(R.string.MessageInscripcioEvent), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
                 goToPaypal(view)
-
-                LlistaEvents.add(titleE.toString())
             }
             else {
                 Snackbar.make(view, getResources().getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
