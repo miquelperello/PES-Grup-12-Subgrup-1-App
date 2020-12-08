@@ -54,7 +54,7 @@ class BuyPaypal : AppCompatActivity() {
 
         var sala = ArrayList<String>()
 
-        for (i in 0 until columns){
+        for (i in 0 until columns-1){
             sala.add(prematrix.get(i).filter{it!= '\t'})
         }
 
