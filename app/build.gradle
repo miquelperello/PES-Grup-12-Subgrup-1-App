@@ -22,7 +22,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'keyGCM', properties.getProperty('keyGCM', '"xxx"')
-        buildConfigField 'String', 'keyPayPal', properties.getProperty('keyPayPal', '"xxx"')
     }
 
     buildTypes {
@@ -65,6 +64,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support:design:30.0.0'
-    implementation 'com.paypal.sdk:paypal-android-sdk:2.14.2'
+    implementation 'com.google.android.gms:play-services-wallet:18.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 
 }

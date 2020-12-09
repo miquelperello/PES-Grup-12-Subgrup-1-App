@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -37,7 +38,8 @@
         <activity
             android:name=".BuyPaypal"
             android:parentActivityName=".Esdeveniment"
-            android:theme="@style/MyEvent"/>
+            android:theme="@style/MyEvent"
+            android:noHistory="true"/>
     </application>
 
 </manifest>
