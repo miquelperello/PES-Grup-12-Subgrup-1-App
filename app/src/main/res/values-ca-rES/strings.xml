@@ -36,4 +36,5 @@
     <string name="RoomVisualization">Visualització de la sala</string>
     <string name="FullRoom">No hi ha tickets disponibles, disculpa les molesties</string>
     <string name="SeeSeats">Veure seients</string>
+    <string name="ButtonSeeDetails">Veure disponibilitat</string>
 </resources>

@@ -21,12 +21,12 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_buy_paypal.*
+import kotlinx.android.synthetic.main.activity_eventdetails.*
 import org.json.JSONException
 import org.json.JSONObject
 
 
-class BuyTickets : AppCompatActivity() {
+class EventDetails : AppCompatActivity() {
 
     val LOAD_PAYMENT_DATA_REQUEST_CODE = 123
 
@@ -36,42 +36,37 @@ class BuyTickets : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_buy_paypal)
+        setContentView(R.layout.activity_eventdetails)
 
-
-        // Initialize a Google Pay API client for an environment suitable for testing.
-        // It's recommended to create the PaymentsClient object inside of the onCreate method.
-        paymentsClient = PaymentsUtil.createPaymentsClient(this)
-        possiblyShowGooglePayButton()
-
-
-        val actionBar : ActionBar? = supportActionBar
+        val actionBar: ActionBar? = supportActionBar
         actionBar!!.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayShowHomeEnabled(true)
 
         val extras = intent.extras
         val roomName = extras?.getString("roomName")
         val user_id = extras?.getString("user_id")
+        val CanBuy = extras?.getBoolean("CanBuy")
 
         actionBar.title = roomName
 
         val cadires = extras?.getString("matrix")
 
-        var prematrix : List<String>?=null
+        var prematrix: List<String>? = null
 
         if (cadires != null) {
             prematrix = cadires.split('\n')
         }
 
         // GET THE MATRIX DIMENSIONS
-        val rows = prematrix!!.size // Utilizar el put.extra para conseguir filas y columnas de la room
+        val rows =
+            prematrix!!.size // Utilizar el put.extra para conseguir filas y columnas de la room
         val columns = prematrix[0].split('\t').count()
         //var columns = prematrix.get(0).filter{it!= '\t'}.count()
 
 
         val sala = ArrayList<ArrayList<String>>()
 
-        for (i in 0 until rows ){
+        for (i in 0 until rows) {
             sala.add(prematrix[i].split('\t') as ArrayList<String>)
         }
 
@@ -90,8 +85,7 @@ class BuyTickets : AppCompatActivity() {
                 if (sala[i][j] == "T") {
                     salaList.add(Seat(i, j, 'T'))
                     fullRoom = false;
-                }
-                else if (sala[i][j] == "F")
+                } else if (sala[i][j] == "F")
                     salaList.add(Seat(i, j, 'C'))
                 else
                     if (sala[i][j] == user_id)
@@ -106,6 +100,20 @@ class BuyTickets : AppCompatActivity() {
 
         // ATTACH THE ADAPTER TO GRID
         grid.adapter = adapter
+
+        if (CanBuy == false) {
+            renderSeeSeats()
+        } else {
+            renderSeeDisponibility()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun renderSeeDisponibility(){
+        // Initialize a Google Pay API client for an environment suitable for testing.
+        // It's recommended to create the PaymentsClient object inside of the onCreate method.
+        paymentsClient = PaymentsUtil.createPaymentsClient(this)
+        possiblyShowGooglePayButton()
 
         val editText = findViewById<EditText>(R.id.numTickets)
         editText!!.showSoftInputOnFocus = false
@@ -126,9 +134,18 @@ class BuyTickets : AppCompatActivity() {
                     editText.setText("0")
             }
         })
+    }
 
+    private fun renderSeeSeats(){
+        val editText = findViewById<EditText>(R.id.numTickets)
+        val buyButton = findViewById<Button>(R.id.googlePayButton)
+        val increment = findViewById<Button>(R.id.plusTickets)
+        val decrement = findViewById<Button>(R.id.minusTickets)
 
-
+        editText.visibility=View.INVISIBLE
+        buyButton.visibility=View.INVISIBLE
+        increment.visibility=View.INVISIBLE
+        decrement.visibility=View.INVISIBLE
     }
 
     private fun possiblyShowGooglePayButton() {

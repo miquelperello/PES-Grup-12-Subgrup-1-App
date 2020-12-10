@@ -27,7 +27,6 @@
     <string name="SignOut">Sign Out</string>
     <string name="Settings">Settings</string>
     <string name="Language">Change Language</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="BotoEvent">Join Event</string>
     <string name="ButtonGoToPaypal">Buy</string>
@@ -40,5 +39,6 @@
     <string name="RoomVisualization">Room visualization</string>
     <string name="FullRoom">There are no tickets available, we\'re sorry</string>
     <string name="SeeSeats">See seats</string>
+    <string name="ButtonSeeDetails">See disponibility</string>
 
 </resources>

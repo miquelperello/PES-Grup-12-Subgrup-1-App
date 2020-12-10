@@ -56,8 +56,23 @@ class Esdeveniment : AppCompatActivity() {
                         .setAction("Action", null).show()
             }
         }
-    }
 
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        var user_id :String
+        pref.apply{
+            user_id = (getString("ID", "").toString())
+        }
+        var requestQueue: RequestQueue? = null
+        val url = "https://securevent.herokuapp.com/reservations/" + IDE.text + "_" + user_id
+
+        requestQueue = Volley.newRequestQueue(this)
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
+            btn_click_me.isEnabled = false},
+                { error -> error.printStackTrace() })
+
+        requestQueue?.add(request)
+    }
 
     fun goToBuy(view: View) {
 
@@ -79,12 +94,13 @@ class Esdeveniment : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
            try {
                    event  = response.getString("seats")
-                   val intent = Intent(this, BuyTickets::class.java)
+                   val intent = Intent(this, EventDetails::class.java)
                    intent.putExtra("eventID", IDE.text)
                    intent.putExtra("qtt", MinPriceE.text)
                    intent.putExtra("roomName", LocE.text)
                    intent.putExtra("matrix", event)
                    intent.putExtra("user_id", user_id)
+                   intent.putExtra("CanBuy", true)
                    startActivity(intent)
 
            } catch (e: JSONException) {
@@ -95,5 +111,6 @@ class Esdeveniment : AppCompatActivity() {
         requestQueue?.add(request)
 
     }
+
 }
 

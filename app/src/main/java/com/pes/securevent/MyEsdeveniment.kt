@@ -59,12 +59,13 @@ class MyEsdeveniment : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
             try {
                 event  = response.getString("seats")
-                val intent = Intent(this, BuyTickets::class.java)
+                val intent = Intent(this, EventDetails::class.java)
                 intent.putExtra("eventID", IDE.text)
                 intent.putExtra("roomName", LocE.text)
                 intent.putExtra("matrix", event)
                 intent.putExtra("user_id", user_id)
-                startActivity(intent)//todo: go to new intent
+                intent.putExtra("CanBuy", false)
+                startActivity(intent)
 
             } catch (e: JSONException) {
                 e.printStackTrace()
