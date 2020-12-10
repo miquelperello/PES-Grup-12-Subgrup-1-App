@@ -39,6 +39,8 @@
                 app:layout_row="0"
                 tools:ignore="LabelFor"
                 android:maxLength="2"
+                android:enabled="false"
+                android:textColor="@color/black"
                 />
 
             <Button

@@ -64,7 +64,7 @@ class MyEsdeveniment : AppCompatActivity() {
                 intent.putExtra("roomName", LocE.text)
                 intent.putExtra("matrix", event)
                 intent.putExtra("user_id", user_id)
-                startActivity(intent)
+                startActivity(intent)//todo: go to new intent
 
             } catch (e: JSONException) {
                 e.printStackTrace()

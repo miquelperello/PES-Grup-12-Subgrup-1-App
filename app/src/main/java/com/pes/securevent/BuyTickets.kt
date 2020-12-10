@@ -126,6 +126,9 @@ class BuyTickets : AppCompatActivity() {
                     editText.setText("0")
             }
         })
+
+
+
     }
 
     private fun possiblyShowGooglePayButton() {
@@ -159,15 +162,20 @@ class BuyTickets : AppCompatActivity() {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val extras = intent.extras
 
         when (requestCode) {
             // Value passed in AutoResolveHelper
             LOAD_PAYMENT_DATA_REQUEST_CODE -> {
                 when (resultCode) {
-                    RESULT_OK ->
+                    RESULT_OK ->{
+                        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
+                        val numTickets = edit_text_tickets.text.toString().toInt()
+                        postEvent(extras?.getString("eventID"), numTickets.toString())
                         data?.let { intent ->
                             PaymentData.getFromIntent(intent)?.let(::handlePaymentSuccess)
                         }!!
+                    }
 
                     RESULT_CANCELED -> {
                         // The user cancelled the payment attempt
@@ -216,8 +224,9 @@ class BuyTickets : AppCompatActivity() {
     fun increment(view: View) {
         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
         val numTickets = edit_text_tickets.text.toString().toInt()
-
-        edit_text_tickets.setText((numTickets + 1).toString())
+        if (numTickets < 4) {
+            edit_text_tickets.setText((numTickets + 1).toString())
+        }
 
     }
 
@@ -232,7 +241,6 @@ class BuyTickets : AppCompatActivity() {
 
     fun buy(view: View) {
 
-        val extras = intent.extras
         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
         val numTickets = edit_text_tickets.text.toString().toInt()
 
@@ -259,8 +267,6 @@ class BuyTickets : AppCompatActivity() {
                 }
                 //Starting the intent activity for result
                 //the request code will be used on the method onActivityResult
-
-                postEvent(extras?.getString("eventID"), numTickets.toString())
             }
         }
     }
