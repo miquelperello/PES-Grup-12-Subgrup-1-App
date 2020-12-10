@@ -1,24 +1,29 @@
 package com.pes.securevent
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import androidx.preference.PreferenceManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_buy_paypal.*
 import org.json.JSONException
 import org.json.JSONObject
-import kotlinx.android.synthetic.main.activity_buy_paypal.*
 
 
 class BuyTickets : AppCompatActivity() {
@@ -28,6 +33,7 @@ class BuyTickets : AppCompatActivity() {
     private lateinit var paymentsClient: PaymentsClient
     private var fullRoom: Boolean = true
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buy_paypal)
@@ -101,7 +107,25 @@ class BuyTickets : AppCompatActivity() {
         // ATTACH THE ADAPTER TO GRID
         grid.adapter = adapter
 
+        val editText = findViewById<EditText>(R.id.numTickets)
+        editText!!.showSoftInputOnFocus = false
+        val buyButton = findViewById<Button>(R.id.googlePayButton)
+        buyButton.isEnabled = false
 
+        editText.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int,
+                                           count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int,
+                                       before: Int, count: Int) {
+                buyButton.isEnabled = s.toString().toInt() != 0
+                if(editText.text.toString() == "")
+                    editText.setText("0")
+            }
+        })
     }
 
     private fun possiblyShowGooglePayButton() {
@@ -127,9 +151,9 @@ class BuyTickets : AppCompatActivity() {
             googlePayButton.visibility = View.VISIBLE
         } else {
             Toast.makeText(
-                this,
-                "Unfortunately, Google Pay is not available on this device",
-                Toast.LENGTH_LONG).show();
+                    this,
+                    "Unfortunately, Google Pay is not available on this device",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -176,8 +200,8 @@ class BuyTickets : AppCompatActivity() {
 
             // Logging token string.
             Log.d("GooglePaymentToken", paymentMethodData
-                .getJSONObject("tokenizationData")
-                .getString("token"))
+                    .getJSONObject("tokenizationData")
+                    .getString("token"))
 
         } catch (e: JSONException) {
             Log.e("handlePaymentSuccess", "Error: " + e.toString())
@@ -203,6 +227,7 @@ class BuyTickets : AppCompatActivity() {
 
         if (numTickets > 0)
             edit_text_tickets.setText((numTickets - 1).toString())
+
     }
 
     fun buy(view: View) {
@@ -211,10 +236,12 @@ class BuyTickets : AppCompatActivity() {
         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
         val numTickets = edit_text_tickets.text.toString().toInt()
 
+
         if (numTickets > 0) {
-            if (fullRoom)
+            if (fullRoom) {
                 Snackbar.make(view, resources.getString(R.string.FullRoom), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
+            }
             else {
                 val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(0)
                 if (paymentDataRequestJson == null) {
