@@ -8,14 +8,11 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
-import com.pes.securevent.MainActivity.Companion.LlistaEvents
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
-import org.json.JSONArray
 import org.json.JSONException
 
 class Esdeveniment : AppCompatActivity() {
@@ -51,7 +48,7 @@ class Esdeveniment : AppCompatActivity() {
         val btn_click_me = findViewById<Button>(R.id.buttonGoToPaypal)
         btn_click_me.setOnClickListener { view->
             if (UsuariActiu) {
-                goToPaypal(view)
+                goToBuy(view)
             }
             else {
                 Snackbar.make(view, getResources().getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
@@ -61,7 +58,7 @@ class Esdeveniment : AppCompatActivity() {
     }
 
 
-    fun goToPaypal(view: View) {
+    fun goToBuy(view: View) {
 
         var requestQueue: RequestQueue? = null
         var event : String? = null
@@ -75,7 +72,7 @@ class Esdeveniment : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
            try {
                    event  = response.getString("seats")
-                   val intent = Intent(this, BuyPaypal::class.java)
+                   val intent = Intent(this, BuyTickets::class.java)
                    intent.putExtra("eventID", IDE.text)
                    intent.putExtra("qtt", MinPriceE.text)
                    intent.putExtra("roomName", LocE.text)

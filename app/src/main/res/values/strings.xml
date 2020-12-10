@@ -38,5 +38,6 @@
     <string name="PayPal">PayPal</string>
     <string name="buy">Buy</string>
     <string name="RoomVisualization">Room visualization</string>
+    <string name="FullRoom">There are no tickets available, we\'re sorry</string>
 
 </resources>

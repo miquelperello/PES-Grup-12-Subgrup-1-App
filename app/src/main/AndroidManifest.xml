@@ -36,7 +36,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/MyEvent"></activity>
         <activity
-            android:name=".BuyPaypal"
+            android:name=".BuyTickets"
             android:parentActivityName=".Esdeveniment"
             android:theme="@style/MyEvent"
             android:noHistory="true"/>

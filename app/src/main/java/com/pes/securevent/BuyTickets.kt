@@ -15,19 +15,18 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
+import com.google.android.material.snackbar.Snackbar
 import org.json.JSONException
 import org.json.JSONObject
-import java.math.BigDecimal
 import kotlinx.android.synthetic.main.activity_buy_paypal.*
 
 
-class BuyPaypal : AppCompatActivity() {
+class BuyTickets : AppCompatActivity() {
+
     val LOAD_PAYMENT_DATA_REQUEST_CODE = 123
 
-
-
     private lateinit var paymentsClient: PaymentsClient
-
+    private var fullRoom: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +57,11 @@ class BuyPaypal : AppCompatActivity() {
 
         // GET THE MATRIX DIMENSIONS
         val rows = prematrix!!.size // Utilizar el put.extra para conseguir filas y columnas de la room
-        var columns = prematrix.get(0).split('\t').count()
+        val columns = prematrix.get(0).split('\t').count()
         //var columns = prematrix.get(0).filter{it!= '\t'}.count()
 
 
-        var sala = ArrayList<ArrayList<String>>()
+        val sala = ArrayList<ArrayList<String>>()
 
         for (i in 0 until rows ){
             sala.add(prematrix.get(i).split('\t') as ArrayList<String>)
@@ -80,9 +79,11 @@ class BuyPaypal : AppCompatActivity() {
         for (i in 0 until rows) {
             for (j in 0 until columns) {
 
-                if (sala.get(i).get(j) == "T")
+                if (sala[i][j] == "T") {
                     salaList.add(Seat(i, j, 'T'))
-                else if (sala.get(i).get(j) == "F")
+                    fullRoom = false;
+                }
+                else if (sala[i][j] == "F")
                     salaList.add(Seat(i, j, 'C'))
                 else
                     salaList.add(Seat(i, j, 'F'))
@@ -129,10 +130,6 @@ class BuyPaypal : AppCompatActivity() {
         }
     }
 
-
-
-
-
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -160,12 +157,6 @@ class BuyPaypal : AppCompatActivity() {
                 googlePayButton.isClickable = true
             }
         }
-
-
-
-
-
-
     }
 
     private fun handlePaymentSuccess(paymentData: PaymentData) {
@@ -195,8 +186,6 @@ class BuyPaypal : AppCompatActivity() {
     }
 
 
-
-
     fun increment(view: View) {
         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
         val numTickets = edit_text_tickets.text.toString().toInt()
@@ -213,40 +202,37 @@ class BuyPaypal : AppCompatActivity() {
             edit_text_tickets.setText((numTickets - 1).toString())
     }
 
-
-
-
     fun buy(view: View) {
 
+        val extras = intent.extras
+        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
+        val numTickets = edit_text_tickets.text.toString().toInt()
 
-            //val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest() ?: return
-            //val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString()) ?: return
-            val extras = intent.extras
-
-            val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
-            val numTickets = edit_text_tickets.text.toString().toInt()
         if (numTickets > 0) {
-            val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(0)
-            if (paymentDataRequestJson == null) {
-                Log.e("RequestPayment", "Can't fetch payment data request")
-                return
+            if (fullRoom)
+                Snackbar.make(view, resources.getString(R.string.FullRoom), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+            else {
+                val paymentDataRequestJson = PaymentsUtil.getPaymentDataRequest(0)
+                if (paymentDataRequestJson == null) {
+                    Log.e("RequestPayment", "Can't fetch payment data request")
+                    return
+                }
+                val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+
+                // Since loadPaymentData may show the UI asking the user to select a payment method, we use
+                // AutoResolveHelper to wait for the user interacting with it. Once completed,
+                // onActivityResult will be called with the result.
+                if (request != null) {
+                    AutoResolveHelper.resolveTask(
+                            paymentsClient.loadPaymentData(request), this, LOAD_PAYMENT_DATA_REQUEST_CODE)
+                }
+                //Starting the intent activity for result
+                //the request code will be used on the method onActivityResult
+
+                postEvent(extras?.getString("eventID"), numTickets.toString())
             }
-            val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
-
-            // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-            // AutoResolveHelper to wait for the user interacting with it. Once completed,
-            // onActivityResult will be called with the result.
-            if (request != null) {
-                AutoResolveHelper.resolveTask(
-                        paymentsClient.loadPaymentData(request), this, LOAD_PAYMENT_DATA_REQUEST_CODE)
-            }
-            //Starting the intent activity for result
-            //the request code will be used on the method onActivityResult
-
-            postEvent(extras?.getString("eventID"), numTickets.toString())
-
         }
-
     }
 
     fun postEvent(eventID: String?, numTickets: String) {
