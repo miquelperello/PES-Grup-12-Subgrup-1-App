@@ -1,13 +1,8 @@
 package com.pes.securevent
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.res.Resources
-import android.media.Image
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.preference.PreferenceManager.*
+import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,32 +25,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_account.*
 import org.json.JSONObject
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SignIn.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Acc : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     lateinit var mGoogleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(BuildConfig.keyGCM)
@@ -63,7 +39,6 @@ class Acc : Fragment() {
                 .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity().applicationContext, gso);
-
 
     }
 
@@ -77,8 +52,8 @@ class Acc : Fragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+            savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         super.onViewCreated(view, savedInstanceState)
@@ -92,22 +67,17 @@ class Acc : Fragment() {
         }
         //handle login - hay que hacerlo así, ya que al fragment no le gustan las referencias xd.
 
-
-
-
-//TODO Mirar-ho, if usuariActiu
         val NomUser : TextView = view.findViewById<TextView>(R.id.NomUser)
         val MailUser : TextView = view.findViewById<TextView>(R.id.MailUser)
         val imageE: ImageView = view.findViewById<ImageView>(R.id.imageE)
         val imageViewGoogle : ImageView = view.findViewById<ImageView>(R.id.imageViewGoogle)
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(getActivity()?.getApplicationContext())
+        val pref = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
         var check: Boolean
         pref.apply{
-            if (getString("EMAIL", "") != "") check = true
-            else check = false
+            check = getString("EMAIL", "") != ""
         }
-//TODO  if usuariActiu
+
         if (check) {
             UsuariActiu = true
             pref.apply {
@@ -115,6 +85,7 @@ class Acc : Fragment() {
                 val secondname = getString("SURNAME", "") ?: ""
                 val email_ = getString("EMAIL", "") ?: ""
                 val url_ = getString("IMAGE", "") ?: ""
+
                 usuari = UserG(firstname, secondname, email_, "token", url_)
                 NomUser.text = firstname
                 MailUser.text = email_
@@ -123,37 +94,35 @@ class Acc : Fragment() {
         }
 
         if (UsuariActiu) {
-            google_login_btn.setVisibility(View.GONE); //amaguem el botó
-            imageViewGoogle.setVisibility(View.GONE);
-            imageE.setVisibility(View.VISIBLE)
-            NomUser.setVisibility(View.VISIBLE)
-            MailUser.setVisibility(View.VISIBLE)
+            google_login_btn.visibility = View.GONE; //amaguem el botó
+            imageViewGoogle.visibility = View.GONE;
+            imageE.visibility = View.VISIBLE
+            NomUser.visibility = View.VISIBLE
+            MailUser.visibility = View.VISIBLE
             NomUser.text = usuari.firstName
             MailUser.text = usuari.email
             Picasso.get().load(usuari.image).into(imageE);
-            google_logout_btn.setVisibility(View.VISIBLE)
+            google_logout_btn.visibility = View.VISIBLE
         }
-
-
 
         return view;
     }
 
     private fun signOut() {
 
-        getActivity()?.let {
+        activity?.let {
             mGoogleSignInClient.signOut()
                     .addOnCompleteListener(it) {
                         UsuariActiu = false
-                        google_login_btn.setVisibility(View.VISIBLE);
-                        imageViewGoogle.setVisibility(View.VISIBLE);
-                        google_logout_btn.setVisibility(View.GONE);
-                        imageE.setVisibility(View.GONE)
-                        NomUser.setVisibility(View.GONE)
-                        MailUser.setVisibility(View.GONE)
+                        google_login_btn.visibility = View.VISIBLE;
+                        imageViewGoogle.visibility = View.VISIBLE;
+                        google_logout_btn.visibility = View.GONE;
+                        imageE.visibility = View.GONE
+                        NomUser.visibility = View.GONE
+                        MailUser.visibility = View.GONE
                     }
         }
-        val pref = getDefaultSharedPreferences(getActivity()?.getApplicationContext())
+        val pref = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
         val editor = pref.edit()
         editor
                 .putString("NAME", "")
@@ -182,7 +151,7 @@ class Acc : Fragment() {
             )
             // Signed in successfully
             val googleId = account?.id ?: ""
-            //println("Google ID" + googleId)
+            //println("Google ID$googleId")
 
             val googleFirstName = account?.givenName ?: ""
             //println("Google First Name" + googleFirstName)
@@ -214,14 +183,10 @@ class Acc : Fragment() {
 
     private fun loadUserInfo() {
 
-
         //Fem el post a clients. SI ja estem registrats ens torna un error 400.
-
-
 
         val username = usuari.email.split("@")
         val url = "https://securevent.herokuapp.com/clients"
-
 
         //creem objecte JSON per fer la crida POST
         val params = JSONObject()
@@ -232,16 +197,12 @@ class Acc : Fragment() {
         params.put("last_name",  usuari.lastName);
         params.put("is_manager",  false);
 
+        //un cop ja hem fet el registre, sol.licitem el token
 
-
-
-
-
-//un cop ja hem fet el registre, sol.licitem el token
-
-//getToken
+        //getToken
 
         var token_mongo = ""
+        var user_id = -1
         val urltoken = "https://securevent.herokuapp.com/auth/login"
         val paramsToken = JSONObject()
         paramsToken.put("username", username[0]);
@@ -252,11 +213,11 @@ class Acc : Fragment() {
                 { response ->
                     // Process the json
                     try {
-
+                        user_id = response.getJSONObject("user").getInt("id")
                         token_mongo = response.getString("token")
                         println( "Response $response")
                         println(token_mongo)
-                        GuardaCache(token_mongo)
+                        guardaCache(token_mongo, user_id.toString())
 
                     } catch (e: Exception) {
                        println( "Response $e")
@@ -291,7 +252,7 @@ class Acc : Fragment() {
                     1f
             )
 
-            getActivity()?.getApplicationContext()?.let { VolleySingleton.getInstance(it).addToRequestQueue(request)}
+            activity?.applicationContext?.let { VolleySingleton.getInstance(it).addToRequestQueue(request)}
 
         })
 
@@ -305,65 +266,43 @@ class Acc : Fragment() {
 
         // Add the volley post request to the request queue
 
-        getActivity()?.getApplicationContext()?.let { VolleySingleton.getInstance(it).addToRequestQueue(requestToken) }
+        activity?.applicationContext?.let { VolleySingleton.getInstance(it).addToRequestQueue(requestToken) }
 
-//Un cop fetes les crides i amb la informació, guardem al local storage l'user
-
-
-
+        //Un cop fetes les crides i amb la informació, guardem al local storage l'user
 
         //Fragment Sign In
-        google_login_btn.setVisibility(View.GONE); //amaguem el botó
-        imageViewGoogle.setVisibility(View.GONE);
-        imageE.setVisibility(View.VISIBLE)
-        NomUser.setVisibility(View.VISIBLE)
-        MailUser.setVisibility(View.VISIBLE)
+        google_login_btn.visibility = View.GONE; //amaguem el botó
+        imageViewGoogle.visibility = View.GONE;
+        imageE.visibility = View.VISIBLE
+        NomUser.visibility = View.VISIBLE
+        MailUser.visibility = View.VISIBLE
         NomUser.text = usuari.firstName
         MailUser.text = usuari.email
         Picasso.get().load(usuari.image).into(imageE);
-        google_logout_btn.setVisibility(View.VISIBLE)
-        MainActivity.UsuariActiu = true
+        google_logout_btn.visibility = View.VISIBLE
+        UsuariActiu = true
     }
 
-    private fun GuardaCache(token_mongo: String) {
-        val pref = getDefaultSharedPreferences(getActivity()?.getApplicationContext())
+    private fun guardaCache(token_mongo: String, user_id: String) {
+        val pref = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
         val editor = pref.edit()
         editor
-                .putString("NAME", usuari.firstName)
-                .putString("SURNAME", usuari.lastName)
-                .putString("EMAIL", usuari.email)
-                .putString("IMAGE", usuari.image)
-                .putString("TOKEN", token_mongo)
-                .apply()
+            .putString("NAME", usuari.firstName)
+            .putString("SURNAME", usuari.lastName)
+            .putString("EMAIL", usuari.email)
+            .putString("IMAGE", usuari.image)
+            .putString("TOKEN", token_mongo)
+            .putString("ID", user_id)
+            .apply()
 
         pref.apply {
             println(getString("NAME", ""))
             println(getString("EMAIL", ""))
             println(getString("IMAGE", ""))
             println(getString("TOKEN", ""))
+            println(getString("ID", ""))
         }
 
-
-
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignIn.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                Acc().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-    }
 }

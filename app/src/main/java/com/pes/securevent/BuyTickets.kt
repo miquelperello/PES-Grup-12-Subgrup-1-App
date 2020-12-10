@@ -2,7 +2,7 @@ package com.pes.securevent
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -45,6 +45,8 @@ class BuyTickets : AppCompatActivity() {
 
         val extras = intent.extras
         val roomName = extras?.getString("roomName")
+        val user_id = extras?.getString("user_id")
+
         actionBar.title = roomName
 
         val cadires = extras?.getString("matrix")
@@ -57,14 +59,14 @@ class BuyTickets : AppCompatActivity() {
 
         // GET THE MATRIX DIMENSIONS
         val rows = prematrix!!.size // Utilizar el put.extra para conseguir filas y columnas de la room
-        val columns = prematrix.get(0).split('\t').count()
+        val columns = prematrix[0].split('\t').count()
         //var columns = prematrix.get(0).filter{it!= '\t'}.count()
 
 
         val sala = ArrayList<ArrayList<String>>()
 
         for (i in 0 until rows ){
-            sala.add(prematrix.get(i).split('\t') as ArrayList<String>)
+            sala.add(prematrix[i].split('\t') as ArrayList<String>)
         }
 
 
@@ -86,9 +88,10 @@ class BuyTickets : AppCompatActivity() {
                 else if (sala[i][j] == "F")
                     salaList.add(Seat(i, j, 'C'))
                 else
-                    salaList.add(Seat(i, j, 'F'))
-
-
+                    if (sala[i][j] == user_id)
+                        salaList.add(Seat(i, j, 'U'))
+                    else
+                        salaList.add(Seat(i, j, 'F'))
             }
         }
 
@@ -237,9 +240,7 @@ class BuyTickets : AppCompatActivity() {
 
     fun postEvent(eventID: String?, numTickets: String) {
 
-
         val url = "https://securevent.herokuapp.com/reservations?n=$numTickets"
-
 
         //creem objecte JSON per fer la crida POST
         val params = JSONObject()

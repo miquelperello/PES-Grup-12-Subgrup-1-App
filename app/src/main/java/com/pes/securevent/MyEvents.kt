@@ -2,7 +2,7 @@ package com.pes.securevent
 
 import android.content.Context
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +24,7 @@ class MyEvents : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(getActivity()?.getApplicationContext())
+        val pref = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
         var tokenMongoPost :String
         pref.apply{
             tokenMongoPost = (getString("TOKEN", "").toString())
@@ -32,7 +32,7 @@ class MyEvents : Fragment() {
         }
 
         val url = "https://securevent.herokuapp.com/clients/agenda"
-        requestQueue = Volley.newRequestQueue(getActivity()?.getApplicationContext())
+        requestQueue = Volley.newRequestQueue(activity?.applicationContext)
         val arrayList = ArrayList<Model>()
 
         val request = object: JsonArrayRequest(Request.Method.GET, url, null, { response ->
@@ -82,7 +82,7 @@ class MyEvents : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(com.pes.securevent.R.layout.fragment_my_events, container, false)
+        return inflater.inflate(R.layout.fragment_my_events, container, false)
     }
 
     class MyDrawerLayout : DrawerLayout {

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -65,6 +66,12 @@ class Esdeveniment : AppCompatActivity() {
         //Get de la room para devolver cols y rows
 
         val url = "https://securevent.herokuapp.com/events/" + IDE.text //<- events
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        var user_id :String
+        pref.apply{
+            user_id = (getString("ID", "").toString())
+        }
      
         requestQueue = Volley.newRequestQueue(this)
 
@@ -77,6 +84,7 @@ class Esdeveniment : AppCompatActivity() {
                    intent.putExtra("qtt", MinPriceE.text)
                    intent.putExtra("roomName", LocE.text)
                    intent.putExtra("matrix", event)
+                   intent.putExtra("user_id", user_id)
                    startActivity(intent)
 
            } catch (e: JSONException) {
@@ -85,9 +93,6 @@ class Esdeveniment : AppCompatActivity() {
         }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
-
-
-
 
     }
 }

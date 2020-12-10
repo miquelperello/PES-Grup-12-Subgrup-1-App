@@ -32,6 +32,8 @@ class SeatAdapter(context: Context, seatList: List<Seat>) :
                 return View.inflate(context, R.layout.seat_item_occ, null)
             else if (seatList[i].occupied == 'T')
                 return View.inflate(context, R.layout.seat_item_free, null)
+            else if (seatList[i].occupied == 'U')
+                return View.inflate(context, R.layout.seat_item_user, null)
             return View.inflate(context, R.layout.seat_item_covid, null)
         }
 
