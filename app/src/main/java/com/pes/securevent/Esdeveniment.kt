@@ -18,6 +18,8 @@ import org.json.JSONException
 
 class Esdeveniment : AppCompatActivity() {
 
+    var canBuy = true;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_esdeveniment)
@@ -68,8 +70,8 @@ class Esdeveniment : AppCompatActivity() {
         requestQueue = Volley.newRequestQueue(this)
 
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
-            btn_click_me.isEnabled = false},
-                { error -> error.printStackTrace() })
+            this.canBuy = false;
+        }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
     }
@@ -100,7 +102,7 @@ class Esdeveniment : AppCompatActivity() {
                    intent.putExtra("roomName", LocE.text)
                    intent.putExtra("matrix", event)
                    intent.putExtra("user_id", user_id)
-                   intent.putExtra("CanBuy", true)
+                   intent.putExtra("CanBuy", canBuy)
                    startActivity(intent)
 
            } catch (e: JSONException) {

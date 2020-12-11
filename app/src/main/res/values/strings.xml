@@ -39,6 +39,11 @@
     <string name="RoomVisualization">Room visualization</string>
     <string name="FullRoom">There are no tickets available, we\'re sorry</string>
     <string name="SeeSeats">See seats</string>
-    <string name="ButtonSeeDetails">See disponibility</string>
+    <string name="ButtonSeeDetails">See availability</string>
+    <string name="Scenario">Stage</string>
+    <string name="yourseet">Assigned</string>
+    <string name="freeseat">Available</string>
+    <string name="occseat">Occupied</string>
+    <string name="covidseat">Restricted</string>
 
 </resources>

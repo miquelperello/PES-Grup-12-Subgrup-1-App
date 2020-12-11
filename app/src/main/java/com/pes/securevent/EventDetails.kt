@@ -7,10 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.GridView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -134,18 +131,12 @@ class EventDetails : AppCompatActivity() {
                     editText.setText("0")
             }
         })
+        findViewById<GridLayout>(R.id.legend).visibility = View.GONE
     }
 
     private fun renderSeeSeats(){
-        val editText = findViewById<EditText>(R.id.numTickets)
-        val buyButton = findViewById<Button>(R.id.googlePayButton)
-        val increment = findViewById<Button>(R.id.plusTickets)
-        val decrement = findViewById<Button>(R.id.minusTickets)
-
-        editText.visibility=View.INVISIBLE
-        buyButton.visibility=View.INVISIBLE
-        increment.visibility=View.INVISIBLE
-        decrement.visibility=View.INVISIBLE
+        findViewById<Button>(R.id.googlePayButton).visibility = View.GONE
+        findViewById<GridLayout>(R.id.numSeatsWrapper).visibility = View.GONE
     }
 
     private fun possiblyShowGooglePayButton() {

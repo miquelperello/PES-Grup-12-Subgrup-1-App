@@ -37,4 +37,9 @@
     <string name="FullRoom">No hi ha tickets disponibles, disculpa les molesties</string>
     <string name="SeeSeats">Veure seients</string>
     <string name="ButtonSeeDetails">Veure disponibilitat</string>
+    <string name="Scenario">Escenari</string>
+    <string name="yourseet">Assignat</string>
+    <string name="freeseat">Disponible</string>
+    <string name="occseat">Ocupat</string>
+    <string name="covidseat">Restringit</string>
 </resources>

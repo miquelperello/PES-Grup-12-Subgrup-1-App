@@ -4,69 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:layout_marginTop="20dp"
     android:background="@color/white"
+    android:padding="16dp"
     tools:context=".EventDetails">
 
-    <LinearLayout
-        android:id="@+id/LinearLayoutLocalitzacio"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <GridView
-            android:id="@+id/grid"
+        <LinearLayout
+            android:id="@+id/LinearLayoutLocalitzacio"
             android:layout_width="match_parent"
-            android:layout_height="386dp"
-            android:layout_gravity="center" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <androidx.gridlayout.widget.GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="78dp">
-
-
-            <EditText
-                android:id="@+id/numTickets"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autofillHints="Number of tickets"
-                android:ems="10"
-                android:inputType="number"
-                android:text="0"
-                app:layout_column="0"
-                app:layout_row="0"
-                tools:ignore="LabelFor"
-                android:maxLength="2"
-                android:enabled="false"
-                android:textColor="@color/black"
-                />
+                android:text="@string/Scenario"
+                android:textSize="26sp" />
+
+            <GridView
+                android:id="@+id/grid"
+                android:layout_width="match_parent"
+                android:layout_height="386dp"
+                android:layout_gravity="center" />
+
+            <GridLayout
+                android:id="@+id/numSeatsWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="78dp">
+
+
+                <EditText
+                    android:id="@+id/numTickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Number of tickets"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    app:layout_column="0"
+                    app:layout_row="0"
+                    tools:ignore="LabelFor" />
+
+                <Button
+                    android:id="@+id/plusTickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="increment"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/minusTickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="decrement"
+                    android:text="-" />
+
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/legend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/seatUser"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_user_seat" />
+
+                <TextView
+                    android:text="@string/yourseet" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_free_seat" />
+                <TextView android:text="@string/freeseat" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_occ_seat" />
+                <TextView android:text="@string/occseat" />
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_seat" />
+                <TextView android:text="@string/covidseat" />
+
+            </GridLayout>
 
             <Button
-                android:id="@+id/plusTickets"
-                android:layout_width="wrap_content"
+                android:id="@+id/googlePayButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+"
-                android:onClick="increment"/>
+                android:layout_gravity="center"
+                android:onClick="buy"
+                android:text="@string/buy" />
 
-            <Button
-                android:id="@+id/minusTickets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:onClick="decrement"/>
-
-        </androidx.gridlayout.widget.GridLayout>
-
-        <Button
-            android:id="@+id/googlePayButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="buy"
-            android:text="@string/buy" />
-
-    </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

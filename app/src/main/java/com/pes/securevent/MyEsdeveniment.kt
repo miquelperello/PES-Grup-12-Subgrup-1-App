@@ -10,6 +10,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.pes.securevent.services.RoomService
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import org.json.JSONException
 
@@ -31,6 +32,7 @@ class MyEsdeveniment : AppCompatActivity() {
         val EDate = intent.getStringExtra("EDate")
         val EHour = intent.getStringExtra("EHour")
 
+
         actionBar.title = ETitle
         titleE.text = ETitle
         IDE.text = EId
@@ -38,6 +40,11 @@ class MyEsdeveniment : AppCompatActivity() {
         LocE.text= ELoc
         DateE.text = EDate
         HourE.text = EHour
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     fun goToRoomVisualization(view: View) {
