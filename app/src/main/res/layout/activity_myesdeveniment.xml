@@ -165,4 +165,22 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/LinearLayoutButtonMaps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutButton"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonMaps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="goToMaps"
+            android:text="@string/SeeSeats" />
+    </LinearLayout>
+
+
+
 </RelativeLayout>

@@ -10,7 +10,6 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.pes.securevent.services.RoomService
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import org.json.JSONException
 
@@ -80,6 +79,14 @@ class MyEsdeveniment : AppCompatActivity() {
         }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
+
+    }
+
+    fun goToMaps(view: View) {
+        val intent = Intent(this, MapsActivity::class.java)
+        //intent.putExtra("eventID", IDE.text)
+        startActivity(intent)
+
 
     }
 }
