@@ -130,6 +130,7 @@ class Acc : Fragment() {
                 .putString("EMAIL", "")
                 .putString("IMAGE", "")
                 .putString("TOKEN", "")
+                .putString("ID", "")
                 .apply()
 
         UsuariActiu = false;

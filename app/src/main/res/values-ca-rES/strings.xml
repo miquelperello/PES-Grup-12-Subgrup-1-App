@@ -42,4 +42,5 @@
     <string name="freeseat">Disponible</string>
     <string name="occseat">Ocupat</string>
     <string name="covidseat">Restringit</string>
+    <string name="SeeLocation">Veure localització</string>
 </resources>

@@ -25,7 +25,6 @@ class Events : Fragment() {
         val url = "https://securevent.herokuapp.com/events"
         requestQueue = Volley.newRequestQueue(activity?.applicationContext)
         val arrayList = ArrayList<Model>()
-        println("MATRIX : : : ")
         val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
            try {
                for (i in 0 until response.length()) {

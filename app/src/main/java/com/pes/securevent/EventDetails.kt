@@ -3,6 +3,7 @@ package com.pes.securevent
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -21,6 +22,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_eventdetails.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class EventDetails : AppCompatActivity() {
@@ -40,6 +44,7 @@ class EventDetails : AppCompatActivity() {
         actionBar.setDisplayShowHomeEnabled(true)
 
         val extras = intent.extras
+
         val roomName = extras?.getString("roomName")
         val user_id = extras?.getString("user_id")
         val CanBuy = extras?.getBoolean("CanBuy")
@@ -103,6 +108,8 @@ class EventDetails : AppCompatActivity() {
         } else {
             renderSeeDisponibility()
         }
+
+
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -122,12 +129,13 @@ class EventDetails : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {}
 
             override fun beforeTextChanged(s: CharSequence, start: Int,
-                                           count: Int, after: Int) {}
+                                           count: Int, after: Int) {
+            }
 
             override fun onTextChanged(s: CharSequence, start: Int,
                                        before: Int, count: Int) {
                 buyButton.isEnabled = s.toString().toInt() != 0
-                if(editText.text.toString() == "")
+                if (editText.text.toString() == "")
                     editText.setText("0")
             }
         })
@@ -171,12 +179,11 @@ class EventDetails : AppCompatActivity() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val extras = intent.extras
-
         when (requestCode) {
             // Value passed in AutoResolveHelper
             LOAD_PAYMENT_DATA_REQUEST_CODE -> {
                 when (resultCode) {
-                    RESULT_OK ->{
+                    RESULT_OK -> {
                         val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
                         val numTickets = edit_text_tickets.text.toString().toInt()
                         postEvent(extras?.getString("eventID"), numTickets.toString())
@@ -308,7 +315,7 @@ class EventDetails : AppCompatActivity() {
         }) {
             override fun getHeaders(): Map<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token $tokenMongoPost")
+                headers["Authorization"] = "Token $tokenMongoPost"
                 return headers
             }
         }
@@ -320,5 +327,38 @@ class EventDetails : AppCompatActivity() {
         )
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
+
+        addToCalendar()
+
     }
+
+    fun addToCalendar() {
+        val extras = intent.extras
+
+        val date = extras?.getString("date")?.split('-')!!
+        val hourIni = extras.getString("hourIni")?.split(":")!!
+
+        println(date[0].toInt())
+        println(date[1].toInt())
+        println(date[2].toInt())
+
+        val startMillis = Calendar.getInstance()
+        startMillis.set(date[0].toInt(), date[1].toInt(), date[2].toInt(), hourIni[0].toInt(), hourIni[1].toInt())
+
+        val endMillis = Calendar.getInstance()
+        endMillis.set(date[0].toInt(), date[1].toInt(), date[2].toInt(), 23, 30)
+
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis.timeInMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis.timeInMillis)
+            .putExtra(CalendarContract.Events.TITLE, extras.getString("eventName"))
+            .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+            .putExtra(CalendarContract.Events.EVENT_LOCATION, extras.getString("roomName"))
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+            .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
+        startActivity(intent)
+    }
+
 }
+
