@@ -109,7 +109,6 @@ class EventDetails : AppCompatActivity() {
             renderSeeDisponibility()
         }
 
-
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -333,27 +332,36 @@ class EventDetails : AppCompatActivity() {
     }
 
     fun addToCalendar() {
+
+        /*
+         Parece que Google Calendar esta bugeado y suma un mes al que se pone por parametro
+         o eso o algo se esta haciendo mal
+        */
         val extras = intent.extras
 
         val date = extras?.getString("date")?.split('-')!!
         val hourIni = extras.getString("hourIni")?.split(":")!!
 
-        println(date[0].toInt())
         println(date[1].toInt())
-        println(date[2].toInt())
 
-        val startMillis = Calendar.getInstance()
-        startMillis.set(date[0].toInt(), date[1].toInt(), date[2].toInt(), hourIni[0].toInt(), hourIni[1].toInt())
+        val startMillis: Long = Calendar.getInstance().run {
+            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourIni[0].toInt(), hourIni[1].toInt())
+            timeInMillis
+        }
+        val endMillis: Long = Calendar.getInstance().run {
+            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), 23, 45)
+            timeInMillis
+        }
 
-        val endMillis = Calendar.getInstance()
-        endMillis.set(date[0].toInt(), date[1].toInt(), date[2].toInt(), 23, 30)
-
+        println(startMillis)
+        println(endMillis)
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis.timeInMillis)
-            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis.timeInMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
             .putExtra(CalendarContract.Events.TITLE, extras.getString("eventName"))
             .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+            .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
             .putExtra(CalendarContract.Events.EVENT_LOCATION, extras.getString("roomName"))
             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
             .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
