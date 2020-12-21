@@ -8,9 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
+import kotlinx.android.synthetic.main.activity_esdeveniment.DateE
+import kotlinx.android.synthetic.main.activity_esdeveniment.HourE
+import kotlinx.android.synthetic.main.activity_esdeveniment.IDE
+import kotlinx.android.synthetic.main.activity_esdeveniment.LocE
+import kotlinx.android.synthetic.main.activity_esdeveniment.imageE
+import kotlinx.android.synthetic.main.activity_esdeveniment.titleE
+import kotlinx.android.synthetic.main.activity_myesdeveniment.*
 import org.json.JSONException
 
 class MyEsdeveniment : AppCompatActivity() {
@@ -83,10 +91,39 @@ class MyEsdeveniment : AppCompatActivity() {
     }
 
     fun goToMaps(view: View) {
-        val intent = Intent(this, MapsActivity::class.java)
-        //intent.putExtra("eventID", IDE.text)
-        startActivity(intent)
+        //Fem una crida per saber la localització de la sala
+        var requestQueue: RequestQueue? = null
+
+        val url = "https://securevent.herokuapp.com/rooms/" + LocE.text //<- events
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        var user_id :String
+        pref.apply{
+            user_id = (getString("ID", "").toString())
+        }
+
+        requestQueue = Volley.newRequestQueue(this)
+
+        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+            try {
+                val intent = Intent(this, MapsActivity2::class.java)
+                val event = response.getJSONObject(0)
+
+                intent.putExtra("loc",event.getString("street")) //passem el carrer
+
+                startActivity(intent)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, { error -> error.printStackTrace() })
+
+        requestQueue?.add(request)
+
 
 
     }
+
+
+
 }
