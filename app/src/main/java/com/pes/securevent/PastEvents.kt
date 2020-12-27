@@ -24,6 +24,7 @@ class PastEvents : Fragment() {
 
     private var requestQueue: RequestQueue? = null
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,9 +39,7 @@ class PastEvents : Fragment() {
         requestQueue = Volley.newRequestQueue(activity?.applicationContext)
         val arrayList = ArrayList<Model>()
 
-        val request = @RequiresApi(Build.VERSION_CODES.O)
-        @SuppressLint("SimpleDateFormat")
-        object: JsonArrayRequest(Method.GET, url, null, { response ->
+        val request = object: JsonArrayRequest(Method.GET, url, null, { response ->
             try {
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)

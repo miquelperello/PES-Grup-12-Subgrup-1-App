@@ -47,7 +47,8 @@
     <string name="SeeLocation">See Location</string>
     <string name="title_activity_calendar" translatable="false">CalendarActivity</string>
     <string name="title_activity_maps2" translatable="false">Map</string>
-    <string name="PastEvents">Past Events</string>
+    <string name="PastEvents">My Past Events</string>
     <string name="GiveRating">The given rating is</string>
+    <string name="LocNotFound">Location not found</string>
 
 </resources>

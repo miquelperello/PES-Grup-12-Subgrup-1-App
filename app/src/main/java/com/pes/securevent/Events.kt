@@ -1,5 +1,6 @@
 package com.pes.securevent
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -15,10 +16,14 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_events.recyclerView
 import org.json.JSONException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Events : Fragment() {
     private var requestQueue: RequestQueue? = null
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,18 +34,25 @@ class Events : Fragment() {
            try {
                for (i in 0 until response.length()) {
                    val event = response.getJSONObject(i)
-                   arrayList.add(
-                           Model(
-                                   event.getString("name"),
-                                   event.getString("_id"),
-                                   R.drawable.icon,
-                                   event.getString("id_room"),
-                                   event.getString("date"),
-                                   event.getString("hourIni"),
-                                   event.getString("minPrice"),
-                                   event.getString("maxPrice")
-                           )
-                   )
+                   val sdf = SimpleDateFormat("yyyy-MM-dd")
+                   val strDate: Date? = sdf.parse(event.getString("date"))
+                   val isSameDay: Boolean = strDate?.day == Date().day && strDate.month == Date().month && strDate.year == Date().year
+                   println(Date())
+                   println(strDate)
+                   if (Date().before(strDate) || isSameDay) {
+                       arrayList.add(
+                               Model(
+                                       event.getString("name"),
+                                       event.getString("_id"),
+                                       R.drawable.icon,
+                                       event.getString("id_room"),
+                                       event.getString("date"),
+                                       event.getString("hourIni"),
+                                       event.getString("minPrice"),
+                                       event.getString("maxPrice")
+                               )
+                       )
+                   }
 
                }
 
@@ -63,21 +75,5 @@ class Events : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false)
-    }
-
-    class MyDrawerLayout : DrawerLayout {
-        constructor(context: Context?) : super(context!!) {}
-        constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
-        constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
-
-        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-            var widthMeasureSpec = widthMeasureSpec
-            var heightMeasureSpec = heightMeasureSpec
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY)
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.EXACTLY)
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        }
     }
 }

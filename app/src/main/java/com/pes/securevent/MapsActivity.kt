@@ -10,6 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.util.*
 
@@ -40,13 +41,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         val extras = intent.extras
-        //val street: String? = extras?.getString("loc")
-        val street: String = "Carrer Valls d'Andorra, Sant Adria"
-        val addresses: List<Address> = getAddress(street);
-        val location = LatLng(addresses[0].latitude,addresses[0].longitude)
-        mMap.addMarker(MarkerOptions().position(location).title("Marker in " + addresses[0].locality))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        val street: String? = extras?.getString("loc")
+        val addresses: List<Address> = getAddress(street)
+        if(addresses.isEmpty())
+            Snackbar.make(findViewById(R.id.map), R.string.LocNotFound, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        else {
+            val location = LatLng(addresses[0].latitude, addresses[0].longitude)
+            mMap.addMarker(MarkerOptions().position(location).title("Marker in " + addresses[0].locality))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        }
     }
+
     private fun getAddress(street: String?): List<Address> {
         val result = StringBuilder()
         var addresses: List<Address>? = null

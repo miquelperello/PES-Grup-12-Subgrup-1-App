@@ -35,7 +35,7 @@ class MyEvents : Fragment() {
         requestQueue = Volley.newRequestQueue(activity?.applicationContext)
         val arrayList = ArrayList<Model>()
 
-        val request = object: JsonArrayRequest(Request.Method.GET, url, null, { response ->
+        val request = object: JsonArrayRequest(Method.GET, url, null, { response ->
             try {
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)
@@ -83,22 +83,6 @@ class MyEvents : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_events, container, false)
-    }
-
-    class MyDrawerLayout : DrawerLayout {
-        constructor(context: Context?) : super(context!!) {}
-        constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
-        constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
-
-        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-            var widthMeasureSpec = widthMeasureSpec
-            var heightMeasureSpec = heightMeasureSpec
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY)
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.EXACTLY)
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        }
     }
 
 }

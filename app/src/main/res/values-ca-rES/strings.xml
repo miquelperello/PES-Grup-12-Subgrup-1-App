@@ -43,6 +43,7 @@
     <string name="occseat">Ocupat</string>
     <string name="covidseat">Restringit</string>
     <string name="SeeLocation">Veure localització</string>
-    <string name="PastEvents">Events passats</string>
+    <string name="PastEvents">Els meus events passats</string>
     <string name="GiveRating">La puntuació donada és</string>
+    <string name="LocNotFound">No s\'ha trobat la localització</string>
 </resources>
