@@ -1,16 +1,12 @@
 package com.pes.securevent
 
-import android.content.Context
 import android.os.Bundle
-import androidx.preference.PreferenceManager
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
@@ -53,7 +49,7 @@ class MyEvents : Fragment() {
                     )
                 }
 
-                val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapterMyEvents(arrayList, it, false) })
+                val myAdapter = (activity?.applicationContext?.let { MyAdapterMyEvents(arrayList, it, false) })
 
                 recyclerViewE.layoutManager = LinearLayoutManager(activity)
                 recyclerViewE.adapter = myAdapter
@@ -68,7 +64,7 @@ class MyEvents : Fragment() {
                 // Create HashMap of your Headers as the example provided below
 
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token $tokenMongoPost")
+                headers["Authorization"] = "Token $tokenMongoPost"
 
                 return headers
             }
