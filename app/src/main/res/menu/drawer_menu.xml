@@ -16,6 +16,10 @@
             android:title="@string/MyEvents"
             android:icon="@drawable/ic_myevents" />
         <item
+            android:id="@+id/pastevents"
+            android:title="@string/PastEvents"
+            android:icon="@drawable/ic_myevents" />
+        <item
             android:id="@+id/signin"
             android:icon="@drawable/ic_login"
             android:title="@string/SignIn" />

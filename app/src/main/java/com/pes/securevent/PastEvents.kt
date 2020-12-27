@@ -1,23 +1,26 @@
 package com.pes.securevent
 
-import android.content.Context
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import androidx.preference.PreferenceManager
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_my_events.*
 import org.json.JSONException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-class MyEvents : Fragment() {
+class PastEvents : Fragment() {
 
     private var requestQueue: RequestQueue? = null
 
@@ -35,11 +38,18 @@ class MyEvents : Fragment() {
         requestQueue = Volley.newRequestQueue(activity?.applicationContext)
         val arrayList = ArrayList<Model>()
 
-        val request = object: JsonArrayRequest(Request.Method.GET, url, null, { response ->
+        val request = @RequiresApi(Build.VERSION_CODES.O)
+        @SuppressLint("SimpleDateFormat")
+        object: JsonArrayRequest(Method.GET, url, null, { response ->
             try {
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)
-                    arrayList.add(
+                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val strDate: Date? = sdf.parse(event.getString("date"))
+                    if (Date().after(strDate)) {
+                        //println(strDate + " < " + Date())
+
+                        arrayList.add(
                             Model(
                                 event.getString("name"),
                                 event.getString("_id"),
@@ -49,11 +59,18 @@ class MyEvents : Fragment() {
                                 event.getString("hourIni"),
                                 event.getString("minPrice"),
                                 event.getString("maxPrice")
+                            )
                         )
-                    )
+                    }
                 }
 
-                val myAdapter = (getActivity()?.getApplicationContext()?.let { MyAdapterMyEvents(arrayList, it, false) })
+                val myAdapter = (activity?.applicationContext?.let {
+                    MyAdapterMyEvents(
+                        arrayList,
+                        it,
+                        true
+                    )
+                })
 
                 recyclerViewE.layoutManager = LinearLayoutManager(activity)
                 recyclerViewE.adapter = myAdapter
@@ -68,7 +85,7 @@ class MyEvents : Fragment() {
                 // Create HashMap of your Headers as the example provided below
 
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Token $tokenMongoPost")
+                headers["Authorization"] = "Token $tokenMongoPost"
 
                 return headers
             }
@@ -79,26 +96,12 @@ class MyEvents : Fragment() {
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_events, container, false)
-    }
-
-    class MyDrawerLayout : DrawerLayout {
-        constructor(context: Context?) : super(context!!) {}
-        constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {}
-        constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context!!, attrs, defStyle) {}
-
-        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-            var widthMeasureSpec = widthMeasureSpec
-            var heightMeasureSpec = heightMeasureSpec
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY)
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                    MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.EXACTLY)
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        }
+        return inflater.inflate(R.layout.fragment_past_events, container, false)
     }
 
 }

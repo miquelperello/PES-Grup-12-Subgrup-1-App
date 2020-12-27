@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row.view.*
 
-class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context) : RecyclerView.Adapter<MyAdapterMyEvents.ViewHolder>() {
+class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, val past: Boolean) : RecyclerView.Adapter<MyAdapterMyEvents.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -32,21 +32,24 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context) :
         holder.itemView.setOnClickListener{
             val model = arrayList.get(position)
 
-            var ETitle : String = model.title
-            var EId : String = model._id
+            val ETitle : String = model.title
+            val EId : String = model._id
 
-            var EImage : Int = model.image
+            val EImage : Int = model.image
 
-            var ELoc : String = model.loc
+            val ELoc : String = model.loc
 
-            var EDate : String = model.date
+            val EDate : String = model.date
 
-            var EHour: String = model.hour
-            var EPriceMin : String = model.minPrice
-            var EPriceMax : String = model.maxPrice
+            val EHour: String = model.hour
+            val EPriceMin : String = model.minPrice
+            val EPriceMax : String = model.maxPrice
 
 
-            val esdeveniment = Intent(context, MyEsdeveniment::class.java)
+            val esdeveniment : Intent = if(past)
+                Intent(context, MyPastEvent::class.java)
+            else
+                Intent(context, MyEsdeveniment::class.java)
 
             esdeveniment.putExtra("ETitle", ETitle)
             esdeveniment.putExtra("EId", EId)

@@ -27,7 +27,6 @@
     <string name="SignOut">Sign Out</string>
     <string name="Settings">Settings</string>
     <string name="Language">Change Language</string>
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="BotoEvent">Join Event</string>
     <string name="ButtonGoToPaypal">Buy</string>
     <string name="MessageSignIn">SignIn in order to join Events!</string>
@@ -46,10 +45,9 @@
     <string name="occseat">Occupied</string>
     <string name="covidseat">Restricted</string>
     <string name="SeeLocation">See Location</string>
-    <string name="title_activity_calendar">CalendarActivity</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_maps2">Map</string>
+    <string name="title_activity_calendar" translatable="false">CalendarActivity</string>
+    <string name="title_activity_maps2" translatable="false">Map</string>
+    <string name="PastEvents">Past Events</string>
+    <string name="GiveRating">The given rating is</string>
 
 </resources>

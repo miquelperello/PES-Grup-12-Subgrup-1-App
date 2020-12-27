@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_marginTop="20dp"
+    android:background="@color/white"
+
+    tools:context=".MyEsdeveniment">
+
+    <ImageView
+        android:id="@+id/imageE"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/icon"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleE"
+        android:text="@string/title"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_below="@id/imageE"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/IDE"
+        android:text="@string/description"
+        android:textSize="18sp"
+        android:textColor="@color/teal_200"
+        android:gravity="center"
+        android:layout_below="@id/titleE"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LabelInfo"
+        android:text="@string/info"
+        android:textSize="20sp"
+        android:textColor="@color/teal_200"
+        android:gravity="center"
+        android:layout_below="@id/IDE"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/LinearLayoutLocalitzacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/LabelInfo">
+
+        <TextView
+            android:id="@+id/LocTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:layout_marginRight="20dp"
+            android:text="@string/location"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/LocE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/LinearLayoutData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/LinearLayoutLocalitzacio">
+
+        <TextView
+            android:id="@+id/DateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:layout_marginRight="20dp"
+            android:text="@string/date"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/DateE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/LinearLayoutHora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/LinearLayoutData">
+
+        <TextView
+            android:id="@+id/HourTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:layout_marginRight="20dp"
+            android:text="@string/hour"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/HourE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutHora"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <RatingBar
+            android:id="@+id/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize=".5"
+            android:layout_marginLeft="60dp"
+            android:layout_marginStart="60dp"
+            android:progressTint="@color/orange_app"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutButtonMaps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutButton"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonMaps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="goToMaps"
+            android:text="@string/SeeLocation" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

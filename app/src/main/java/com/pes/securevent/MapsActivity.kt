@@ -14,7 +14,7 @@ import java.io.IOException
 import java.util.*
 
 
-class MapsActivity2 : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
@@ -40,7 +40,8 @@ class MapsActivity2 : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         val extras = intent.extras
-        val street: String? = extras?.getString("loc")
+        //val street: String? = extras?.getString("loc")
+        val street: String = "Carrer Valls d'Andorra, Sant Adria"
         val addresses: List<Address> = getAddress(street);
         val location = LatLng(addresses[0].latitude,addresses[0].longitude)
         mMap.addMarker(MarkerOptions().position(location).title("Marker in " + addresses[0].locality))

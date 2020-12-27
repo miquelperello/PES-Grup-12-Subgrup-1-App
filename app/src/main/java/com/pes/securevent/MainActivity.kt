@@ -25,13 +25,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //Gestió Users
 
 
-
     companion object {
         lateinit var usuari: UserG
 
         var UsuariActiu :Boolean = false
-
-        val LlistaEvents: MutableList<String> = ArrayList()
 
     }
 
@@ -40,6 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //Gestió Navigation Drawer
     lateinit var Events: Events
     lateinit var MyEvents: MyEvents
+    lateinit var PastEvents: PastEvents
     lateinit var Acc: Acc
 
 
@@ -48,9 +46,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-
 
         setSupportActionBar(toolBar)
 
@@ -67,19 +62,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     textView.text = usuari.firstName
                     val imageView: ImageView = findViewById(R.id.imageUserHeader) as ImageView
                     Picasso.get().load(usuari.image).into(imageView)
-                    nav_view.getMenu().findItem(R.id.myevents).setVisible(true)
-                    nav_view.getMenu().findItem(R.id.signin).setVisible(false)
-                    nav_view.getMenu().findItem(R.id.signout).setVisible(true)
+                    nav_view.menu.findItem(R.id.myevents).isVisible = true
+                    nav_view.menu.findItem(R.id.signin).isVisible = false
+                    nav_view.menu.findItem(R.id.pastevents).isVisible = true
+                    nav_view.menu.findItem(R.id.signout).isVisible = true
 
                 }
                 else{
-                    val textView: TextView = findViewById(R.id.imageUserName) as TextView
+                    val textView: TextView = findViewById(R.id.imageUserName)
                     textView.text = getResources().getString(R.string.SignIn);
-                    val imageView: ImageView = findViewById(R.id.imageUserHeader) as ImageView
+                    val imageView: ImageView = findViewById(R.id.imageUserHeader)
                     Picasso.get().load(R.drawable.ic_user).into(imageView)
-                    nav_view.getMenu().findItem(R.id.myevents).setVisible(false)
-                    nav_view.getMenu().findItem(R.id.signin).setVisible(true)
-                    nav_view.getMenu().findItem(R.id.signout).setVisible(false)
+                    nav_view.menu.findItem(R.id.myevents).isVisible = false
+                    nav_view.menu.findItem(R.id.signin).isVisible = true
+                    nav_view.menu.findItem(R.id.pastevents).isVisible = false
+                    nav_view.menu.findItem(R.id.signout).isVisible = false
                 }
             }
         }
@@ -89,8 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerToggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
-
 
 
         Events = Events()
@@ -123,6 +118,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, MyEvents)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+            }
+            R.id.pastevents -> {
+                PastEvents = PastEvents()
+                toolBar.title = getResources().getString(R.string.PastEvents);
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_layout, PastEvents)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit()
             }
