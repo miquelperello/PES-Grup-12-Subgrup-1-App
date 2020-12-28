@@ -233,4 +233,23 @@
             android:text="@string/ButtonSeeDetails" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinearLayoutShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutGoToPaypal"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/buttonShare"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#2222"
+            android:text="@string/ButtonShare" />
+    </LinearLayout>
+
+
 </RelativeLayout>

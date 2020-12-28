@@ -3,6 +3,7 @@ package com.pes.securevent
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
@@ -11,6 +12,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_esdeveniment.DateE
 import kotlinx.android.synthetic.main.activity_esdeveniment.HourE
 import kotlinx.android.synthetic.main.activity_esdeveniment.IDE
@@ -45,6 +47,30 @@ class MyEsdeveniment : AppCompatActivity() {
         LocE.text= ELoc
         DateE.text = EDate
         HourE.text = EHour
+
+        val btn_share = findViewById<Button>(R.id.buttonShare)
+        btn_share.setOnClickListener { view->
+            if (MainActivity.UsuariActiu) {
+                val message: String? = getResources().getString(R.string.MessageAssist)
+                val title: String? = ETitle
+                val loc: String? = getResources().getString(R.string.MessageLoc)
+                val LocE: String? = ELoc
+                val download: String? = getResources().getString(R.string.MessageDownload)
+                //val image = Uri.parse()
+
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND
+                intent.putExtra(Intent.EXTRA_TEXT, "$message $title $loc $LocE ?\n\n$download")
+                //intent.putExtra(Intent.EXTRA_STREAM, image)
+                intent.type = "*/*"
+
+                startActivity(Intent.createChooser(intent, "Please select app: "))
+            }
+            else {
+                Snackbar.make(view, getResources().getString(R.string.MessageSignIn2), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

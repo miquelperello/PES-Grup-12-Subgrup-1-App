@@ -46,4 +46,9 @@
     <string name="PastEvents">Els meus events passats</string>
     <string name="GiveRating">La puntuació donada és</string>
     <string name="LocNotFound">No s\'ha trobat la localització</string>
+    <string name="ButtonShare" >Comparteix l\'esdeveniment</string>
+    <string name="MessageSignIn2">Inicia sessió per compartir un esdeveniment!</string>
+    <string name="MessageAssist">"T'agradaria assistir a "</string>
+    <string name="MessageLoc">"al "</string>
+    <string name="MessageDownload">Si vols saber més sobre aquest esdeveniment, descarrega SecurEvent aquí:</string>
 </resources>
