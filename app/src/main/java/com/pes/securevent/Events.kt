@@ -37,8 +37,6 @@ class Events : Fragment() {
                    val sdf = SimpleDateFormat("yyyy-MM-dd")
                    val strDate: Date? = sdf.parse(event.getString("date"))
                    val isSameDay: Boolean = strDate?.day == Date().day && strDate.month == Date().month && strDate.year == Date().year
-                   println(Date())
-                   println(strDate)
                    if (Date().before(strDate) || isSameDay) {
                        arrayList.add(
                                Model(

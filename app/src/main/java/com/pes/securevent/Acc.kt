@@ -127,6 +127,7 @@ class Acc : Fragment() {
         editor
                 .putString("NAME", "")
                 .putString("SURNAME", "")
+                .putString("USERNAME", "")
                 .putString("EMAIL", "")
                 .putString("IMAGE", "")
                 .putString("TOKEN", "")
@@ -218,7 +219,7 @@ class Acc : Fragment() {
                         token_mongo = response.getString("token")
                         println( "Response $response")
                         println(token_mongo)
-                        guardaCache(token_mongo, user_id.toString())
+                        guardaCache(token_mongo, user_id.toString(), username[0])
 
                     } catch (e: Exception) {
                        println( "Response $e")
@@ -284,12 +285,13 @@ class Acc : Fragment() {
         UsuariActiu = true
     }
 
-    private fun guardaCache(token_mongo: String, user_id: String) {
+    private fun guardaCache(token_mongo: String, user_id: String, username: String) {
         val pref = PreferenceManager.getDefaultSharedPreferences(activity?.applicationContext)
         val editor = pref.edit()
         editor
             .putString("NAME", usuari.firstName)
             .putString("SURNAME", usuari.lastName)
+            .putString("USERNAME", username)
             .putString("EMAIL", usuari.email)
             .putString("IMAGE", usuari.image)
             .putString("TOKEN", token_mongo)

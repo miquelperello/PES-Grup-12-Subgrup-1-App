@@ -8,7 +8,7 @@
     android:layout_marginTop="20dp"
     android:background="@color/white"
 
-    tools:context=".MyEsdeveniment">
+    tools:context=".MyPastEvent">
 
     <ImageView
         android:id="@+id/imageE"
@@ -155,7 +155,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/LinearLayoutHora"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <RatingBar
             android:id="@+id/RatingBar"
@@ -166,25 +166,39 @@
             android:layout_marginLeft="60dp"
             android:layout_marginStart="60dp"
             android:progressTint="@color/orange_app"/>
+
+        <EditText
+            android:id="@+id/commentText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
     </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/LinearLayoutButtonMaps"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/LinearLayoutButton"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/buttonSubmitRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="submitRating"
+            android:text="@string/Submit" />
 
         <Button
             android:id="@+id/buttonMaps"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="goToMaps"
             android:text="@string/SeeLocation" />
     </LinearLayout>
-
 
 
 </RelativeLayout>

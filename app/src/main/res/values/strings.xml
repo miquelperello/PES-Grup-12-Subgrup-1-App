@@ -48,12 +48,13 @@
     <string name="title_activity_calendar" translatable="false">CalendarActivity</string>
     <string name="title_activity_maps2" translatable="false">Map</string>
     <string name="PastEvents">My Past Events</string>
-    <string name="GiveRating">The given rating is</string>
+    <string name="GiveRating">Your rating has been submited</string>
     <string name="LocNotFound">Location not found</string>
     <string name="ButtonShare" >Share event</string>
     <string name="MessageSignIn2" >SignIn in order to share this Event!</string>
     <string name="MessageAssist">Would you like to assist to</string>
     <string name="MessageLoc">at</string>
     <string name="MessageDownload" >To know more about this event, download SecurEvent here:</string>
+    <string name="Submit">Submit Rating</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -23,6 +24,7 @@ import org.json.JSONObject
 class MyPastEvent : AppCompatActivity() {
 
     private var requestQueue: RequestQueue? = null
+    private var rating: Float? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,10 +61,10 @@ class MyPastEvent : AppCompatActivity() {
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         var tokenMongoPost :String
-        var email: String
+        var username: String
         pref.apply{
             tokenMongoPost = (getString("TOKEN", "").toString())
-            email = getString("EMAIL", "").toString()
+            username = getString("USERNAME", "").toString()
 
         }
 
@@ -73,10 +75,13 @@ class MyPastEvent : AppCompatActivity() {
             try {
                 for (i in 0 until response.length()) {
                     val rating = response.getJSONObject(i)
-                    val revId = "Review_" + email.takeWhile { c -> c != '@' } + "_" + IDE.text
+                    val revId = "Review_" + username + "_" + IDE.text
+                    println(revId)
                     if(rating.getString("_id") == revId) {
                         val rBar = findViewById<RatingBar>(R.id.RatingBar)
                         rBar.rating = rating.getString("rate").toFloat()
+                        val comment = findViewById<EditText>(R.id.commentText)
+                        comment.setText(rating.getString("comment"))
                         break
                     }
 
@@ -104,13 +109,17 @@ class MyPastEvent : AppCompatActivity() {
         val ratingBar = findViewById<RatingBar>(R.id.RatingBar)
         ratingBar.onRatingBarChangeListener =
             RatingBar.OnRatingBarChangeListener { _, p1, _ ->
-                postRating(p1)
-                val string : String = getString(R.string.GiveRating) + " " + p1
-                Toast.makeText(this@MyPastEvent, string, Toast.LENGTH_SHORT).show()
+                rating = p1
             }
     }
 
-    private fun postRating(rating: Float) {
+    fun submitRating(view: View) {
+        val comment = findViewById<EditText>(R.id.commentText)
+        postRating(rating, comment.text.toString())
+        Toast.makeText(this@MyPastEvent, R.string.GiveRating, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun postRating(rating: Float?, comment: String) {
         val url = "https://securevent.herokuapp.com/ratings"
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
@@ -126,7 +135,7 @@ class MyPastEvent : AppCompatActivity() {
         val params = JSONObject()
         params.put("id_event", IDE.text)
         params.put("rate", rating)
-        params.put("comment", null)
+        params.put("comment", comment)
         params.put("author", username)
 
         // Volley post request with parameters
