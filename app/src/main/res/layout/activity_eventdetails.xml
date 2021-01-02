@@ -80,33 +80,41 @@
 
                 <ImageView
                     android:id="@+id/seatUser"
-                    android:layout_width="30dp"
+                    android:layout_width="25dp"
                     android:layout_height="30dp"
                     android:src="@mipmap/ic_user_seat" />
 
-                <TextView android:text="@string/yourseet" />
+                <TextView
+                    android:text="@string/yourseet"
+                    />
 
                 <ImageView
-                    android:layout_width="30dp"
+                    android:layout_width="25dp"
                     android:layout_height="30dp"
                     android:src="@mipmap/ic_free_seat" />
 
-                <TextView android:text="@string/freeseat" />
+                <TextView
+                    android:text="@string/freeseat"
+                    />
 
                 <ImageView
-                    android:layout_width="30dp"
+                    android:layout_width="25dp"
                     android:layout_height="30dp"
                     android:src="@mipmap/ic_occ_seat" />
 
-                <TextView android:text="@string/occseat" />
+                <TextView
+                    android:text="@string/occseat"
+                    />
 
 
                 <ImageView
-                    android:layout_width="30dp"
+                    android:layout_width="25dp"
                     android:layout_height="30dp"
                     android:src="@mipmap/ic_seat" />
 
-                <TextView android:text="@string/covidseat" />
+                <TextView
+                    android:text="@string/covidseat"
+                    />
 
             </GridLayout>
 
