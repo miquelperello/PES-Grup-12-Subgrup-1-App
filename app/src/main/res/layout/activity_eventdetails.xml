@@ -35,7 +35,8 @@
             <GridLayout
                 android:id="@+id/numSeatsWrapper"
                 android:layout_width="wrap_content"
-                android:layout_height="78dp">
+                android:layout_height="78dp"
+                android:layout_marginTop="5dp">
 
 
                 <EditText
