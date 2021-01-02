@@ -58,14 +58,25 @@
             android:textSize="18sp"
             android:visibility="invisible" />
 
+        <Button
+            android:id="@+id/google_logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/MailUser"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:text="@string/SignOutWithGoogle"
+            android:textSize="15sp"
+            android:visibility="invisible" />
+
     </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/LinearLayoutLocalitzacio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="200dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:orientation="horizontal"
             android:gravity="center"
             android:background="#800000"
@@ -92,22 +103,6 @@
 
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/google_logout_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/LinearLayoutLocalitzacio"
-            android:layout_gravity="center"
-            android:text="@string/SignOutWithGoogle"
-            android:textSize="15sp"
-            android:visibility="invisible" />
-
-
-
-
-
-
 
 
 </RelativeLayout>
