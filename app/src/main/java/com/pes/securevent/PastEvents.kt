@@ -54,6 +54,7 @@ class PastEvents : Fragment() {
                                 event.getString("id_room"),
                                 event.getString("date"),
                                 event.getString("hourIni"),
+                                event.getString("hourEnd"),
                                 event.getString("minPrice"),
                                 event.getString("maxPrice")
                             )

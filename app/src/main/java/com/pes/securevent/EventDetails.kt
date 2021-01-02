@@ -341,6 +341,9 @@ class EventDetails : AppCompatActivity() {
 
         val date = extras?.getString("date")?.split('-')!!
         val hourIni = extras.getString("hourIni")?.split(":")!!
+        val hourEnd = extras.getString("hourEnd")?.split(":")!!
+
+
 
         println(date[1].toInt())
 
@@ -349,12 +352,10 @@ class EventDetails : AppCompatActivity() {
             timeInMillis
         }
         val endMillis: Long = Calendar.getInstance().run {
-            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), 23, 45)
+            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourEnd[0].toInt(), hourEnd[1].toInt())
             timeInMillis
         }
 
-        println(startMillis)
-        println(endMillis)
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)

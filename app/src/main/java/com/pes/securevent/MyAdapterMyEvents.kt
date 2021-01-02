@@ -42,6 +42,7 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, v
             val EDate : String = model.date
 
             val EHour: String = model.hour
+            val EHourEnd: String = model.hourEnd
             val EPriceMin : String = model.minPrice
             val EPriceMax : String = model.maxPrice
 
@@ -57,6 +58,7 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, v
             esdeveniment.putExtra("ELoc", ELoc)
             esdeveniment.putExtra("EDate", EDate)
             esdeveniment.putExtra("EHour", EHour)
+            esdeveniment.putExtra("EHourEnd", EHourEnd)
             esdeveniment.putExtra("EPriceMin", EPriceMin)
             esdeveniment.putExtra("EPriceMax", EPriceMax)
 

@@ -42,15 +42,17 @@ class MyPastEvent : AppCompatActivity() {
         val loc = intent.getStringExtra("ELoc")
         val date = intent.getStringExtra("EDate")
         val hour = intent.getStringExtra("EHour")
+        val hourEnd = intent.getStringExtra("EHourEnd")
 
 
         actionBar.title = title
         titleE.text = title
         IDE.text = id
         imageE.setImageResource(imageView)
-        LocE.text= loc
+        LocE.text= loc!!.split("_")[0]
         DateE.text = date
         HourE.text = hour
+        HourEnd.text = hourEnd
 
         findIfVoted()
 

@@ -149,11 +149,41 @@
 
     <LinearLayout
         android:layout_marginTop="15dp"
-        android:id="@+id/LinearLayoutPriceMin"
+        android:id="@+id/LinearLayoutHoraFinal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/LinearLayoutHora">
+
+        <TextView
+            android:id="@+id/HourFinalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:layout_marginRight="20dp"
+            android:text="@string/hourEnd"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/HourEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/LinearLayoutPriceMin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/LinearLayoutHoraFinal">
 
         <TextView
             android:id="@+id/PriceMinTitle"

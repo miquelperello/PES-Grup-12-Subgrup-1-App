@@ -13,12 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_esdeveniment.DateE
-import kotlinx.android.synthetic.main.activity_esdeveniment.HourE
-import kotlinx.android.synthetic.main.activity_esdeveniment.IDE
-import kotlinx.android.synthetic.main.activity_esdeveniment.LocE
-import kotlinx.android.synthetic.main.activity_esdeveniment.imageE
-import kotlinx.android.synthetic.main.activity_esdeveniment.titleE
+import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import org.json.JSONException
 
 class MyEsdeveniment : AppCompatActivity() {
@@ -38,24 +33,26 @@ class MyEsdeveniment : AppCompatActivity() {
         val ELoc = intent.getStringExtra("ELoc")
         val EDate = intent.getStringExtra("EDate")
         val EHour = intent.getStringExtra("EHour")
+        val EHourEnd = intent.getStringExtra("EHourEnd")
 
 
         actionBar.title = ETitle
         titleE.text = ETitle
         IDE.text = EId
         imageE.setImageResource(EImageView)
-        LocE.text= ELoc
+        LocE.text= ELoc!!.split("_")[0]
         DateE.text = EDate
         HourE.text = EHour
+        HourEnd.text = EHourEnd
 
         val btn_share = findViewById<Button>(R.id.buttonShare)
         btn_share.setOnClickListener { view->
             if (MainActivity.UsuariActiu) {
-                val message: String? = getResources().getString(R.string.MessageAssist)
+                val message: String = resources.getString(R.string.MessageAssist)
                 val title: String? = ETitle
-                val loc: String? = getResources().getString(R.string.MessageLoc)
-                val LocE: String? = ELoc
-                val download: String? = getResources().getString(R.string.MessageDownload)
+                val loc: String = resources.getString(R.string.MessageLoc)
+                val LocE: String = ELoc
+                val download: String = resources.getString(R.string.MessageDownload)
                 //val image = Uri.parse()
 
                 val intent = Intent()

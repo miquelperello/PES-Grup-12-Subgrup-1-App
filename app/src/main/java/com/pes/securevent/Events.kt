@@ -42,10 +42,11 @@ class Events : Fragment() {
                                Model(
                                        event.getString("name"),
                                        event.getString("_id"),
-                                       R.drawable.icon,
+                                       event.getString("logo"),
                                        event.getString("id_room"),
                                        event.getString("date"),
                                        event.getString("hourIni"),
+                                       event.getString("hourEnd"),
                                        event.getString("minPrice"),
                                        event.getString("maxPrice")
                                )

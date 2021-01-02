@@ -13,7 +13,7 @@
     <string name="location">Localització</string>
     <string name="MaxPrice">Preu Màxim</string>
     <string name="mininum_price">Preu Mínim</string>
-    <string name="hour">Hora</string>
+    <string name="hour">Hora d\'inici</string>
     <string name="date">Data</string>
     <string name="open">obre</string>
     <string name="close">tanca</string>
@@ -52,4 +52,5 @@
     <string name="MessageLoc">"al "</string>
     <string name="MessageDownload">Si vols saber més sobre aquest esdeveniment, descarrega SecurEvent aquí:</string>
     <string name="Submit">Pujar valoració</string>
+    <string name="hourEnd">Hora Final</string>
 </resources>

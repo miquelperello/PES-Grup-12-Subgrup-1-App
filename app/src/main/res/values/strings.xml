@@ -16,7 +16,7 @@
     <string name="location">Location</string>
     <string name="MaxPrice">Maximum Price</string>
     <string name="mininum_price">Mininum Price</string>
-    <string name="hour">Hour</string>
+    <string name="hour">Start Hour</string>
     <string name="date">Date</string>
     <string name="open">open</string>
     <string name="close">close</string>
@@ -56,5 +56,6 @@
     <string name="MessageLoc">at</string>
     <string name="MessageDownload" >To know more about this event, download SecurEvent here:</string>
     <string name="Submit">Submit Rating</string>
+    <string name="hourEnd">End Hour</string>
 
 </resources>

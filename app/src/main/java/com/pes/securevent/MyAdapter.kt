@@ -16,7 +16,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
             itemView.titleE.text = model.title
             itemView.descE.text = model._id
-            itemView.imageE.setImageResource(model.image)
+            //itemView.imageE.setImageResource(model.image)
         }
     }
 
@@ -32,18 +32,23 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
         holder.itemView.setOnClickListener{
             val model = arrayList.get(position)
 
-            var ETitle : String = model.title
-            var EId : String = model._id
+            val ETitle : String = model.title
 
-            var EImage : Int = model.image
+            val EId : String = model._id
 
-            var ELoc : String = model.loc
+            //val EImage : Int = model.image
 
-            var EDate : String = model.date
+            val ELoc : String = model.loc
 
-            var EHour: String = model.hour
-            var EPriceMin : String = model.minPrice
-            var EPriceMax : String = model.maxPrice
+            val EDate : String = model.date
+
+            val EHour: String = model.hour
+
+            val EHourEnd: String = model.hourEnd
+
+            val EPriceMin : String = model.minPrice
+
+            val EPriceMax : String = model.maxPrice
 
 
             val esdeveniment = Intent(context, Esdeveniment::class.java)
@@ -53,6 +58,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
             esdeveniment.putExtra("EImage", EImage)
             esdeveniment.putExtra("ELoc", ELoc)
             esdeveniment.putExtra("EDate", EDate)
+            esdeveniment.putExtra("EHourEnd", EHourEnd)
             esdeveniment.putExtra("EHour", EHour)
             esdeveniment.putExtra("EPriceMin", EPriceMin)
             esdeveniment.putExtra("EPriceMax", EPriceMax)

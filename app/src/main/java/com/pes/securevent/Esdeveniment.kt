@@ -1,7 +1,6 @@
 package com.pes.securevent
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -36,6 +35,7 @@ class Esdeveniment : AppCompatActivity() {
         val ELoc = intent.getStringExtra("ELoc")
         val EDate = intent.getStringExtra("EDate")
         val EHour = intent.getStringExtra("EHour")
+        val EHourEnd = intent.getStringExtra("EHourEnd")
         val EPriceMin = intent.getStringExtra("EPriceMin")
         val EPriceMax = intent.getStringExtra("EPriceMax")
 
@@ -43,9 +43,10 @@ class Esdeveniment : AppCompatActivity() {
         titleE.text = ETitle
         IDE.text = EId
         imageE.setImageResource(EImageView)
-        LocE.text= ELoc
+        LocE.text= ELoc!!.split("_")[0]
         DateE.text = EDate
         HourE.text = EHour
+        HourEnd.text = EHourEnd
         MinPriceE.text = EPriceMin
         MaxPriceE.text = EPriceMax
 
@@ -130,6 +131,7 @@ class Esdeveniment : AppCompatActivity() {
                intent.putExtra("CanBuy", canBuy)
                intent.putExtra("eventName", titleE.text)
                intent.putExtra("hourIni", HourE.text)
+               intent.putExtra("hourEnd", HourEnd.text)
                intent.putExtra("date", DateE.text)
                startActivity(intent)
 

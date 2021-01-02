@@ -49,7 +49,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         else {
             val location = LatLng(addresses[0].latitude, addresses[0].longitude)
             mMap.addMarker(MarkerOptions().position(location).title("Marker in " + addresses[0].locality))
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16f))
         }
     }
 
