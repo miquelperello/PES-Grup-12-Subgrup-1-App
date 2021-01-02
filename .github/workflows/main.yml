@@ -32,6 +32,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+          
+      - name: Decode BASEURL
+        env:
+          BASEURL: ${{ secrets.LOCAL }}
+        run: echo LOCAL="$LOCAL" > ./local.properties  
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
       - name: Upload APK
