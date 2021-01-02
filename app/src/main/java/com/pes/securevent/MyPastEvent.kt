@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import kotlinx.android.synthetic.main.fragment_my_events.*
 import org.json.JSONException
@@ -25,6 +26,8 @@ class MyPastEvent : AppCompatActivity() {
 
     private var requestQueue: RequestQueue? = null
     private var rating: Float? = null
+    private var voted: Boolean = false
+    private var revId: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +41,17 @@ class MyPastEvent : AppCompatActivity() {
         val intent = intent
         val title = intent.getStringExtra("ETitle")
         val id = intent.getStringExtra("EId")
-        val imageView = intent.getIntExtra("EImage", 0)
         val loc = intent.getStringExtra("ELoc")
         val date = intent.getStringExtra("EDate")
         val hour = intent.getStringExtra("EHour")
         val hourEnd = intent.getStringExtra("EHourEnd")
+        val logo = intent.getStringExtra("Elogo")
 
 
         actionBar.title = title
         titleE.text = title
         IDE.text = id
-        imageE.setImageResource(imageView)
+        Picasso.get().load(logo).into(imageE);
         LocE.text= loc!!.split("_")[0]
         DateE.text = date
         HourE.text = hour
@@ -77,13 +80,13 @@ class MyPastEvent : AppCompatActivity() {
             try {
                 for (i in 0 until response.length()) {
                     val rating = response.getJSONObject(i)
-                    val revId = "Review_" + username + "_" + IDE.text
-                    println(revId)
+                    revId = username + "_" + IDE.text
                     if(rating.getString("_id") == revId) {
                         val rBar = findViewById<RatingBar>(R.id.RatingBar)
                         rBar.rating = rating.getString("rate").toFloat()
                         val comment = findViewById<EditText>(R.id.commentText)
                         comment.setText(rating.getString("comment"))
+                        voted = true
                         break
                     }
 
@@ -117,8 +120,64 @@ class MyPastEvent : AppCompatActivity() {
 
     fun submitRating(view: View) {
         val comment = findViewById<EditText>(R.id.commentText)
-        postRating(rating, comment.text.toString())
+        if(voted)
+            putRating(rating, comment.text.toString())
+        else
+            postRating(rating, comment.text.toString())
         Toast.makeText(this@MyPastEvent, R.string.GiveRating, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun putRating(rating:Float?, comment: String) {
+        val url = "https://securevent.herokuapp.com/ratings/$revId"
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
+        var username :String
+        var tokenMongoPost :String
+
+        pref.apply{
+            username = (getString("NAME", "").toString())
+            tokenMongoPost = (getString("TOKEN", "").toString())
+        }
+
+        //creem objecte JSON per fer la crida POST
+        val params = JSONObject()
+        params.put("id_event", IDE.text)
+        params.put("rate", rating)
+        params.put("comment", comment)
+        params.put("author", username)
+
+        val request : JsonObjectRequest
+
+        // Volley post request with parameters
+
+        request = object : JsonObjectRequest(Method.PUT, url, params,
+                { response ->
+                    // Process the json
+                    try {
+                        Log.i("Registration", "Response $response")
+                    } catch (e: Exception) {
+                        Log.e("Registration", "Response $e")
+                    }
+                }, {
+            // Error in request -- ja estem registrats
+            println("Volley error: $it")
+
+        }) {
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Token $tokenMongoPost"
+                return headers
+            }
+        }
+
+        // Volley request policy, only one time request to avoid duplicate transaction
+        request.retryPolicy = DefaultRetryPolicy(
+                DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                0,
+                1f
+        )
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
     }
 
     private fun postRating(rating: Float?, comment: String) {
@@ -140,8 +199,11 @@ class MyPastEvent : AppCompatActivity() {
         params.put("comment", comment)
         params.put("author", username)
 
+        val request : JsonObjectRequest
+
         // Volley post request with parameters
-        val request = object : JsonObjectRequest(Method.POST, url, params,
+
+        request = object : JsonObjectRequest(Method.POST, url, params,
                 { response ->
                     // Process the json
                     try {
@@ -160,6 +222,7 @@ class MyPastEvent : AppCompatActivity() {
                 return headers
             }
         }
+
         // Volley request policy, only one time request to avoid duplicate transaction
         request.retryPolicy = DefaultRetryPolicy(
                 DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,

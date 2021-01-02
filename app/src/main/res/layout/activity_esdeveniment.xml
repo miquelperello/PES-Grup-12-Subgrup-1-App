@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@+id/imageE"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/icon"
+        android:layout_width="192dp"
+        android:layout_height="157dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/todo"
+        android:src="@drawable/icon" />
 
     <TextView
         android:layout_width="match_parent"
@@ -30,6 +30,23 @@
         android:layout_marginTop="5dp"
         />
 
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleE"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/buttonShare"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="share"
+            android:src="@drawable/ic_share"
+            android:text="@string/ButtonShare" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,9 +55,8 @@
         android:textSize="18sp"
         android:textColor="@color/teal_200"
         android:gravity="center"
-        android:layout_below="@id/titleE"
+        android:layout_below="@+id/LinearLayoutShare"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         android:visibility="invisible"
         />
 
@@ -52,9 +68,8 @@
         android:textSize="20sp"
         android:textColor="@color/teal_200"
         android:gravity="center"
-        android:layout_below="@id/IDE"
+        android:layout_below="@id/LinearLayoutShare"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         />
 
     <LinearLayout
@@ -262,26 +277,6 @@
             android:background="#2222"
             android:text="@string/ButtonSeeDetails" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutShare"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/LinearLayoutGoToPaypal"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-
-        <Button
-            android:id="@+id/buttonShare"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="#2222"
-            android:text="@string/ButtonShare" />
-    </LinearLayout>
-
-    
 
 
 </RelativeLayout>

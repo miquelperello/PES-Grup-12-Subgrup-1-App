@@ -1,5 +1,6 @@
 package com.pes.securevent
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,10 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.fragment_my_events.*
 import org.json.JSONException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MyEvents : Fragment() {
 
@@ -31,23 +36,29 @@ class MyEvents : Fragment() {
         requestQueue = Volley.newRequestQueue(activity?.applicationContext)
         val arrayList = ArrayList<Model>()
 
-        val request = object: JsonArrayRequest(Method.GET, url, null, { response ->
+        val request = @SuppressLint("SimpleDateFormat")
+        object: JsonArrayRequest(Method.GET, url, null, { response ->
             try {
                 for (i in 0 until response.length()) {
                     val event = response.getJSONObject(i)
-                    arrayList.add(
-                            Model(
-                                event.getString("name"),
-                                event.getString("_id"),
-                                event.getString("logo"),
-                                event.getString("id_room"),
-                                event.getString("date"),
-                                event.getString("hourIni"),
-                                event.getString("hourEnd"),
-                                event.getString("minPrice"),
-                                event.getString("maxPrice")
+                    val sdf = SimpleDateFormat("yyyy-MM-dd")
+                    val strDate: Date? = sdf.parse(event.getString("date"))
+                    val isSameDay: Boolean = strDate?.day == Date().day && strDate.month == Date().month && strDate.year == Date().year
+                    if (Date().before(strDate) || isSameDay) {
+                        arrayList.add(
+                                Model(
+                                        event.getString("name"),
+                                        event.getString("_id"),
+                                        event.getString("logo"),
+                                        event.getString("id_room"),
+                                        event.getString("date"),
+                                        event.getString("hourIni"),
+                                        event.getString("hourEnd"),
+                                        event.getString("minPrice"),
+                                        event.getString("maxPrice")
+                                )
                         )
-                    )
+                    }
                 }
 
                 val myAdapter = (activity?.applicationContext?.let { MyAdapterMyEvents(arrayList, it, false) })

@@ -21,18 +21,6 @@
         app:titleTextColor="@color/white"
         app:theme="@style/AppTheme.AppBarOverlay">
 
-        <ImageView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="right"
-            android:src="@drawable/ic_share"
-            android:textColor="#5E5E5E"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-
-
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout

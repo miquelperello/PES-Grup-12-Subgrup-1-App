@@ -12,11 +12,11 @@
 
     <ImageView
         android:id="@+id/imageE"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/icon"
+        android:layout_width="154dp"
+        android:layout_height="131dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/todo"
+        android:src="@drawable/icon" />
 
     <TextView
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
         android:textSize="20sp"
         android:textColor="@color/teal_200"
         android:gravity="center"
-        android:layout_below="@id/IDE"
+        android:layout_below="@id/titleE"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         />

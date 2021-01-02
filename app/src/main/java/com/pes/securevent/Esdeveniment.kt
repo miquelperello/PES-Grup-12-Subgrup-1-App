@@ -32,7 +32,6 @@ class Esdeveniment : AppCompatActivity() {
         val intent = intent
         val ETitle = intent.getStringExtra("ETitle")
         val EId = intent.getStringExtra("EId")
-        val EImageView = intent.getIntExtra("EImage", 0)
         val ELoc = intent.getStringExtra("ELoc")
         val EDate = intent.getStringExtra("EDate")
         val EHour = intent.getStringExtra("EHour")
@@ -58,31 +57,7 @@ class Esdeveniment : AppCompatActivity() {
                 goToBuy(view)
             }
             else {
-                Snackbar.make(view, getResources().getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
-            }
-        }
-
-        val btn_share = findViewById<Button>(R.id.buttonShare)
-        btn_share.setOnClickListener { view->
-            if (UsuariActiu) {
-                val message: String? = getResources().getString(R.string.MessageAssist)
-                val title: String? = ETitle
-                val loc: String? = getResources().getString(R.string.MessageLoc)
-                val LocE: String? = ELoc
-                val download: String? = getResources().getString(R.string.MessageDownload)
-                //val image = Uri.parse()
-
-                val intent = Intent()
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, "$message $title $loc $LocE ?\n\n$download")
-                //intent.putExtra(Intent.EXTRA_STREAM, image)
-                intent.type = "*/*"
-
-                startActivity(Intent.createChooser(intent, "Please select app: "))
-            }
-            else {
-                Snackbar.make(view, getResources().getString(R.string.MessageSignIn2), Snackbar.LENGTH_LONG)
+                Snackbar.make(view, resources.getString(R.string.MessageSignIn), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
             }
         }
@@ -102,6 +77,29 @@ class Esdeveniment : AppCompatActivity() {
         }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
+    }
+
+    fun share(view: View) {
+        if (UsuariActiu) {
+            val message: String = resources.getString(R.string.MessageAssist)
+            val title: String? = titleE.text as String?
+            val loc: String = resources.getString(R.string.MessageLoc)
+            val LocE: String? = LocE.text as String?
+            val download: String = resources.getString(R.string.MessageDownload)
+            //val image = Uri.parse()
+
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, "$message $title $loc $LocE ?\n\n$download")
+            //intent.putExtra(Intent.EXTRA_STREAM, image)
+            intent.type = "*/*"
+
+            startActivity(Intent.createChooser(intent, "Please select app: "))
+        }
+        else {
+            Snackbar.make(view, resources.getString(R.string.MessageSignIn2), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        }
     }
 
     fun goToBuy(view: View) {

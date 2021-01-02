@@ -1,6 +1,5 @@
 package com.pes.securevent
 
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -12,7 +11,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
-import com.android.volley.RequestQueue
 import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,8 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var UsuariActiu :Boolean = false
 
     }
-
-
 
     //Gestió Navigation Drawer
     lateinit var Events: Events
@@ -58,9 +54,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ){
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 if (UsuariActiu) {
-                    val textView: TextView = findViewById(R.id.imageUserName) as TextView
+                    val textView: TextView = findViewById(R.id.imageUserName)
                     textView.text = usuari.firstName
-                    val imageView: ImageView = findViewById(R.id.imageUserHeader) as ImageView
+                    val imageView: ImageView = findViewById(R.id.imageUserHeader)
                     Picasso.get().load(usuari.image).into(imageView)
                     nav_view.menu.findItem(R.id.myevents).isVisible = true
                     nav_view.menu.findItem(R.id.signin).isVisible = false
@@ -104,7 +100,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (menuItem.itemId) {
             R.id.events -> {
                 Events = Events()
-                toolBar.title = getResources().getString(R.string.Events);
+                toolBar.title = resources.getString(R.string.Events);
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, Events)
@@ -114,7 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.myevents -> {
                 MyEvents = MyEvents()
-                toolBar.title = getResources().getString(R.string.MyEvents);
+                toolBar.title = resources.getString(R.string.MyEvents);
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, MyEvents)
@@ -123,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.pastevents -> {
                 PastEvents = PastEvents()
-                toolBar.title = getResources().getString(R.string.PastEvents);
+                toolBar.title = resources.getString(R.string.PastEvents);
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, PastEvents)
@@ -132,7 +128,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.signin -> {
                 Acc = Acc()
-                toolBar.title = getResources().getString(R.string.SignIn);
+                toolBar.title = resources.getString(R.string.SignIn);
                 supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.frame_layout, Acc)
@@ -141,7 +137,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.signout -> {
                 Acc = Acc()
-                toolBar.title = getResources().getString(R.string.SignIn);
+                toolBar.title = resources.getString(R.string.SignIn);
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.frame_layout, Acc)
@@ -157,8 +153,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            if(UsuariActiu) println("User actiu.")
-            else println("User not actiu")
             drawerLayout.closeDrawer(GravityCompat.START)
         }
         else {
