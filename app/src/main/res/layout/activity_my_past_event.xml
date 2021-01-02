@@ -186,6 +186,7 @@
         android:numStars="5"
         android:stepSize=".5"
         android:layout_below="@id/LinearLayoutHoraFinal"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:progressTint="@color/orange_app"/>
 
@@ -194,10 +195,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/RatingBar"
-        android:layout_marginTop="15dp"
         android:orientation="vertical">
-
-
 
         <EditText
             android:id="@+id/commentText"
