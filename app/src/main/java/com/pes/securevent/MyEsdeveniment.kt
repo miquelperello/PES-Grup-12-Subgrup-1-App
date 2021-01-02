@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import org.json.JSONException
 
@@ -34,12 +35,13 @@ class MyEsdeveniment : AppCompatActivity() {
         val EDate = intent.getStringExtra("EDate")
         val EHour = intent.getStringExtra("EHour")
         val EHourEnd = intent.getStringExtra("EHourEnd")
+        val logo = intent.getStringExtra("Elogo")
 
 
         actionBar.title = ETitle
         titleE.text = ETitle
         IDE.text = EId
-        imageE.setImageResource(EImageView)
+        Picasso.get().load(logo).into(imageE);
         LocE.text= ELoc!!.split("_")[0]
         DateE.text = EDate
         HourE.text = EHour

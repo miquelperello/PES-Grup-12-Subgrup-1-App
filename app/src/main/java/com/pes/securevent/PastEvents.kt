@@ -50,7 +50,7 @@ class PastEvents : Fragment() {
                             Model(
                                 event.getString("name"),
                                 event.getString("_id"),
-                                R.drawable.icon,
+                                event.getString("logo"),
                                 event.getString("id_room"),
                                 event.getString("date"),
                                 event.getString("hourIni"),

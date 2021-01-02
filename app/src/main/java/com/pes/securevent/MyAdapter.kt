@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row.view.*
 
 class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
@@ -17,6 +18,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
             itemView.titleE.text = model.title
             itemView.descE.text = model._id
             //itemView.imageE.setImageResource(model.image)
+            Picasso.get().load(model.image).into(itemView.imageE);
         }
     }
 
@@ -36,7 +38,7 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
             val EId : String = model._id
 
-            //val EImage : Int = model.image
+            val EImage : String = model.image
 
             val ELoc : String = model.loc
 
@@ -50,6 +52,8 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
             val EPriceMax : String = model.maxPrice
 
+            val Elogo : String = model.image
+
 
             val esdeveniment = Intent(context, Esdeveniment::class.java)
 
@@ -62,6 +66,8 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
             esdeveniment.putExtra("EHour", EHour)
             esdeveniment.putExtra("EPriceMin", EPriceMin)
             esdeveniment.putExtra("EPriceMax", EPriceMax)
+            esdeveniment.putExtra("Elogo", Elogo)
+            esdeveniment.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(esdeveniment)
         }

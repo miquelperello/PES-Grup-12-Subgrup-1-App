@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row.view.*
 
 class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, val past: Boolean) : RecyclerView.Adapter<MyAdapterMyEvents.ViewHolder>() {
@@ -16,7 +17,8 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, v
 
             itemView.titleE.text = model.title
             itemView.descE.text = model._id
-            itemView.imageE.setImageResource(model.image)
+            //itemView.imageE.setImageResource(model.image)
+            Picasso.get().load(model.image).into(itemView.imageE);
         }
     }
 
@@ -35,7 +37,7 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, v
             val ETitle : String = model.title
             val EId : String = model._id
 
-            val EImage : Int = model.image
+            val EImage : String = model.image
 
             val ELoc : String = model.loc
 
@@ -45,6 +47,7 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, v
             val EHourEnd: String = model.hourEnd
             val EPriceMin : String = model.minPrice
             val EPriceMax : String = model.maxPrice
+            val Elogo : String = model.image
 
 
             val esdeveniment : Intent = if(past)
@@ -61,7 +64,8 @@ class MyAdapterMyEvents(val arrayList: ArrayList<Model>, val context: Context, v
             esdeveniment.putExtra("EHourEnd", EHourEnd)
             esdeveniment.putExtra("EPriceMin", EPriceMin)
             esdeveniment.putExtra("EPriceMax", EPriceMax)
-
+            esdeveniment.putExtra("Elogo", Elogo)
+            esdeveniment.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(esdeveniment)
         }
     }
