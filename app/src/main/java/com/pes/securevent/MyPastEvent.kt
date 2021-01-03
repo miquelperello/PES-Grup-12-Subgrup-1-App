@@ -28,7 +28,7 @@ class MyPastEvent : AppCompatActivity() {
     private var rating: Float? = null
     private var voted: Boolean = false
     private var revId: String? = null
-
+    var localitzacioid : String ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +52,7 @@ class MyPastEvent : AppCompatActivity() {
         titleE.text = title
         IDE.text = id
         Picasso.get().load(logo).into(imageE);
+        localitzacioid = loc
         LocE.text= loc!!.split("_")[0]
         DateE.text = date
         HourE.text = hour
@@ -241,7 +242,7 @@ class MyPastEvent : AppCompatActivity() {
     fun goToMaps(view: View) {
         //Fem una crida per saber la localització de la sala
 
-        val url = "https://securevent.herokuapp.com/rooms/" + LocE.text //<- events
+        val url = "https://securevent.herokuapp.com/rooms/$localitzacioid" //<- events
 
         val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
 
