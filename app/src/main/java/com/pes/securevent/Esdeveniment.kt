@@ -85,14 +85,14 @@ class Esdeveniment : AppCompatActivity() {
             val title: String? = titleE.text as String?
             val loc: String = resources.getString(R.string.MessageLoc)
             val LocE: String? = LocE.text as String?
-            val download: String = resources.getString(R.string.MessageDownload)
+            val download: String = resources.getString(R.string.MessageDownload) + "https://tinyurl.com/securevent"
             //val image = Uri.parse()
 
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
             intent.putExtra(Intent.EXTRA_TEXT, "$message $title $loc $LocE ?\n\n$download")
             //intent.putExtra(Intent.EXTRA_STREAM, image)
-            intent.type = "*/*"
+            intent.type = "text/plain"
 
             startActivity(Intent.createChooser(intent, "Please select app: "))
         }

@@ -19,6 +19,9 @@ import org.json.JSONException
 
 class MyEsdeveniment : AppCompatActivity() {
 
+
+    var localitzacioid : String ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_myesdeveniment)
@@ -42,6 +45,7 @@ class MyEsdeveniment : AppCompatActivity() {
         titleE.text = ETitle
         IDE.text = EId
         Picasso.get().load(logo).into(imageE);
+        localitzacioid = ELoc
         LocE.text= ELoc!!.split("_")[0]
         DateE.text = EDate
         HourE.text = EHour
@@ -117,7 +121,7 @@ class MyEsdeveniment : AppCompatActivity() {
         //Fem una crida per saber la localització de la sala
         var requestQueue: RequestQueue? = null
 
-        val url = "https://securevent.herokuapp.com/rooms/" + LocE.text //<- events
+        val url = "https://securevent.herokuapp.com/rooms/" + localitzacioid //<- events
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         var user_id :String

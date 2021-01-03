@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,8 +14,8 @@
 
     <ImageView
         android:id="@+id/imageE"
-        android:layout_width="192dp"
-        android:layout_height="157dp"
+        android:layout_width="157dp"
+        android:layout_height="135dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/todo"
         android:src="@drawable/icon" />
@@ -227,3 +230,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+</ScrollView>
