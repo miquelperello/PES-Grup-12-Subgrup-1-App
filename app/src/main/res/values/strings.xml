@@ -57,5 +57,8 @@
     <string name="MessageDownload" >To know more about this event, download SecurEvent here:</string>
     <string name="Submit">Submit Rating</string>
     <string name="hourEnd">End Hour</string>
+    <string name="YourSeats">Your seats</string>
+    <string name="Row">Row</string>
+    <string name="Col">Column</string>
 
 </resources>

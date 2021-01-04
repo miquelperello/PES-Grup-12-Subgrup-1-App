@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +21,8 @@ import org.json.JSONException
 class Esdeveniment : AppCompatActivity() {
 
     var canBuy = true;
+    var localitzacioid : String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +46,9 @@ class Esdeveniment : AppCompatActivity() {
         actionBar.title = ETitle
         titleE.text = ETitle
         IDE.text = EId
-        Picasso.get().load(logo).into(imageE);
+        Picasso.get().load(logo).into(imageE)
         LocE.text= ELoc!!.split("_")[0]
+        localitzacioid = ELoc
         DateE.text = EDate
         HourE.text = EHour
         HourEnd.text = EHourEnd
@@ -67,13 +71,12 @@ class Esdeveniment : AppCompatActivity() {
         pref.apply{
             user_id = (getString("ID", "").toString())
         }
-        var requestQueue: RequestQueue? = null
         val url = "https://securevent.herokuapp.com/reservations/" + IDE.text + "_" + user_id
 
-        requestQueue = Volley.newRequestQueue(this)
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
 
         val request = JsonObjectRequest(Request.Method.GET, url, null, {
-            this.canBuy = false;
+            this.canBuy = false
         }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
@@ -104,8 +107,7 @@ class Esdeveniment : AppCompatActivity() {
 
     fun goToBuy(view: View) {
 
-        var requestQueue: RequestQueue? = null
-        var event : String? = null
+        var event: String?
         //Get de la room para devolver cols y rows
 
         val url = "https://securevent.herokuapp.com/events/" + IDE.text //<- events
@@ -115,8 +117,8 @@ class Esdeveniment : AppCompatActivity() {
         pref.apply{
             user_id = (getString("ID", "").toString())
         }
-     
-        requestQueue = Volley.newRequestQueue(this)
+
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
 
 
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
@@ -141,6 +143,33 @@ class Esdeveniment : AppCompatActivity() {
         }, { error -> error.printStackTrace() })
 
         requestQueue?.add(request)
+
+    }
+
+    fun goToMaps(view: View) {
+        //Fem una crida per saber la localització de la sala
+
+        val url = "https://securevent.herokuapp.com/rooms/$localitzacioid" //<- events
+
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
+
+        val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
+            try {
+                val intent = Intent(this, MapsActivity::class.java)
+                val event = response.getJSONObject(0)
+
+                intent.putExtra("loc", event.getString("street")) //passem el carrer
+
+                startActivity(intent)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, { error -> error.printStackTrace() })
+
+        requestQueue?.add(request)
+
+
 
     }
 

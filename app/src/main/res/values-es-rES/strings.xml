@@ -49,8 +49,11 @@
     <string name="ButtonShare" >Comparte el evento</string>
     <string name="MessageSignIn2">¡Inicia sesión para compartir un evento!</string>
     <string name="MessageAssist">Te gustaría asistir a</string>
-    <string name="MessageLoc">en el</string>
+    <string name="MessageLoc">en</string>
     <string name="MessageDownload">Si quieres saber más sobre este evento, descarga SecurEvent aquí:</string>
     <string name="Submit">Subir valoración</string>
     <string name="hourEnd">Hora Final</string>
+    <string name="YourSeats">Tus asientos</string>
+    <string name="Row">Fila</string>
+    <string name="Col">Columna</string>
 </resources>

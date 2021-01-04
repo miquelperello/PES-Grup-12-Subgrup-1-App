@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -40,15 +40,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleE"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
 
         <ImageView
             android:id="@+id/buttonShare"
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="60dp"
             android:onClick="share"
             android:src="@drawable/ic_share"
             android:text="@string/ButtonShare" />
+
+        <ImageView
+            android:id="@+id/iconMaps"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="goToMaps"
+            android:src="@drawable/ic_location_foreground"/>
+
+        <ImageView
+            android:id="@+id/iconSeats"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="goToRoomVisualization"
+            android:src="@drawable/ic_seat_foreground"/>
+
     </LinearLayout>
 
     <TextView
@@ -103,7 +121,10 @@
             android:layout_marginTop="5dp"
             android:gravity="start"
             android:textColor="@color/grey"
-            android:textSize="18sp" />
+            android:clickable="true"
+            android:textSize="18sp"
+            android:onClick="goToMaps"
+            android:focusable="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -197,10 +218,40 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/LinearLayoutSeats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/LinearLayoutHoraFinal">
+
+        <TextView
+            android:id="@+id/SeatsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:layout_marginRight="20dp"
+            android:text="@string/YourSeats"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/Seats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start"
+            android:textColor="@color/grey"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/LinearLayoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/LinearLayoutHoraFinal"
+        android:layout_below="@+id/LinearLayoutSeats"
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
@@ -210,23 +261,6 @@
             android:layout_height="match_parent"
             android:onClick="goToRoomVisualization"
             android:text="@string/SeeSeats" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutButtonMaps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/LinearLayoutButton"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonMaps"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:onClick="goToMaps"
-            android:text="@string/SeeLocation" />
     </LinearLayout>
 
 </RelativeLayout>

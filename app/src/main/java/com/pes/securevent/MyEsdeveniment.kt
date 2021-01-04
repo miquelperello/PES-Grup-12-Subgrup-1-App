@@ -2,7 +2,6 @@ package com.pes.securevent
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +13,14 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_esdeveniment.*
+import kotlinx.android.synthetic.main.activity_esdeveniment.DateE
+import kotlinx.android.synthetic.main.activity_esdeveniment.HourE
+import kotlinx.android.synthetic.main.activity_esdeveniment.HourEnd
+import kotlinx.android.synthetic.main.activity_esdeveniment.IDE
+import kotlinx.android.synthetic.main.activity_esdeveniment.LocE
+import kotlinx.android.synthetic.main.activity_esdeveniment.imageE
+import kotlinx.android.synthetic.main.activity_esdeveniment.titleE
+import kotlinx.android.synthetic.main.activity_myesdeveniment.*
 import org.json.JSONException
 
 class MyEsdeveniment : AppCompatActivity() {
@@ -31,6 +37,13 @@ class MyEsdeveniment : AppCompatActivity() {
         actionBar.setDisplayShowHomeEnabled(true)
 
 
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        var user_id :String
+        pref.apply{
+            user_id = (getString("ID", "").toString())
+        }
+
+
         val intent = intent
         val ETitle = intent.getStringExtra("ETitle")
         val EId = intent.getStringExtra("EId")
@@ -39,7 +52,9 @@ class MyEsdeveniment : AppCompatActivity() {
         val EHour = intent.getStringExtra("EHour")
         val EHourEnd = intent.getStringExtra("EHourEnd")
         val logo = intent.getStringExtra("Elogo")
+        val resId = EId + "_"  + user_id
 
+        getSeats(resId)
 
         actionBar.title = ETitle
         titleE.text = ETitle
@@ -50,12 +65,35 @@ class MyEsdeveniment : AppCompatActivity() {
         DateE.text = EDate
         HourE.text = EHour
         HourEnd.text = EHourEnd
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun getSeats(id: String) {
+
+        val url = "https://securevent.herokuapp.com/reservations/$id"
+        var seats: String? = ""
+
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
+            try {
+                for (seat in response.getJSONArray("seat_number").toString().split(",")) {
+                    val s = seat.split("-")
+                    seats += resources.getString(R.string.Row) + ": " + s[0].dropWhile { c -> c == '"' || c == '[' } + ", " +
+                            resources.getString(R.string.Col) + ": " + s[1][0]+ "\n"
+                }
+                Seats.text = seats
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }, { error -> error.printStackTrace() })
+
+        requestQueue?.add(request)
     }
 
     fun share(view: View) {
@@ -83,7 +121,6 @@ class MyEsdeveniment : AppCompatActivity() {
 
     fun goToRoomVisualization(view: View) {
 
-        var requestQueue: RequestQueue? = null
         var event : String? = null
         //Get de la room para devolver cols y rows
 
@@ -95,7 +132,7 @@ class MyEsdeveniment : AppCompatActivity() {
             user_id = (getString("ID", "").toString())
         }
 
-        requestQueue = Volley.newRequestQueue(this)
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
 
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
             try {
@@ -118,18 +155,10 @@ class MyEsdeveniment : AppCompatActivity() {
     }
 
     fun goToMaps(view: View) {
-        //Fem una crida per saber la localització de la sala
-        var requestQueue: RequestQueue? = null
 
-        val url = "https://securevent.herokuapp.com/rooms/" + localitzacioid //<- events
+        val url = "https://securevent.herokuapp.com/rooms/$localitzacioid"
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        var user_id :String
-        pref.apply{
-            user_id = (getString("ID", "").toString())
-        }
-
-        requestQueue = Volley.newRequestQueue(this)
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
 
         val request = JsonArrayRequest(Request.Method.GET, url, null, { response ->
             try {
