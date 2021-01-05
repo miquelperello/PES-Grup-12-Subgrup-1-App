@@ -343,10 +343,6 @@ class EventDetails : AppCompatActivity() {
         val hourIni = extras.getString("hourIni")?.split(":")!!
         val hourEnd = extras.getString("hourEnd")?.split(":")!!
 
-
-
-        println(date[1].toInt())
-
         val startMillis: Long = Calendar.getInstance().run {
             set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourIni[0].toInt(), hourIni[1].toInt())
             timeInMillis

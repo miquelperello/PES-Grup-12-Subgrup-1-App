@@ -59,7 +59,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         try {
             val geocoder = Geocoder(this, Locale.getDefault())
             addresses = geocoder.getFromLocationName(street, 1);
-            println(addresses);
 
         } catch (e: IOException) {
             println("fail");

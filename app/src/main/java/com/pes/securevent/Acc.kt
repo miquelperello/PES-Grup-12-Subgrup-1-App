@@ -153,22 +153,16 @@ class Acc : Fragment() {
             )
             // Signed in successfully
             val googleId = account?.id ?: ""
-            //println("Google ID$googleId")
 
             val googleFirstName = account?.givenName ?: ""
-            //println("Google First Name" + googleFirstName)
 
             val googleLastName = account?.familyName ?: ""
-            //println("Google Last Name" + googleLastName)
 
             val googleEmail = account?.email ?: ""
-            //println("Google Email" + googleEmail)
 
             val googleProfilePicURL = account?.photoUrl.toString()
-            //println("Google Profile Pic URL" + googleProfilePicURL)
 
             val googleIdToken = account?.idToken ?: ""
-            //println("Google ID Token" + googleIdToken)
 
             usuari = UserG(googleFirstName, googleLastName, googleEmail, googleIdToken, googleProfilePicURL)
 
@@ -217,8 +211,6 @@ class Acc : Fragment() {
                     try {
                         user_id = response.getJSONObject("user").getInt("id")
                         token_mongo = response.getString("token")
-                        println( "Response $response")
-                        println(token_mongo)
                         guardaCache(token_mongo, user_id.toString(), username[0])
 
                     } catch (e: Exception) {
@@ -297,15 +289,6 @@ class Acc : Fragment() {
             .putString("TOKEN", token_mongo)
             .putString("ID", user_id)
             .apply()
-
-        pref.apply {
-            println(getString("NAME", ""))
-            println(getString("EMAIL", ""))
-            println(getString("IMAGE", ""))
-            println(getString("TOKEN", ""))
-            println(getString("ID", ""))
-        }
-
     }
 
 }

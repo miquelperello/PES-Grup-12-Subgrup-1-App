@@ -44,8 +44,6 @@ class PastEvents : Fragment() {
                     val sdf = SimpleDateFormat("yyyy-MM-dd")
                     val strDate: Date? = sdf.parse(event.getString("date"))
                     if (Date().after(strDate)) {
-                        //println(strDate + " < " + Date())
-
                         arrayList.add(
                             Model(
                                 event.getString("name"),
