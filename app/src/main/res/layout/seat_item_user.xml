@@ -9,5 +9,5 @@
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:src="@mipmap/ic_user_seat" />
+        android:src="@drawable/ic_user_seat_foreground" />
 </LinearLayout>

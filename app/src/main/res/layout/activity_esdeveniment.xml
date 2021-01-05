@@ -115,10 +115,7 @@
             android:layout_marginTop="5dp"
             android:gravity="start"
             android:textColor="@color/grey"
-            android:clickable="true"
-            android:textSize="18sp"
-            android:onClick="goToMaps"
-            android:focusable="true" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

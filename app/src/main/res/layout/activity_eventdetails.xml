@@ -82,7 +82,7 @@
                     android:id="@+id/seatUser"
                     android:layout_width="25dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/ic_user_seat" />
+                    android:src="@drawable/ic_user_seat_foreground" />
 
                 <TextView
                     android:text="@string/yourseet"
@@ -91,7 +91,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/ic_free_seat" />
+                    android:src="@drawable/ic_free_seat_foreground" />
 
                 <TextView
                     android:text="@string/freeseat"
@@ -100,7 +100,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/ic_occ_seat" />
+                    android:src="@drawable/ic_occ_seat_foreground" />
 
                 <TextView
                     android:text="@string/occseat"
@@ -110,7 +110,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/ic_seat" />
+                    android:src="@drawable/ic_seat_foreground" />
 
                 <TextView
                     android:text="@string/covidseat"
