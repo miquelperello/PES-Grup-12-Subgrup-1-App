@@ -189,6 +189,7 @@ class EventDetails : AppCompatActivity() {
                         data?.let { intent ->
                             PaymentData.getFromIntent(intent)?.let(::handlePaymentSuccess)
                         }!!
+                        addToCalendar()
                     }
 
                     RESULT_CANCELED -> {
@@ -326,9 +327,6 @@ class EventDetails : AppCompatActivity() {
         )
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
-
-        addToCalendar()
-
     }
 
     fun addToCalendar() {

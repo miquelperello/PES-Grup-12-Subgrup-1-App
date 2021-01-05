@@ -56,10 +56,14 @@ class MyEsdeveniment : AppCompatActivity() {
 
         getSeats(resId)
 
+        if(logo == "")
+            Picasso.get().load(R.drawable.icon).into(imageE)
+        else
+            Picasso.get().load(logo).into(imageE)
+
         actionBar.title = ETitle
         titleE.text = ETitle
         IDE.text = EId
-        Picasso.get().load(logo).into(imageE);
         localitzacioid = ELoc
         LocE.text= ELoc!!.split("_")[0]
         DateE.text = EDate

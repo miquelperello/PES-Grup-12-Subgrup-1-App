@@ -43,7 +43,8 @@ class PastEvents : Fragment() {
                     val event = response.getJSONObject(i)
                     val sdf = SimpleDateFormat("yyyy-MM-dd")
                     val strDate: Date? = sdf.parse(event.getString("date"))
-                    if (Date().after(strDate)) {
+                    val isSameDay: Boolean = strDate?.day == Date().day && strDate.month == Date().month && strDate.year == Date().year
+                    if (Date().after(strDate) && !isSameDay) {
                         arrayList.add(
                             Model(
                                 event.getString("name"),

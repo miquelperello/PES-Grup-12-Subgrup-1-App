@@ -47,11 +47,14 @@ class MyPastEvent : AppCompatActivity() {
         val hourEnd = intent.getStringExtra("EHourEnd")
         val logo = intent.getStringExtra("Elogo")
 
+        if(logo == "")
+            Picasso.get().load(R.drawable.icon).into(imageE)
+        else
+            Picasso.get().load(logo).into(imageE)
 
         actionBar.title = title
         titleE.text = title
         IDE.text = id
-        Picasso.get().load(logo).into(imageE);
         localitzacioid = loc
         LocE.text= loc!!.split("_")[0]
         DateE.text = date

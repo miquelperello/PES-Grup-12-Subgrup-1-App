@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.pes.securevent.MainActivity.Companion.UsuariActiu
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_esdeveniment.*
+import kotlinx.android.synthetic.main.row.view.*
 import org.json.JSONException
 
 class Esdeveniment : AppCompatActivity() {
@@ -43,10 +44,14 @@ class Esdeveniment : AppCompatActivity() {
         val EPriceMax = intent.getStringExtra("EPriceMax")
         val logo = intent.getStringExtra("Elogo")
 
+        if(logo == "")
+            Picasso.get().load(R.drawable.icon).into(imageE)
+        else
+            Picasso.get().load(logo).into(imageE)
+
         actionBar.title = ETitle
         titleE.text = ETitle
         IDE.text = EId
-        Picasso.get().load(logo).into(imageE)
         LocE.text= ELoc!!.split("_")[0]
         localitzacioid = ELoc
         DateE.text = EDate

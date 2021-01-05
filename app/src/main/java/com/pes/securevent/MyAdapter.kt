@@ -17,8 +17,11 @@ class MyAdapter(val arrayList: ArrayList<Model>, val context: Context) : Recycle
 
             itemView.titleE.text = model.title
             itemView.descE.text = model._id
-            //itemView.imageE.setImageResource(model.image)
-            Picasso.get().load(model.image).into(itemView.imageE);
+
+            if(model.image.isEmpty())
+                Picasso.get().load(R.drawable.icon).into(itemView.imageE)
+            else
+                Picasso.get().load(model.image).into(itemView.imageE)
         }
     }
 
