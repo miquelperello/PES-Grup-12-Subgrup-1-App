@@ -84,15 +84,15 @@
 
             <ImageView
                 android:id="@+id/imageViewGoogle"
-                android:layout_width="wrap_content"
+                android:layout_width="58dp"
                 android:layout_height="36dp"
                 android:src="@drawable/google_logo" />
 
 
             <Button
                 android:id="@+id/google_login_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="82dp"
+                android:layout_width="185dp"
+                android:layout_height="74dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@null"
                 android:text="@string/SignInWithGoogle"
