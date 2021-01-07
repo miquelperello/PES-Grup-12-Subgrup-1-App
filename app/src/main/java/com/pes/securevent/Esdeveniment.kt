@@ -21,9 +21,7 @@ import org.json.JSONException
 
 class Esdeveniment : AppCompatActivity() {
 
-    var canBuy = true;
     var localitzacioid : String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,21 +69,8 @@ class Esdeveniment : AppCompatActivity() {
             }
         }
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        var user_id :String
-        pref.apply{
-            user_id = (getString("ID", "").toString())
-        }
-        val url = "https://securevent.herokuapp.com/reservations/" + IDE.text + "_" + user_id
-
-        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
-
-        val request = JsonObjectRequest(Request.Method.GET, url, null, {
-            this.canBuy = false
-        }, { error -> error.printStackTrace() })
-
-        requestQueue?.add(request)
     }
+
 
     fun share(view: View) {
         if (UsuariActiu) {
@@ -135,7 +120,6 @@ class Esdeveniment : AppCompatActivity() {
                intent.putExtra("roomName", LocE.text)
                intent.putExtra("matrix", event)
                intent.putExtra("user_id", user_id)
-               intent.putExtra("CanBuy", canBuy)
                intent.putExtra("eventName", titleE.text)
                intent.putExtra("hourIni", HourE.text)
                intent.putExtra("hourEnd", HourEnd.text)

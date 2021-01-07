@@ -14,11 +14,14 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import kotlinx.android.synthetic.main.activity_eventdetails.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -47,7 +50,8 @@ class EventDetails : AppCompatActivity() {
 
         val roomName = extras?.getString("roomName")
         val user_id = extras?.getString("user_id")
-        val CanBuy = extras?.getBoolean("CanBuy")
+        val event_id = extras?.getString("eventID")
+        //val CanBuy = extras?.getBoolean("CanBuy")
 
         actionBar.title = roomName
 
@@ -103,11 +107,15 @@ class EventDetails : AppCompatActivity() {
         // ATTACH THE ADAPTER TO GRID
         grid.adapter = adapter
 
-        if (CanBuy == false) {
+        val url = "https://securevent.herokuapp.com/reservations/" + event_id + "_" + user_id
+
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(this)
+
+        val request = JsonObjectRequest(Request.Method.GET, url, null, {
             renderSeeSeats()
-        } else {
-            renderSeeDisponibility()
-        }
+        }, { renderSeeDisponibility() })
+
+        requestQueue?.add(request)
 
     }
 
