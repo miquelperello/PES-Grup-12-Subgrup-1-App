@@ -68,6 +68,14 @@
                 android:onClick="goToRoomVisualization"
                 android:src="@drawable/ic_seat_foreground"/>
 
+            <ImageView
+                android:id="@+id/iconCalendar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:onClick="goToCalendar"
+                android:src="@drawable/ic_calendar_foreground"/>
+
         </LinearLayout>
 
         <TextView

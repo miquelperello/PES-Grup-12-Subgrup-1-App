@@ -2,6 +2,7 @@ package com.pes.securevent
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +23,12 @@ import kotlinx.android.synthetic.main.activity_esdeveniment.imageE
 import kotlinx.android.synthetic.main.activity_esdeveniment.titleE
 import kotlinx.android.synthetic.main.activity_myesdeveniment.*
 import org.json.JSONException
+import java.util.*
 
 class MyEsdeveniment : AppCompatActivity() {
 
 
-    var localitzacioid : String ?= null
+    var localitzacioid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +47,14 @@ class MyEsdeveniment : AppCompatActivity() {
 
 
         val intent = intent
-        val ETitle = intent.getStringExtra("ETitle")
-        val EId = intent.getStringExtra("EId")
-        val ELoc = intent.getStringExtra("ELoc")
-        val EDate = intent.getStringExtra("EDate")
-        val EHour = intent.getStringExtra("EHour")
-        val EHourEnd = intent.getStringExtra("EHourEnd")
+        val title = intent.getStringExtra("ETitle")
+        val id = intent.getStringExtra("EId")
+        val loc = intent.getStringExtra("ELoc")
+        val date = intent.getStringExtra("EDate")
+        val hourIni = intent.getStringExtra("EHour")
+        val hourEnd = intent.getStringExtra("EHourEnd")
         val logo = intent.getStringExtra("Elogo")
-        val resId = EId + "_"  + user_id
+        val resId = id + "_"  + user_id
 
         getSeats(resId)
 
@@ -61,14 +63,14 @@ class MyEsdeveniment : AppCompatActivity() {
         else
             Picasso.get().load(logo).into(imageE)
 
-        actionBar.title = ETitle
-        titleE.text = ETitle
-        IDE.text = EId
-        localitzacioid = ELoc
-        LocE.text= ELoc!!.split("_")[0]
-        DateE.text = EDate
-        HourE.text = EHour
-        HourEnd.text = EHourEnd
+        actionBar.title = title
+        titleE.text = title
+        IDE.text = id
+        localitzacioid = loc
+        LocE.text= loc!!.split("_")[0]
+        DateE.text = date
+        HourE.text = hourIni
+        HourEnd.text = hourEnd
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -125,7 +127,7 @@ class MyEsdeveniment : AppCompatActivity() {
 
     fun goToRoomVisualization(view: View) {
 
-        var event : String? = null
+        var event: String?
         //Get de la room para devolver cols y rows
 
         val url = "https://securevent.herokuapp.com/events/" + IDE.text //<- events
@@ -180,8 +182,33 @@ class MyEsdeveniment : AppCompatActivity() {
 
         requestQueue?.add(request)
 
+    }
 
+    fun goToCalendar(view: View) {
 
+        val date = DateE.text?.split('-')!!
+        val hourIni = HourE.text?.split(":")!!
+        val hourEnd = HourEnd.text?.split(":")!!
+
+        val startMillis: Long = Calendar.getInstance().run {
+            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourIni[0].toInt(), hourIni[1].toInt())
+            timeInMillis
+        }
+        val endMillis: Long = Calendar.getInstance().run {
+            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourEnd[0].toInt(), hourEnd[1].toInt())
+            timeInMillis
+        }
+
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
+            .putExtra(CalendarContract.Events.TITLE, titleE.text)
+            .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+            .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
+            .putExtra(CalendarContract.Events.EVENT_LOCATION, LocE.text)
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+        startActivity(intent)
     }
 
 

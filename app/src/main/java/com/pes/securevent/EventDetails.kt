@@ -1,10 +1,8 @@
 package com.pes.securevent
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,6 +11,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceManager
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
@@ -22,21 +21,21 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_esdeveniment.*
 import kotlinx.android.synthetic.main.activity_eventdetails.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class EventDetails : AppCompatActivity() {
 
-    val LOAD_PAYMENT_DATA_REQUEST_CODE = 123
+    private val LOAD_PAYMENT_DATA_REQUEST_CODE = 123
 
     private lateinit var paymentsClient: PaymentsClient
     private var fullRoom: Boolean = true
+    private var avail: Int = 0
+    lateinit var MyEvents: MyEvents
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,11 +51,11 @@ class EventDetails : AppCompatActivity() {
         val roomName = extras?.getString("roomName")
         val user_id = extras?.getString("user_id")
         val event_id = extras?.getString("eventID")
-        //val CanBuy = extras?.getBoolean("CanBuy")
+        val cadires = extras?.getString("matrix")
+
 
         actionBar.title = roomName
 
-        val cadires = extras?.getString("matrix")
 
         var prematrix: List<String>? = null
 
@@ -64,11 +63,8 @@ class EventDetails : AppCompatActivity() {
             prematrix = cadires.split('\n')
         }
 
-        // GET THE MATRIX DIMENSIONS
-        val rows =
-            prematrix!!.size // Utilizar el put.extra para conseguir filas y columnas de la room
+        val rows = prematrix!!.size
         val columns = prematrix[0].split('\t').count()
-        //var columns = prematrix.get(0).filter{it!= '\t'}.count()
 
 
         val sala = ArrayList<ArrayList<String>>()
@@ -78,20 +74,18 @@ class EventDetails : AppCompatActivity() {
         }
 
 
-        // INITIALISE YOUR GRID
         val grid = findViewById<View>(R.id.grid) as GridView
         grid.numColumns = columns
 
-        // CREATE A LIST OF MATRIX OBJECT
         val salaList: MutableList<Seat> = ArrayList()
 
-        // ADD SOME CONTENTS TO EACH ITEM
         for (i in 0 until rows) {
             for (j in 0 until columns) {
 
                 if (sala[i][j] == "T") {
                     salaList.add(Seat(i, j, 'T'))
-                    fullRoom = false;
+                    ++avail
+                    fullRoom = false
                 } else if (sala[i][j] == "F")
                     salaList.add(Seat(i, j, 'C'))
                 else
@@ -102,10 +96,8 @@ class EventDetails : AppCompatActivity() {
             }
         }
 
-        // CREATE AN ADAPTER  (MATRIX ADAPTER)
         val adapter = SeatAdapter(applicationContext, salaList)
 
-        // ATTACH THE ADAPTER TO GRID
         grid.adapter = adapter
 
         val url = "https://securevent.herokuapp.com/reservations/" + event_id + "_" + user_id
@@ -122,8 +114,6 @@ class EventDetails : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun renderSeeDisponibility(){
-        // Initialize a Google Pay API client for an environment suitable for testing.
-        // It's recommended to create the PaymentsClient object inside of the onCreate method.
         paymentsClient = PaymentsUtil.createPaymentsClient(this)
         possiblyShowGooglePayButton()
 
@@ -159,14 +149,11 @@ class EventDetails : AppCompatActivity() {
         val isReadyToPayJson = PaymentsUtil.isReadyToPayRequest() ?: return
         val request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString()) ?: return
 
-        // The call to isReadyToPay is asynchronous and returns a Task. We need to provide an
-        // OnCompleteListener to be triggered when the result of the call is known.
         val task = paymentsClient.isReadyToPay(request)
         task.addOnCompleteListener { completedTask ->
             try {
                 completedTask.getResult(ApiException::class.java)?.let(::setGooglePayAvailable)
             } catch (exception: ApiException) {
-                // Process error
                 Log.w("isReadyToPay failed", exception)
             }
         }
@@ -180,11 +167,10 @@ class EventDetails : AppCompatActivity() {
             Toast.makeText(
                     this,
                     "Unfortunately, Google Pay is not available on this device",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show()
         }
     }
 
-    @SuppressLint("ResourceType")
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val extras = intent.extras
@@ -193,20 +179,19 @@ class EventDetails : AppCompatActivity() {
             LOAD_PAYMENT_DATA_REQUEST_CODE -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
-                        val numTickets = edit_text_tickets.text.toString().toInt()
+                        val editText = findViewById<EditText>(R.id.numTickets)
+                        val numTickets = editText.text.toString().toInt()
                         postEvent(extras?.getString("eventID"), numTickets.toString())
                         data?.let { intent ->
                             PaymentData.getFromIntent(intent)?.let(::handlePaymentSuccess)
                         }!!
-                        addToCalendar()
 
-                        this.recreate()
+                        startActivity(Intent(this, MainActivity::class.java))
 
                         Toast.makeText(
                             this,
-                            "Event Joined!",
-                            Toast.LENGTH_LONG).show();
+                            resources.getString(R.string.MessageInscripcioEvent),
+                            Toast.LENGTH_LONG).show()
                     }
 
                     RESULT_CANCELED -> {
@@ -254,31 +239,31 @@ class EventDetails : AppCompatActivity() {
 
 
     fun increment(view: View) {
-        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
-        val numTickets = edit_text_tickets.text.toString().toInt()
+        val editText = findViewById<EditText>(R.id.numTickets)
+        val numTickets = editText.text.toString().toInt()
         if (numTickets < 4) {
-            edit_text_tickets.setText((numTickets + 1).toString())
+            editText.setText((numTickets + 1).toString())
         }
 
     }
 
     fun decrement(view: View) {
-        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
-        val numTickets = edit_text_tickets.text.toString().toInt()
+        val editText = findViewById<EditText>(R.id.numTickets)
+        val numTickets = editText.text.toString().toInt()
 
         if (numTickets > 0)
-            edit_text_tickets.setText((numTickets - 1).toString())
+            editText.setText((numTickets - 1).toString())
 
     }
 
     fun buy(view: View) {
 
-        val edit_text_tickets = findViewById<EditText>(R.id.numTickets)
-        val numTickets = edit_text_tickets.text.toString().toInt()
+        val editText = findViewById<EditText>(R.id.numTickets)
+        val numTickets = editText.text.toString().toInt()
 
 
         if (numTickets > 0) {
-            if (fullRoom) {
+            if (fullRoom || avail < numTickets) {
                 Snackbar.make(view, resources.getString(R.string.FullRoom), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
             }
@@ -338,39 +323,6 @@ class EventDetails : AppCompatActivity() {
         )
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
-    }
-
-    fun addToCalendar() {
-
-        /*
-         Parece que Google Calendar esta bugeado y suma un mes al que se pone por parametro
-         o eso o algo se esta haciendo mal
-        */
-        val extras = intent.extras
-
-        val date = extras?.getString("date")?.split('-')!!
-        val hourIni = extras.getString("hourIni")?.split(":")!!
-        val hourEnd = extras.getString("hourEnd")?.split(":")!!
-
-        val startMillis: Long = Calendar.getInstance().run {
-            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourIni[0].toInt(), hourIni[1].toInt())
-            timeInMillis
-        }
-        val endMillis: Long = Calendar.getInstance().run {
-            set(date[0].toInt(), date[1].toInt()-1, date[2].toInt(), hourEnd[0].toInt(), hourEnd[1].toInt())
-            timeInMillis
-        }
-
-        val intent = Intent(Intent.ACTION_INSERT)
-            .setData(CalendarContract.Events.CONTENT_URI)
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
-            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
-            .putExtra(CalendarContract.Events.TITLE, extras.getString("eventName"))
-            .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
-            .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
-            .putExtra(CalendarContract.Events.EVENT_LOCATION, extras.getString("roomName"))
-            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-        startActivity(intent)
     }
 
 }
