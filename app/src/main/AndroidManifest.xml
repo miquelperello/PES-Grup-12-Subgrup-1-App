@@ -69,7 +69,6 @@
 
         <activity
             android:name=".EventDetails"
-            android:noHistory="true"
             android:parentActivityName=".Esdeveniment"
             android:theme="@style/MyEvent" />
     </application>

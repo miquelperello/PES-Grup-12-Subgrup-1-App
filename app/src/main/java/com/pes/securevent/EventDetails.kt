@@ -1,5 +1,6 @@
 package com.pes.securevent
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -183,6 +184,7 @@ class EventDetails : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ResourceType")
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val extras = intent.extras
@@ -198,6 +200,13 @@ class EventDetails : AppCompatActivity() {
                             PaymentData.getFromIntent(intent)?.let(::handlePaymentSuccess)
                         }!!
                         addToCalendar()
+
+                        this.recreate()
+
+                        Toast.makeText(
+                            this,
+                            "Event Joined!",
+                            Toast.LENGTH_LONG).show();
                     }
 
                     RESULT_CANCELED -> {
@@ -235,7 +244,7 @@ class EventDetails : AppCompatActivity() {
                     .getString("token"))
 
         } catch (e: JSONException) {
-            Log.e("handlePaymentSuccess", "Error: " + e.toString())
+            Log.e("handlePaymentSuccess", "Error: $e")
         }
 
     }
@@ -279,17 +288,11 @@ class EventDetails : AppCompatActivity() {
                     Log.e("RequestPayment", "Can't fetch payment data request")
                     return
                 }
-                val request = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+                val paymentDataRequest = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
 
-                // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-                // AutoResolveHelper to wait for the user interacting with it. Once completed,
-                // onActivityResult will be called with the result.
-                if (request != null) {
-                    AutoResolveHelper.resolveTask(
-                            paymentsClient.loadPaymentData(request), this, LOAD_PAYMENT_DATA_REQUEST_CODE)
+                paymentsClient.loadPaymentData(paymentDataRequest)?.let { task ->
+                    AutoResolveHelper.resolveTask(task, this, LOAD_PAYMENT_DATA_REQUEST_CODE)
                 }
-                //Starting the intent activity for result
-                //the request code will be used on the method onActivityResult
             }
         }
     }
