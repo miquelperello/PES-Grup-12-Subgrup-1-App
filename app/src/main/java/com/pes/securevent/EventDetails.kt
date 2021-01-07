@@ -359,7 +359,6 @@ class EventDetails : AppCompatActivity() {
             .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
             .putExtra(CalendarContract.Events.EVENT_LOCATION, extras.getString("roomName"))
             .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-            .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
         startActivity(intent)
     }
 
