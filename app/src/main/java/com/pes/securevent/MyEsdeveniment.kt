@@ -108,7 +108,7 @@ class MyEsdeveniment : AppCompatActivity() {
             val title: String? = titleE.text as String?
             val loc: String = resources.getString(R.string.MessageLoc)
             val LocE: String? = LocE.text as String?
-            val download: String = resources.getString(R.string.MessageDownload)
+            val download: String = resources.getString(R.string.MessageDownload) + " https://tinyurl.com/secureventapp"
             //val image = Uri.parse()
 
             val intent = Intent()
