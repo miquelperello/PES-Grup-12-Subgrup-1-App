@@ -115,7 +115,7 @@ class MyEsdeveniment : AppCompatActivity() {
             intent.action = Intent.ACTION_SEND
             intent.putExtra(Intent.EXTRA_TEXT, "$message $title $loc $LocE ?\n\n$download")
             //intent.putExtra(Intent.EXTRA_STREAM, image)
-            intent.type = "*/*"
+            intent.type = "text/html"
 
             startActivity(Intent.createChooser(intent, "Please select app: "))
         }

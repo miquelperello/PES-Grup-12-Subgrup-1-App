@@ -196,6 +196,8 @@ class EventDetails : AppCompatActivity() {
 
                     RESULT_CANCELED -> {
                         // The user cancelled the payment attempt
+                        println("User cancelled payment attempt")
+
                     }
 
                     AutoResolveHelper.RESULT_ERROR -> {
